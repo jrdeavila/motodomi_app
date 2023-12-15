@@ -2,8 +2,6 @@ import 'package:motodomi_app/lib.dart';
 import 'package:motodomi_app/src/presentacion/widgets/button.dart';
 
 import '../routes/authentication_routes.dart';
-import '../utils/colors.dart';
-import '../utils/dimensions.dart';
 
 class Main extends StatelessWidget {
   const Main({super.key});
