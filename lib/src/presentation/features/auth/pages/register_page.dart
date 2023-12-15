@@ -1,13 +1,49 @@
 import 'package:motodomi_app/lib.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final _scrollController = ScrollController();
+  final FocusNode _phoneFN = FocusNode();
+  final FocusNode _nameFN = FocusNode();
+  final FocusNode _emailFN = FocusNode();
+  final FocusNode _passwordFN = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _phoneFN.addListener(_scrollToBottom);
+    _nameFN.addListener(_scrollToBottom);
+    _emailFN.addListener(_scrollToBottom);
+    _passwordFN.addListener(_scrollToBottom);
+  }
+
+  @override
+  void dispose() {
+    _phoneFN.removeListener(_scrollToBottom);
+    _nameFN.removeListener(_scrollToBottom);
+    _emailFN.removeListener(_scrollToBottom);
+    _passwordFN.removeListener(_scrollToBottom);
+    _phoneFN.dispose();
+    _scrollController.dispose();
+    _nameFN.dispose();
+    _emailFN.dispose();
+    _passwordFN.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
@@ -64,6 +100,8 @@ class RegisterPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextFormField(
+            focusNode: _phoneFN,
+            keyboardType: TextInputType.phone,
             decoration: const InputDecoration(
               labelText: "Telefono",
               prefixIcon: Icon(Icons.phone),
@@ -74,6 +112,7 @@ class RegisterPage extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            focusNode: _nameFN,
             decoration: const InputDecoration(
               labelText: "Nombre",
               prefixIcon: Icon(Icons.person),
@@ -81,6 +120,8 @@ class RegisterPage extends StatelessWidget {
           ),
           const SizedBox(height: 7),
           TextFormField(
+            focusNode: _emailFN,
+            keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
               labelText: "Correo Electronico",
               prefixIcon: Icon(Icons.person),
@@ -88,6 +129,8 @@ class RegisterPage extends StatelessWidget {
           ),
           const SizedBox(height: 7),
           TextFormField(
+            focusNode: _passwordFN,
+            obscureText: true,
             decoration: const InputDecoration(
               labelText: "Contraseña",
               prefixIcon: Icon(Icons.lock),
@@ -104,5 +147,15 @@ class RegisterPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _scrollToBottom() {
+    Future.delayed(const Duration(milliseconds: 400), () {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 }

@@ -1,7 +1,39 @@
 import 'package:motodomi_app/lib.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _scrollController = ScrollController();
+  final FocusNode _phoneFN = FocusNode();
+
+  @override
+  void initState() {
+    _phoneFN.addListener(_scrollToBottom);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _phoneFN.removeListener(_scrollToBottom);
+    _phoneFN.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToBottom() {
+    Future.delayed(const Duration(milliseconds: 200), () {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
