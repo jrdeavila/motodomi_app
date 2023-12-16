@@ -4,11 +4,31 @@ abstract class AppTheme {
   static double get borderRadius => 30;
   static ThemeData get lightTheme => ThemeData(
         useMaterial3: true,
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color(0xff0f1f41),
+        primaryColor: const Color(0xff05c7f2),
+        primaryColorLight: const Color(0xff05c7f2),
+        primaryColorDark: const Color(0xff05c7f2),
+        hintColor: const Color(0xff05c7f2),
+        canvasColor: const Color(0xff05c7f2),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         // -------- Icon Theme --------
         iconTheme: const IconThemeData(
           color: Colors.white,
+        ),
+        // -------- App Bar Theme --------
+        appBarTheme: const AppBarTheme(
+          toolbarHeight: kToolbarHeight + 30,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          iconTheme: IconThemeData(
+            size: 30,
+            color: Color(0xff05c7f2),
+          ),
+          titleTextStyle: TextStyle(
+            color: Color(0xff05c7f2),
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+          ),
         ),
         // -------- Color Scheme --------
         colorScheme: const ColorScheme.light(
@@ -27,8 +47,14 @@ abstract class AppTheme {
             fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
+          hintStyle: GoogleFonts.nunito(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: Colors.white.withOpacity(0.5),
+          ),
           alignLabelWithHint: true,
           prefixIconColor: Colors.white,
+          suffixIconColor: Colors.white,
           contentPadding: const EdgeInsets.symmetric(
             vertical: 15,
             horizontal: 24,
@@ -98,6 +124,82 @@ abstract class AppTheme {
               ),
             ),
           ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(
+              const Color(0xff0f1f41),
+            ),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(borderRadius),
+              ),
+            ),
+            padding: MaterialStateProperty.all(
+              const EdgeInsets.symmetric(
+                vertical: 16,
+                horizontal: 24,
+              ),
+            ),
+            foregroundColor: MaterialStateProperty.all(
+              const Color(0xff05C7F2),
+            ),
+            textStyle: MaterialStateProperty.all(
+              GoogleFonts.nunito(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: const Color(0xff11238c),
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+        ),
+        checkboxTheme: CheckboxThemeData(
+          fillColor: MaterialStateProperty.all(
+            const Color(0xff05C7F2),
+          ),
+          checkColor: MaterialStateProperty.all(
+            Colors.white,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          visualDensity: VisualDensity.compact,
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          overlayColor: MaterialStateProperty.all(
+            const Color(0xff05C7F2).withOpacity(0.1),
+          ),
+        ),
+        // -------- Drawer Theme --------
+        drawerTheme: DrawerThemeData(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(borderRadius),
+              bottomRight: Radius.circular(borderRadius),
+            ),
+          ),
+        ),
+        // -------- List Tile Theme --------
+        listTileTheme: ListTileThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 5,
+            horizontal: 35,
+          ),
+          dense: true,
+          minVerticalPadding: 0,
+          horizontalTitleGap: 10,
+          selectedTileColor: Colors.white,
+          iconColor: const Color(0xff11238c),
         ),
         // -------- Text Theme --------
         textTheme: TextTheme(

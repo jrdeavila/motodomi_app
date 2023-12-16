@@ -1,7 +1,7 @@
 import 'package:motodomi_app/lib.dart';
 
-class AppPage extends GetView<InitCtrl> {
-  const AppPage({super.key});
+class WelcomePage extends GetView<InitCtrl> {
+  const WelcomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,6 +9,11 @@ class AppPage extends GetView<InitCtrl> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
+          Positioned.fill(
+            child: Container(
+              color: Theme.of(context).colorScheme.background,
+            ),
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: WelcomeRoundedBall(

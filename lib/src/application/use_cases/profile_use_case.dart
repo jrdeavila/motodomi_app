@@ -12,8 +12,7 @@ class UpdateProfileUseCase implements IUpdateProfileUseCase {
   Future<AppUser> updateProfile(UpdateProfileRequest updateProfileRequest) {
     final user = AppUser(
       uuid: updateProfileRequest.uuid,
-      firstname: updateProfileRequest.firstname,
-      lastname: updateProfileRequest.lastname,
+      name: updateProfileRequest.firstname,
       phone: updateProfileRequest.phone,
       email: updateProfileRequest.email,
       roles: updateProfileRequest.roles,

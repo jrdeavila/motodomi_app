@@ -14,37 +14,16 @@ class LoginRequest {
   }
 }
 
-class LoginWithPhoneRequest {
-  final String phone;
-  final void Function() onCodeSend;
-  final void Function() onError;
-
-  LoginWithPhoneRequest({
-    required this.phone,
-    required this.onCodeSend,
-    required this.onError,
-  });
-}
-
 class RegisterRequest {
-  final String firstname;
-  final String lastname;
+  final String name;
   final String email;
+  final String phone;
+  final String password;
 
   RegisterRequest({
-    required this.firstname,
-    required this.lastname,
+    required this.name,
     required this.email,
-  });
-}
-
-class SendCodeRequest {
-  final String code;
-  final void Function() onLoginSuccessful;
-  final void Function() onShouldRegister;
-  SendCodeRequest({
-    required this.code,
-    required this.onLoginSuccessful,
-    required this.onShouldRegister,
+    required this.phone,
+    required this.password,
   });
 }

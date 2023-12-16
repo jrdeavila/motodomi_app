@@ -1,18 +1,17 @@
 import 'package:injectable/injectable.dart';
 import 'package:motodomi_app/lib.dart';
 
-@Injectable(as: ILoginWithPhoneUseCase)
-class LoginWithPhoneUseCase implements ILoginWithPhoneUseCase {
-  final IPhoneAuthenticationService _authenticationService;
+@Injectable(as: ILoginUseCase)
+class LoginUseCase implements ILoginUseCase {
+  final IAuthenticationService _authenticationService;
 
-  LoginWithPhoneUseCase(this._authenticationService);
+  LoginUseCase(this._authenticationService);
 
   @override
-  Future<void> loginWithPhone(LoginWithPhoneRequest loginWithPhoneRequest) {
-    return _authenticationService.loginWithPhone(
-      phone: loginWithPhoneRequest.phone,
-      onCodeSend: loginWithPhoneRequest.onCodeSend,
-      onError: loginWithPhoneRequest.onError,
+  Future<void> login(LoginRequest loginRequest) async {
+    return _authenticationService.login(
+      email: loginRequest.email,
+      password: loginRequest.password,
     );
   }
 }
@@ -29,18 +28,15 @@ class LogoutUseCase implements ILogoutUseCase {
   }
 }
 
-@Injectable(as: ISendCodeUseCase)
-class SendCodeUseCase implements ISendCodeUseCase {
-  final IPhoneAuthenticationService _authenticationService;
+@Injectable(as: IListenAuthenticationUseCase)
+class ListenAuthenticationUseCase implements IListenAuthenticationUseCase {
+  final IAuthenticationService _authenticationService;
 
-  SendCodeUseCase(this._authenticationService);
+  ListenAuthenticationUseCase(this._authenticationService);
+
   @override
-  Future<void> sendCode(SendCodeRequest sendCodeRequest) {
-    return _authenticationService.verifyCode(
-      smsCode: sendCodeRequest.code,
-      onLoginSuccess: sendCodeRequest.onLoginSuccessful,
-      onShouldRegister: sendCodeRequest.onShouldRegister,
-    );
+  Stream<bool> listenAuthenticationState() {
+    return _authenticationService.isAuthenticated();
   }
 }
 
@@ -75,11 +71,14 @@ class RegisterUseCase implements IRegisterUseCase {
 
   @override
   Future<AppUser> register(RegisterRequest registerRequest) async {
+    final uuid = await _authenticationService.register(
+      email: registerRequest.email,
+      password: registerRequest.password,
+    );
     final user = AppUser(
-        uuid: _authenticationService.getUserUuid(),
-        firstname: registerRequest.firstname,
-        lastname: registerRequest.lastname,
-        phone: _authenticationService.getUserPhone(),
+        uuid: uuid,
+        name: registerRequest.name,
+        phone: registerRequest.phone,
         email: registerRequest.email,
         roles: [
           AppUserRole.client,

@@ -10,7 +10,7 @@ class ChatWithClientService implements IChatWithClientService {
   @override
   Future<void> chat(AppUser client) {
     return _chatService.sendMessage(
-      message: "Hola, soy ${client.firstname} soy tu conductor",
+      message: "Hola, soy ${client.name} soy tu conductor",
       numberPhone: client.phone,
     );
   }

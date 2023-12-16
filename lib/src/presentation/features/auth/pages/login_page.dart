@@ -8,25 +8,32 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final LoginCtrl controller = Get.find<LoginCtrl>();
+
   final _scrollController = ScrollController();
-  final FocusNode _phoneFN = FocusNode();
+  final FocusNode _emailFN = FocusNode();
+  final FocusNode _passwordFN = FocusNode();
 
   @override
   void initState() {
-    _phoneFN.addListener(_scrollToBottom);
+    _emailFN.addListener(_scrollToBottom);
+    _passwordFN.addListener(_scrollToBottom);
     super.initState();
   }
 
   @override
   void dispose() {
-    _phoneFN.removeListener(_scrollToBottom);
-    _phoneFN.dispose();
+    _emailFN.removeListener(_scrollToBottom);
+    _passwordFN.removeListener(_scrollToBottom);
+    _emailFN.dispose();
+    _passwordFN.dispose();
     _scrollController.dispose();
+    controller.dispose();
     super.dispose();
   }
 
   void _scrollToBottom() {
-    Future.delayed(const Duration(milliseconds: 200), () {
+    Future.delayed(const Duration(milliseconds: 400), () {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
         duration: const Duration(milliseconds: 500),
@@ -40,30 +47,36 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
           child: Stack(
             children: [
+              Positioned.fill(
+                child: Container(
+                  color: Theme.of(context).colorScheme.background,
+                ),
+              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: WelcomeRoundedBall(
                   color: Theme.of(context).colorScheme.surface,
-                  height: 500,
+                  height: 600,
                 ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: WelcomeRoundedBall(
                   color: Theme.of(context).colorScheme.secondary,
-                  height: 450,
+                  height: 550,
                 ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: WelcomeRoundedBall(
                   color: Theme.of(context).colorScheme.primary,
-                  height: 400,
+                  height: 500,
                 ),
               ),
               Align(
@@ -89,31 +102,83 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildForm() {
     return SizedBox(
-      height: 300,
+      height: 350,
       width: 350,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextFormField(
-            decoration: const InputDecoration(
-              labelText: "Telefono",
-              prefixIcon: Icon(Icons.phone),
+      child: Obx(() {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextFormField(
+              initialValue: controller.email,
+              keyboardType: TextInputType.emailAddress,
+              onChanged: controller.setEmail,
+              decoration: const InputDecoration(
+                hintText: "Correo electrónico",
+                prefixIcon: Icon(FontAwesomeIcons.envelope),
+              ),
             ),
-            inputFormatters: [
-              PhoneInputFormatter(),
-            ],
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {},
-            child: const SizedBox(
-              width: double.infinity,
-              child: Text("Iniciar Sesión", textAlign: TextAlign.center),
+            const SizedBox(height: 10),
+            TextFormField(
+              focusNode: _passwordFN,
+              initialValue: controller.password,
+              keyboardType: TextInputType.visiblePassword,
+              obscureText: !controller.isPasswordVisible,
+              onChanged: controller.setPassword,
+              decoration: InputDecoration(
+                hintText: "Contraseña",
+                prefixIcon: const Icon(FontAwesomeIcons.lock),
+                suffixIcon: GestureDetector(
+                  onTap: controller.togglePasswordVisibility,
+                  child: Icon(controller.isPasswordVisible
+                      ? FontAwesomeIcons.eyeSlash
+                      : FontAwesomeIcons.eye),
+                ),
+              ),
             ),
-          ),
-        ],
-      ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Checkbox(
+                  value: controller.isRememberMe,
+                  onChanged: controller.toggleRememberMe,
+                ),
+                const Expanded(
+                  child: Text("Recordar contraseña"),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: controller.goToForgotPassword,
+              child: const Text("¿Olvidaste tu contraseña?"),
+            ),
+            const SizedBox(height: 20),
+            FadeInUpBig(
+              animate: controller.isReady,
+              child: ElevatedButton(
+                onPressed: controller.login,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: controller.loading
+                      ? const Center(
+                          child: SizedBox(
+                            height: 22,
+                            child: LoadingIndicator(
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      : const Text(
+                          "Iniciar Sesión",
+                          textAlign: TextAlign.center,
+                        ),
+                ),
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 }

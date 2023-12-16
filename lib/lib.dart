@@ -12,7 +12,9 @@ export 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 export 'package:geolocator/geolocator.dart';
 export 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 export 'package:flutter_local_notifications/flutter_local_notifications.dart';
+export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 export 'firebase_options.dart';
 export 'main.dart';
 export 'src/src.dart';
+export 'app.dart';

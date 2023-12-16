@@ -8,10 +8,16 @@ abstract class AuthRoutes {
     GetPage(
       name: login,
       page: () => const LoginPage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => LoginCtrl());
+      }),
     ),
     GetPage(
       name: register,
       page: () => const RegisterPage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => RegisterCtrl());
+      }),
     ),
   ];
 }

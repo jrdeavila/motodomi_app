@@ -8,6 +8,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final controller = Get.find<RegisterCtrl>();
+
   final _scrollController = ScrollController();
   final FocusNode _phoneFN = FocusNode();
   final FocusNode _nameFN = FocusNode();
@@ -40,51 +42,62 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: double.infinity,
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: WelcomeRoundedBall(
-                  color: Theme.of(context).colorScheme.surface,
-                  height: 620,
+    return WillPopScope(
+      onWillPop: () async {
+        controller.cancel();
+        return false;
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        body: SingleChildScrollView(
+          controller: _scrollController,
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: double.infinity,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: Container(
+                    color: Theme.of(context).colorScheme.background,
+                  ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: WelcomeRoundedBall(
-                  color: Theme.of(context).colorScheme.secondary,
-                  height: 570,
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: WelcomeRoundedBall(
+                    color: Theme.of(context).colorScheme.surface,
+                    height: 620,
+                  ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: WelcomeRoundedBall(
-                  color: Theme.of(context).colorScheme.primary,
-                  height: 520,
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: WelcomeRoundedBall(
+                    color: Theme.of(context).colorScheme.secondary,
+                    height: 570,
+                  ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: _buildForm(),
-              ),
-              const Align(
-                alignment: Alignment.topLeft,
-                child: BackOvalSection(
-                  width: 300,
-                  height: 220,
-                  backLabel: "Inicio",
-                  labelTitle: "Registrate",
-                  labelDesc: "Crea una cuenta para continuar",
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: WelcomeRoundedBall(
+                    color: Theme.of(context).colorScheme.primary,
+                    height: 520,
+                  ),
                 ),
-              ),
-            ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: _buildForm(),
+                ),
+                const Align(
+                  alignment: Alignment.topLeft,
+                  child: BackOvalSection(
+                    width: 300,
+                    height: 220,
+                    backLabel: "Inicio",
+                    labelTitle: "Registrate",
+                    labelDesc: "Crea una cuenta para continuar",
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -93,59 +106,112 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildForm() {
     return SizedBox(
-      height: 400,
+      height: 450,
       width: 350,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextFormField(
-            focusNode: _phoneFN,
-            keyboardType: TextInputType.phone,
-            decoration: const InputDecoration(
-              labelText: "Telefono",
-              prefixIcon: Icon(Icons.phone),
+      child: Obx(() {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                  child: TextFormField(
+                    initialValue: controller.code,
+                    onChanged: controller.setCode,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      hintText: "+57",
+                    ),
+                    inputFormatters: [
+                      PhoneCodeInputFormatter(),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 7),
+                Expanded(
+                  child: TextFormField(
+                    focusNode: _phoneFN,
+                    initialValue: controller.phone,
+                    onChanged: controller.setPhone,
+                    keyboardType: TextInputType.phone,
+                    decoration: const InputDecoration(
+                      hintText: "Telefono",
+                      prefixIcon: Icon(Icons.phone),
+                    ),
+                    inputFormatters: [
+                      PhoneInputFormatter(),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            inputFormatters: [
-              PhoneInputFormatter(),
-            ],
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            focusNode: _nameFN,
-            decoration: const InputDecoration(
-              labelText: "Nombre",
-              prefixIcon: Icon(Icons.person),
+            const SizedBox(height: 7),
+            TextFormField(
+              focusNode: _nameFN,
+              initialValue: controller.name,
+              onChanged: controller.setName,
+              decoration: const InputDecoration(
+                hintText: "Nombre",
+                prefixIcon: Icon(Icons.person),
+              ),
             ),
-          ),
-          const SizedBox(height: 7),
-          TextFormField(
-            focusNode: _emailFN,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              labelText: "Correo Electronico",
-              prefixIcon: Icon(Icons.person),
+            const SizedBox(height: 7),
+            TextFormField(
+              focusNode: _emailFN,
+              initialValue: controller.email,
+              onChanged: controller.setEmail,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                hintText: "Correo Electronico",
+                prefixIcon: Icon(Icons.person),
+              ),
             ),
-          ),
-          const SizedBox(height: 7),
-          TextFormField(
-            focusNode: _passwordFN,
-            obscureText: true,
-            decoration: const InputDecoration(
-              labelText: "Contraseña",
-              prefixIcon: Icon(Icons.lock),
+            const SizedBox(height: 7),
+            TextFormField(
+              focusNode: _passwordFN,
+              initialValue: controller.password,
+              onChanged: controller.setPassword,
+              obscureText: !controller.isPasswordVisible,
+              decoration: InputDecoration(
+                hintText: "Contraseña",
+                prefixIcon: const Icon(Icons.lock),
+                suffixIcon: GestureDetector(
+                  onTap: controller.togglePasswordVisibility,
+                  child: Icon(
+                    controller.isPasswordVisible
+                        ? FontAwesomeIcons.eye
+                        : FontAwesomeIcons.eyeSlash,
+                  ),
+                ),
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {},
-            child: const SizedBox(
-              width: double.infinity,
-              child: Text("Iniciar Sesión", textAlign: TextAlign.center),
+            const SizedBox(height: 20),
+            FadeInUpBig(
+              animate: controller.isReady,
+              child: ElevatedButton(
+                onPressed: controller.register,
+                child: controller.loading
+                    ? Container(
+                        padding: const EdgeInsets.all(10.0),
+                        width: double.infinity,
+                        height: 22,
+                        child: const Center(
+                          child: LoadingIndicator(
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    : const SizedBox(
+                        width: double.infinity,
+                        child: Text("Registrarse", textAlign: TextAlign.center),
+                      ),
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
     );
   }
 

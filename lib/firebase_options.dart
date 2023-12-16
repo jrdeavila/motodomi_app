@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -49,9 +46,18 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDQ8M7YAAZZFFNuIh4HjmF-4eyYcerB_Ec',
+    appId: '1:422891690174:web:f6fd85df4f4f691e66e6ef',
+    messagingSenderId: '422891690174',
+    projectId: 'motodomi-app',
+    authDomain: 'motodomi-app.firebaseapp.com',
+    storageBucket: 'motodomi-app.appspot.com',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB4lSzACg9yHOX1FZNaDgjZK5PS-B0_V6k',
-    appId: '1:422891690174:android:d3c9a72e2118087066e6ef',
+    appId: '1:422891690174:android:5195e890a7ab4cb366e6ef',
     messagingSenderId: '422891690174',
     projectId: 'motodomi-app',
     storageBucket: 'motodomi-app.appspot.com',
@@ -59,7 +65,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBpOV50gemsy489Dd2rexxj64AfvJvHoQ4',
-    appId: '1:422891690174:ios:5c6dea22eee8bc9766e6ef',
+    appId: '1:422891690174:ios:5bc55e4b36c0713466e6ef',
     messagingSenderId: '422891690174',
     projectId: 'motodomi-app',
     storageBucket: 'motodomi-app.appspot.com',

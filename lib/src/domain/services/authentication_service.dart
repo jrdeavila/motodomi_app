@@ -1,22 +1,15 @@
+import 'package:motodomi_app/lib.dart';
+
 abstract class IAuthenticationService {
   Future<void> logout();
-
+  Future<void> login({
+    required String email,
+    required String password,
+  });
+  Future<String> register({
+    required String email,
+    required String password,
+  });
   Stream<bool> isAuthenticated();
-
   String getUserUuid();
-  String getUserPhone();
-}
-
-abstract class IPhoneAuthenticationService {
-  Future<void> loginWithPhone({
-    required String phone,
-    required void Function() onCodeSend,
-    required void Function() onError,
-  });
-
-  Future<void> verifyCode({
-    required String smsCode,
-    required void Function() onLoginSuccess,
-    required void Function() onShouldRegister,
-  });
 }

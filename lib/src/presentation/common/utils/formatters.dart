@@ -1,5 +1,9 @@
 import 'package:flutter/services.dart';
 
+class PhoneCodeInputFormatter extends MaskInputFormatter {
+  PhoneCodeInputFormatter() : super(mask: "+xxx", separator: "+");
+}
+
 class PhoneInputFormatter extends MaskInputFormatter {
   PhoneInputFormatter() : super(mask: "xxx xxx xxxx", separator: " ");
 }

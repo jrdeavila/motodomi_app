@@ -25,7 +25,9 @@ abstract class FirebaseAuthModule {
   @preResolve
   @lazySingleton
   Future<FirebaseAuth> get firebaseAuth async {
-    return FirebaseAuth.instanceFor(app: getIt<FirebaseApp>());
+    return FirebaseAuth.instanceFor(
+      app: getIt<FirebaseApp>(),
+    );
   }
 }
 
@@ -44,7 +46,7 @@ abstract class AppCheckModule {
   Future<FirebaseAppCheck> get appCheck async {
     final appCheck = FirebaseAppCheck.instanceFor(app: getIt<FirebaseApp>());
     await appCheck.activate(
-      androidProvider: AndroidProvider.playIntegrity,
+      androidProvider: AndroidProvider.debug,
     );
     return appCheck;
   }
@@ -57,7 +59,7 @@ abstract class FirebaseStorageModule {
   Future<FirebaseStorage> get firebaseStorage async =>
       FirebaseStorage.instanceFor(
         app: getIt<FirebaseApp>(),
-        bucket: "gs://mevo-ceb14.appspot.com",
+        bucket: "gs://motodomi-app.appspot.com",
       );
 }
 
