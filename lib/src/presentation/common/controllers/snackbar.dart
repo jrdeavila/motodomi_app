@@ -7,20 +7,21 @@ showSnackbar(
   String? actionLabel,
   VoidCallback? actionCallback,
 }) {
+  late SnackbarController controller;
   final action = actionLabel != null
       ? SnackBarAction(
           label: actionLabel,
           onPressed: () {
             actionCallback?.call();
-            Get.closeCurrentSnackbar();
+            controller.close();
           },
         )
       : IconButton(
-          onPressed: () => Get.closeCurrentSnackbar(),
+          onPressed: () => controller.close(),
           icon: const Icon(Icons.close),
         );
   Get.closeAllSnackbars();
-  return Get.showSnackbar(GetSnackBar(
+  controller = Get.showSnackbar(GetSnackBar(
     snackPosition: SnackPosition.TOP,
     title: title,
     message: message,

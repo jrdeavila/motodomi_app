@@ -1,12 +1,12 @@
 import 'package:motodomi_app/lib.dart';
 
-class DrawerOption {
+class HomeOption {
   final String title;
   final String? desc;
   final IconData icon;
   final void Function(BuildContext context)? onTap;
 
-  DrawerOption({
+  HomeOption({
     required this.title,
     this.desc,
     required this.icon,
@@ -16,21 +16,46 @@ class DrawerOption {
 
 class HomeCtrl extends GetxController {
   // ---------------------- Getters ---------------------
-
-  List<DrawerOption> get options => [
-        DrawerOption(
+  List<HomeOption> get homeOptions => [
+        HomeOption(
           title: "Principal",
           icon: FontAwesomeIcons.houseChimneyCrack,
+          onTap: (context) {
+            if (Get.currentRoute != HomeRoutes.home) {
+              Get.offAllNamed(HomeRoutes.home);
+            }
+          },
         ),
-        DrawerOption(
-          title: "Configuracion del usuario",
+        HomeOption(
+          title: "Perfil",
           icon: FontAwesomeIcons.userGroup,
+          onTap: (context) => Get.toNamed(HomeRoutes.profileDetails),
         ),
-        DrawerOption(
+        HomeOption(
           title: "Modo de conductor",
           icon: FontAwesomeIcons.carBurst,
         ),
+        HomeOption(
+          title: "Configuraciones",
+          icon: FontAwesomeIcons.gear,
+        ),
       ];
+
+  List<HomeOption> get profileOptions => [
+        HomeOption(
+          title: "Editar Perfil",
+          icon: FontAwesomeIcons.userGear,
+          onTap: (context) {
+            Get.toNamed(HomeRoutes.editProfile);
+          },
+        ),
+      ];
+
+  String get userFirstName => Get.find<SessionCtrl>().user!.name.split(' ')[0];
+
+  String get userName => Get.find<SessionCtrl>().user!.name;
+
+  String get userPhone => Get.find<SessionCtrl>().user!.phone;
 
   // ---------------------- Public Methods ---------------------
 

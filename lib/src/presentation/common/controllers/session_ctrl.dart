@@ -8,6 +8,9 @@ class SessionCtrl extends GetxController {
   // ----------------------- Getters -----------------------
   AppUser? get user => _user.value;
 
+  // ----------------------- Setters -----------------------
+  void setUser(AppUser? value) => _user.value = value;
+
   // ----------------------- Life Cycle -----------------------
 
   @override

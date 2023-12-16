@@ -1,14 +1,13 @@
 import 'package:motodomi_app/lib.dart';
 
-final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final key = GlobalKey<ScaffoldState>();
     return Scaffold(
-      key: _key,
+      key: key,
       drawer: const HomeDrawer(),
       body: Stack(
         children: [
@@ -43,7 +42,7 @@ class HomePage extends StatelessWidget {
             left: 16,
             child: FloatingActionButton(
               onPressed: () {
-                _key.currentState?.openDrawer();
+                key.currentState?.openDrawer();
               },
               child: const Icon(FontAwesomeIcons.barsStaggered),
             ),

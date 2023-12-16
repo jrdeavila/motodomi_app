@@ -1,5 +1,6 @@
 class AppUser {
   String uuid;
+  final String? avatar;
   final String name;
   final String phone;
   final String email;
@@ -7,6 +8,7 @@ class AppUser {
 
   AppUser({
     required this.uuid,
+    this.avatar,
     required this.name,
     required this.phone,
     required this.email,

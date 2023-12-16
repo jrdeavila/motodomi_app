@@ -13,7 +13,7 @@ class FirebaseUserRepository implements IUserRepository {
     return _firestore
         .collection('users')
         .doc(user.uuid)
-        .set(userToJson(user))
+        .update(userToJsonWithoutRoles(user))
         .then((value) => user);
   }
 

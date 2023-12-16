@@ -27,7 +27,7 @@ class HomeDrawer extends GetView<HomeCtrl> {
                   ),
                   const Spacer(),
                   Text(
-                    "Motodomi",
+                    controller.userFirstName,
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           color: Colors.black,
                         ),
@@ -35,11 +35,18 @@ class HomeDrawer extends GetView<HomeCtrl> {
                   const SizedBox(
                     width: 5,
                   ),
-                  const CircleAvatar(),
+                  CircleAvatar(
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    child: const Icon(
+                      FontAwesomeIcons.user,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
                 ],
               ),
             ),
-            ...controller.options
+            ...controller.homeOptions
                 .map((e) => ListTile(
                       leading: Icon(e.icon),
                       title: Text(
