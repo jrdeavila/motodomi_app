@@ -42,6 +42,8 @@ class SessionCtrl extends GetxController {
         Get.offAllNamed(HomeRoutes.home);
         return;
       }
+    } else {
+      Get.offAllNamed(MainRoutes.root);
     }
   }
 
@@ -61,7 +63,12 @@ class SessionCtrl extends GetxController {
 
   void logout() async {
     final useCase = getIt<ILogoutUseCase>();
-    await useCase.logout();
+    _loading.value = true;
+    await Future.wait([
+      Future.delayed(1.seconds),
+      useCase.logout(),
+    ]);
+
     _user.value = null;
   }
 }
