@@ -1,6 +1,6 @@
 import 'package:motodomi_app/lib.dart';
 
-showSnackbar(
+void showSnackbar(
   String title,
   String message, {
   IconData? icon,

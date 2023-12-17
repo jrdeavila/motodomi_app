@@ -1,5 +1,4 @@
 import 'package:motodomi_app/lib.dart';
-import 'package:motodomi_app/src/presentation/features/home/routes/home_routes.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

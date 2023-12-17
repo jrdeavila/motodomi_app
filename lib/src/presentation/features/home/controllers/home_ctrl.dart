@@ -57,6 +57,8 @@ class HomeCtrl extends GetxController {
 
   String get userPhone => Get.find<SessionCtrl>().user!.phone;
 
+  String? get userAvatar => Get.find<SessionCtrl>().user!.avatar;
+
   // ---------------------- Public Methods ---------------------
 
   void logout() {

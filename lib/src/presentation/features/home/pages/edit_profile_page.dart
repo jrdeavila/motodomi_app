@@ -49,20 +49,65 @@ class EditProfilePage extends GetView<EditProfileCtrl> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            CircleAvatar(
-              radius: 80,
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-              child: const Icon(
-                FontAwesomeIcons.user,
-                color: Colors.white,
-                size: 40,
-              ),
-            ),
+            _buildAvatar(context),
             ..._buildPersonalInfo(context),
             ..._buildPasswordInfo(context),
           ],
         );
       }),
+    );
+  }
+
+  Widget _buildAvatar(context) {
+    return Center(
+      child: SizedBox(
+        width: 160,
+        height: 160,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondary,
+                  shape: BoxShape.circle,
+                ),
+                child: controller.avatar != null
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: CachedNetworkImage(
+                              imageUrl: controller.avatar!,
+                              placeholder: (context, url) => const Icon(
+                                FontAwesomeIcons.user,
+                                color: Colors.white,
+                                size: 40,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : const Icon(
+                        FontAwesomeIcons.user,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: FloatingActionButton.small(
+                onPressed: () {
+                  controller.pickImage();
+                },
+                child: const Icon(FontAwesomeIcons.camera),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

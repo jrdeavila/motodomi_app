@@ -21,3 +21,53 @@ class UpdateProfileUseCase implements IUpdateProfileUseCase {
     return _userRepository.updateUser(user);
   }
 }
+
+@Injectable(as: IUpdateProfileAvatarWithCameraUseCase)
+class UpdateProfileAvatarWithCameraUseCase
+    implements IUpdateProfileAvatarWithCameraUseCase {
+  final IProfileAvatarService _profileAvatarService;
+
+  UpdateProfileAvatarWithCameraUseCase(
+      {required IProfileAvatarService profileAvatarService})
+      : _profileAvatarService = profileAvatarService;
+
+  @override
+  Future<String?> updateProfileAvatarWithCamera(
+      UpdateProfileAvatarRequest updateProfileAvatarRequest) {
+    return _profileAvatarService
+        .updateProfileAvatarDataFromCamera(updateProfileAvatarRequest.user);
+  }
+}
+
+@Injectable(as: IUpdateProfileAvatarWithGalleryUseCase)
+class UpdateProfileAvatarWithGalleryUseCase
+    implements IUpdateProfileAvatarWithGalleryUseCase {
+  final IProfileAvatarService _profileAvatarService;
+
+  UpdateProfileAvatarWithGalleryUseCase(
+      {required IProfileAvatarService profileAvatarService})
+      : _profileAvatarService = profileAvatarService;
+
+  @override
+  Future<String?> updateProfileAvatarWithGallery(
+      UpdateProfileAvatarRequest updateProfileAvatarRequest) {
+    return _profileAvatarService
+        .updateProfileAvatarDataFromGallery(updateProfileAvatarRequest.user);
+  }
+}
+
+@Injectable(as: IDeleteProfileAvatarUseCase)
+class DeleteProfileAvatarUseCase implements IDeleteProfileAvatarUseCase {
+  final IProfileAvatarService _profileAvatarService;
+
+  DeleteProfileAvatarUseCase(
+      {required IProfileAvatarService profileAvatarService})
+      : _profileAvatarService = profileAvatarService;
+
+  @override
+  Future<void> deleteProfileAvatar(
+      DeleteProfileAvatarRequest deleteProfileAvatarRequest) {
+    return _profileAvatarService
+        .deleteProfileAvatarData(deleteProfileAvatarRequest.user);
+  }
+}

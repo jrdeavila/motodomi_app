@@ -51,11 +51,28 @@ class ProfileDetailsPage extends GetView<HomeCtrl> {
             CircleAvatar(
               radius: 80,
               backgroundColor: Theme.of(context).colorScheme.secondary,
-              child: const Icon(
-                FontAwesomeIcons.user,
-                color: Colors.white,
-                size: 40,
-              ),
+              child: controller.userAvatar != null
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: CachedNetworkImage(
+                            imageUrl: controller.userAvatar!,
+                            placeholder: (context, url) => const Icon(
+                              FontAwesomeIcons.user,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : const Icon(
+                      FontAwesomeIcons.user,
+                      color: Colors.white,
+                      size: 40,
+                    ),
             ),
             const SizedBox(
               height: 10,

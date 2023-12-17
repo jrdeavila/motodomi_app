@@ -7,7 +7,7 @@ class EditProfileCtrl extends GetxController {
   final RxString _code = ''.obs;
   final RxString _phone = ''.obs;
   final RxString _email = ''.obs;
-  final Rx<String?> _avatar = null.obs;
+  final Rx<String?> _avatar = Rx(null);
   final RxString _currentPassword = ''.obs;
   final RxString _password = ''.obs;
   final RxString _confirmPassword = ''.obs;
@@ -45,7 +45,34 @@ class EditProfileCtrl extends GetxController {
     _phone.value = phone.split(' ').sublist(1).join(' ');
 
     _email.value = Get.find<SessionCtrl>().user!.email;
-    _avatar.value = Get.find<SessionCtrl>().user!.avatar;
+    _avatar.value = Get.find<SessionCtrl>().user?.avatar;
+  }
+  // ---------------------- Private Methods ---------------------
+
+  void _pickImageFromCamera() async {
+    final useCase = getIt<IUpdateProfileAvatarWithCameraUseCase>();
+    final url =
+        await useCase.updateProfileAvatarWithCamera(UpdateProfileAvatarRequest(
+      user: Get.find<SessionCtrl>().user!,
+    ));
+    _avatar.value = url;
+  }
+
+  void _pickImageFromGallery() async {
+    final useCase = getIt<IUpdateProfileAvatarWithGalleryUseCase>();
+    final url =
+        await useCase.updateProfileAvatarWithGallery(UpdateProfileAvatarRequest(
+      user: Get.find<SessionCtrl>().user!,
+    ));
+    _avatar.value = url;
+  }
+
+  void _removeImage() {
+    final useCase = getIt<IDeleteProfileAvatarUseCase>();
+    useCase.deleteProfileAvatar(DeleteProfileAvatarRequest(
+      user: Get.find<SessionCtrl>().user!,
+    ));
+    _avatar.value = null;
   }
 
   // ---------------------- Public Methods ---------------------
@@ -63,5 +90,25 @@ class EditProfileCtrl extends GetxController {
       'Perfil actualizado correctamente',
       'Tu perfil ha sido actualizado correctamente',
     );
+  }
+
+  void pickImage() {
+    showModalBottomSheet(
+        context: Get.context!,
+        builder: (context) {
+          return PickerSelectionModal(
+            canRemove: avatar != null,
+            onSelect: (selection) {
+              switch (selection) {
+                case PickerSelection.camera:
+                  return _pickImageFromCamera();
+                case PickerSelection.gallery:
+                  return _pickImageFromGallery();
+                case PickerSelection.remove:
+                  return _removeImage();
+              }
+            },
+          );
+        });
   }
 }

@@ -187,10 +187,10 @@ class ListenCurrentRequestServiceDriverUseCase
 @Injectable(as: IUpdateProfileLocationDataUseCase)
 class UpdateProfileLocationDataUseCase
     implements IUpdateProfileLocationDataUseCase {
-  final IProfileService _profileService;
+  final IProfileLocationService _profileService;
 
   UpdateProfileLocationDataUseCase({
-    required IProfileService profileService,
+    required IProfileLocationService profileService,
   }) : _profileService = profileService;
   @override
   Future<void> updateProfileData(UpdateProfileLocationDataRequest request) {

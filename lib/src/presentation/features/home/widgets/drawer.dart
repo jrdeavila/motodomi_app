@@ -37,11 +37,28 @@ class HomeDrawer extends GetView<HomeCtrl> {
                   ),
                   CircleAvatar(
                     backgroundColor: Theme.of(context).colorScheme.secondary,
-                    child: const Icon(
-                      FontAwesomeIcons.user,
-                      color: Colors.white,
-                      size: 20,
-                    ),
+                    child: controller.userAvatar != null
+                        ? Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: CachedNetworkImage(
+                                  imageUrl: controller.userAvatar!,
+                                  placeholder: (context, url) => const Icon(
+                                    FontAwesomeIcons.user,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : const Icon(
+                            FontAwesomeIcons.user,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                   ),
                 ],
               ),

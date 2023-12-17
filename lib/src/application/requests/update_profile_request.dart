@@ -1,3 +1,5 @@
+import 'package:motodomi_app/lib.dart';
+
 class UpdateProfileRequest {
   final String uuid;
   final String name;
@@ -10,4 +12,16 @@ class UpdateProfileRequest {
     required this.phone,
     required this.email,
   });
+}
+
+class UpdateProfileAvatarRequest {
+  final AppUser user;
+
+  UpdateProfileAvatarRequest({required this.user});
+}
+
+class DeleteProfileAvatarRequest {
+  final AppUser user;
+
+  DeleteProfileAvatarRequest({required this.user});
 }
