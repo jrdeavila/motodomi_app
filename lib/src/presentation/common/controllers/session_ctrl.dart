@@ -64,6 +64,10 @@ class SessionCtrl extends GetxController {
 
   // ----------------------- Public Methods -----------------------
 
+  void updateAvatar(String? url) {
+    _user.value = _user.value?..avatar = url;
+  }
+
   void logout() async {
     final useCase = getIt<ILogoutUseCase>();
     _loading.value = true;

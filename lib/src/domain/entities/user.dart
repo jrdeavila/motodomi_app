@@ -1,6 +1,6 @@
 class AppUser {
   String uuid;
-  final String? avatar;
+  String? avatar;
   final String name;
   final String phone;
   final String email;

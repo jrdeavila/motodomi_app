@@ -12,6 +12,8 @@ class EditProfileCtrl extends GetxController {
   final RxString _password = ''.obs;
   final RxString _confirmPassword = ''.obs;
 
+  final RxBool _loadingAvatar = false.obs;
+
   // ---------------------- Getters ---------------------
 
   String get name => _name.value;
@@ -22,6 +24,8 @@ class EditProfileCtrl extends GetxController {
   String get currentPassword => _currentPassword.value;
   String get password => _password.value;
   String get confirmPassword => _confirmPassword.value;
+
+  bool get loadingAvatar => _loadingAvatar.value;
 
   // ---------------------- Setters ---------------------
 
@@ -51,28 +55,40 @@ class EditProfileCtrl extends GetxController {
 
   void _pickImageFromCamera() async {
     final useCase = getIt<IUpdateProfileAvatarWithCameraUseCase>();
+    _loadingAvatar.value = true;
+    await Future.delayed(const Duration(seconds: 1));
     final url =
         await useCase.updateProfileAvatarWithCamera(UpdateProfileAvatarRequest(
       user: Get.find<SessionCtrl>().user!,
     ));
+    _loadingAvatar.value = false;
     _avatar.value = url;
+    Get.find<SessionCtrl>().updateAvatar(url);
   }
 
   void _pickImageFromGallery() async {
     final useCase = getIt<IUpdateProfileAvatarWithGalleryUseCase>();
+    _loadingAvatar.value = true;
+    await Future.delayed(const Duration(seconds: 1));
     final url =
         await useCase.updateProfileAvatarWithGallery(UpdateProfileAvatarRequest(
       user: Get.find<SessionCtrl>().user!,
     ));
+    _loadingAvatar.value = false;
     _avatar.value = url;
+    Get.find<SessionCtrl>().updateAvatar(url);
   }
 
-  void _removeImage() {
+  void _removeImage() async {
     final useCase = getIt<IDeleteProfileAvatarUseCase>();
-    useCase.deleteProfileAvatar(DeleteProfileAvatarRequest(
+    _loadingAvatar.value = true;
+    await Future.delayed(const Duration(seconds: 1));
+    await useCase.deleteProfileAvatar(DeleteProfileAvatarRequest(
       user: Get.find<SessionCtrl>().user!,
     ));
+    _loadingAvatar.value = false;
     _avatar.value = null;
+    Get.find<SessionCtrl>().updateAvatar(null);
   }
 
   // ---------------------- Public Methods ---------------------

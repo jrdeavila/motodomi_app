@@ -102,7 +102,11 @@ class EditProfilePage extends GetView<EditProfileCtrl> {
                 onPressed: () {
                   controller.pickImage();
                 },
-                child: const Icon(FontAwesomeIcons.camera),
+                child: controller.loadingAvatar
+                    ? const LoadingIndicator(
+                        count: 1,
+                      )
+                    : const Icon(FontAwesomeIcons.camera),
               ),
             ),
           ],
