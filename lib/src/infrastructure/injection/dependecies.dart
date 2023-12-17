@@ -18,6 +18,13 @@ abstract class FirebaseAppModule {
   Future<FirebaseApp> get firebaseApp => Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
+
+  @preResolve
+  @Named("FirebaseAppForPasswordReset")
+  Future<FirebaseApp> get firebaseAppForPasswordReset => Firebase.initializeApp(
+        name: "FirebaseAppForPasswordReset",
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
 }
 
 @module
@@ -27,6 +34,15 @@ abstract class FirebaseAuthModule {
   Future<FirebaseAuth> get firebaseAuth async {
     return FirebaseAuth.instanceFor(
       app: getIt<FirebaseApp>(),
+    );
+  }
+
+  @preResolve
+  @Named("FirebaseAuthForPasswordReset")
+  @lazySingleton
+  Future<FirebaseAuth> get firebaseAuthForPasswordReset async {
+    return FirebaseAuth.instanceFor(
+      app: getIt<FirebaseApp>(instanceName: "FirebaseAppForPasswordReset"),
     );
   }
 }

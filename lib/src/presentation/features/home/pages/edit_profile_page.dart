@@ -26,6 +26,7 @@ class EditProfilePage extends GetView<EditProfileCtrl> {
             top: kTextTabBarHeight,
             left: 16.0,
             child: FloatingActionButton(
+              heroTag: 'back',
               onPressed: () {
                 Get.back();
               },
@@ -51,7 +52,6 @@ class EditProfilePage extends GetView<EditProfileCtrl> {
           children: [
             _buildAvatar(context),
             ..._buildPersonalInfo(context),
-            ..._buildPasswordInfo(context),
           ],
         );
       }),
@@ -109,58 +109,6 @@ class EditProfilePage extends GetView<EditProfileCtrl> {
         ),
       ),
     );
-  }
-
-  List<Widget> _buildPasswordInfo(context) {
-    return [
-      const SizedBox(
-        height: 20,
-      ),
-      Text(
-        "Cambiar contraseña",
-        style: Theme.of(context).textTheme.headlineMedium,
-        textAlign: TextAlign.center,
-      ),
-      const SizedBox(
-        height: 20,
-      ),
-      TextFormField(
-        initialValue: controller.currentPassword,
-        onChanged: (value) => controller.currentPassword = value,
-        decoration: const InputDecoration(
-          hintText: 'Contraseña actual',
-        ),
-      ),
-      const SizedBox(
-        height: 10,
-      ),
-      TextFormField(
-        initialValue: controller.password,
-        onChanged: (value) => controller.password = value,
-        decoration: const InputDecoration(
-          hintText: 'Nueva contraseña',
-        ),
-      ),
-      const SizedBox(
-        height: 10,
-      ),
-      TextFormField(
-        initialValue: controller.confirmPassword,
-        onChanged: (value) => controller.confirmPassword = value,
-        decoration: const InputDecoration(
-          hintText: 'Confirmar contraseña',
-        ),
-      ),
-      const SizedBox(
-        height: 20,
-      ),
-      ElevatedButton(
-        onPressed: () {
-          controller.saveProfileData();
-        },
-        child: const Text('Guardar'),
-      ),
-    ];
   }
 
   List<Widget> _buildPersonalInfo(context) {

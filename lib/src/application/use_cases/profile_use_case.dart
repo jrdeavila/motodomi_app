@@ -71,3 +71,21 @@ class DeleteProfileAvatarUseCase implements IDeleteProfileAvatarUseCase {
         .deleteProfileAvatarData(deleteProfileAvatarRequest.user);
   }
 }
+
+@Injectable(as: IChangePasswordUseCase)
+class ChangePasswordUseCase implements IChangePasswordUseCase {
+  final IChangePasswordService _changePasswordService;
+
+  ChangePasswordUseCase({required IChangePasswordService changePasswordService})
+      : _changePasswordService = changePasswordService;
+
+  @override
+  Future<void> changePassword(ChangePasswordRequest changePasswordRequest) {
+    return _changePasswordService.changePasswordData(
+      user: changePasswordRequest.user,
+      oldPassword: changePasswordRequest.currentPassword,
+      newPassword: changePasswordRequest.password,
+      confirmPassword: changePasswordRequest.confirmPassword,
+    );
+  }
+}

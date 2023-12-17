@@ -4,6 +4,7 @@ abstract class HomeRoutes {
   static const String home = '/home';
   static const String profileDetails = '/profile-details';
   static const String editProfile = '/edit-profile';
+  static const String changePassword = '/change-password';
 
   static final routes = [
     GetPage(
@@ -21,6 +22,12 @@ abstract class HomeRoutes {
     GetPage(
         name: editProfile,
         page: () => const EditProfilePage(),
+        binding: BindingsBuilder(() {
+          Get.put(EditProfileCtrl());
+        })),
+    GetPage(
+        name: changePassword,
+        page: () => const ChangePasswordPage(),
         binding: BindingsBuilder(() {
           Get.put(EditProfileCtrl());
         })),

@@ -13,3 +13,12 @@ abstract class IAuthenticationService {
   Stream<bool> isAuthenticated();
   String getUserUuid();
 }
+
+abstract interface class IChangePasswordService {
+  Future<void> changePasswordData({
+    required AppUser user,
+    required String oldPassword,
+    required String newPassword,
+    required String confirmPassword,
+  });
+}

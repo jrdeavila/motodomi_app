@@ -19,7 +19,7 @@ class EditProfileCtrl extends GetxController {
   String get code => _code.value;
   String get email => _email.value;
   String? get avatar => _avatar.value;
-  String get currentPassword => _password.value;
+  String get currentPassword => _currentPassword.value;
   String get password => _password.value;
   String get confirmPassword => _confirmPassword.value;
 
@@ -89,6 +89,21 @@ class EditProfileCtrl extends GetxController {
     Get.find<BannerCtrl>().showSuccess(
       'Perfil actualizado correctamente',
       'Tu perfil ha sido actualizado correctamente',
+    );
+  }
+
+  void savePassword() async {
+    final useCase = getIt<IChangePasswordUseCase>();
+    await useCase.changePassword(ChangePasswordRequest(
+      user: Get.find<SessionCtrl>().user!,
+      currentPassword: currentPassword,
+      password: password,
+      confirmPassword: confirmPassword,
+    ));
+    Get.back();
+    Get.find<BannerCtrl>().showSuccess(
+      'Contraseña actualizada correctamente',
+      'Tu contraseña ha sido actualizada correctamente',
     );
   }
 

@@ -25,3 +25,17 @@ class DeleteProfileAvatarRequest {
 
   DeleteProfileAvatarRequest({required this.user});
 }
+
+class ChangePasswordRequest {
+  final AppUser user;
+  final String currentPassword;
+  final String password;
+  final String confirmPassword;
+
+  ChangePasswordRequest({
+    required this.user,
+    required this.currentPassword,
+    required this.password,
+    required this.confirmPassword,
+  });
+}

@@ -27,10 +27,11 @@ class FirebaseAuthService implements IAuthenticationService {
 
   @override
   Future<void> login({required String email, required String password}) {
-    return _firebaseAuth.signInWithEmailAndPassword(
+    final credential = EmailAuthProvider.credential(
       email: email,
       password: password,
     );
+    return _firebaseAuth.signInWithCredential(credential);
   }
 
   @override
@@ -42,4 +43,64 @@ class FirebaseAuthService implements IAuthenticationService {
         )
         .then((value) => value.user!.uid);
   }
+}
+
+@Injectable(as: IChangePasswordService)
+class FirebaseChangePasswordService implements IChangePasswordService {
+  final FirebaseAuth _firebaseAuth;
+
+  FirebaseChangePasswordService({
+    @Named('FirebaseAuthForPasswordReset') required FirebaseAuth firebaseAuth,
+  }) : _firebaseAuth = firebaseAuth;
+
+  @override
+  Future<void> changePasswordData(
+      {required AppUser user,
+      required String oldPassword,
+      required String newPassword,
+      required String confirmPassword}) async {
+    final isCorrectPassword = await _checkCurrentPassword(
+      oldPassword: oldPassword,
+      user: user,
+    );
+    if (!isCorrectPassword) {
+      throw const PasswordDoesNotMatchException(code: 'wrong-password');
+    }
+    if (newPassword != confirmPassword) {
+      throw const PasswordDoesNotMatchException();
+    }
+
+    if (oldPassword == newPassword) {
+      throw const PasswordDoesNotMatchException(code: 'same-password');
+    }
+    return _firebaseAuth.currentUser!
+        .updatePassword(newPassword)
+        .then((value) => value);
+  }
+
+  Future<bool> _checkCurrentPassword({
+    required String oldPassword,
+    required AppUser user,
+  }) async {
+    await _firebaseAuth.signOut();
+    try {
+      final credential = EmailAuthProvider.credential(
+        email: user.email,
+        password: oldPassword,
+      );
+      final userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
+      return userCredential.user != null;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        return false;
+      }
+      return false;
+    }
+  }
+}
+
+class PasswordDoesNotMatchException implements Exception {
+  final String code;
+  const PasswordDoesNotMatchException({this.code = 'password-does-not-match'});
 }

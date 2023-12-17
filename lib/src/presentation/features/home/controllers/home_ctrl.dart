@@ -49,6 +49,13 @@ class HomeCtrl extends GetxController {
             Get.toNamed(HomeRoutes.editProfile);
           },
         ),
+        HomeOption(
+          title: "Cambiar Contraseña",
+          icon: FontAwesomeIcons.lock,
+          onTap: (context) {
+            Get.toNamed(HomeRoutes.changePassword);
+          },
+        ),
       ];
 
   String get userFirstName => Get.find<SessionCtrl>().user!.name.split(' ')[0];

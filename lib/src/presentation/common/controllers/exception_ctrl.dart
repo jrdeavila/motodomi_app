@@ -18,6 +18,10 @@ class ExceptionCtrl extends GetxController {
       case FirebaseException:
         _firebaseException(exception as FirebaseException);
         break;
+      case PasswordDoesNotMatchException:
+        _passwordDoesNotMatchException(
+            exception as PasswordDoesNotMatchException);
+        break;
       case DioException:
         _dioException(exception as DioException);
         break;
@@ -31,6 +35,13 @@ class ExceptionCtrl extends GetxController {
         _defaultException(exception);
         break;
     }
+  }
+
+  _passwordDoesNotMatchException(PasswordDoesNotMatchException exception) {
+    return showSnackbar(
+      "Ups! Contraseña incorrecta 😢",
+      passwordDoesNotMatchExceptionsCodeMap[exception.code] ?? exception.code,
+    );
   }
 
   _firebaseException(FirebaseException exception) {
@@ -67,6 +78,12 @@ Map<int, String> dioExceptionsCodeMap = {
   500: 'Error interno del servidor',
   503: 'Servicio no disponible',
   505: 'Versión HTTP no soportada',
+};
+
+Map<String, String> passwordDoesNotMatchExceptionsCodeMap = {
+  'wrong-password': 'Contraseña incorrecta',
+  'same-password': 'La contraseña actual y la nueva son iguales',
+  'password-does-not-match': 'Las contraseñas no coinciden',
 };
 
 Map<String, ExceptionCodeAction> firebaseExceptionsCodeMap = {

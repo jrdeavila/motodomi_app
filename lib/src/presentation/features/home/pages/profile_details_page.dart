@@ -29,6 +29,7 @@ class ProfileDetailsPage extends GetView<HomeCtrl> {
             top: kTextTabBarHeight,
             left: 16.0,
             child: FloatingActionButton(
+              heroTag: 'back',
               onPressed: () {
                 key.currentState?.openDrawer();
               },
@@ -97,21 +98,27 @@ class ProfileDetailsPage extends GetView<HomeCtrl> {
               height: 20,
             ),
             ...controller.profileOptions
-                .map((e) => ListTile(
-                      leading: Icon(e.icon),
-                      iconColor: Theme.of(context).colorScheme.secondary,
-                      textColor: Colors.white,
-                      tileColor: Theme.of(context).colorScheme.tertiary,
-                      title: Text(
-                        e.title,
-                        style: Theme.of(context).textTheme.labelMedium,
+                .map((e) => [
+                      ListTile(
+                        leading: Icon(e.icon),
+                        iconColor: Theme.of(context).colorScheme.secondary,
+                        textColor: Colors.white,
+                        tileColor: Theme.of(context).colorScheme.tertiary,
+                        title: Text(
+                          e.title,
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        //
+                        trailing: const Icon(
+                          FontAwesomeIcons.chevronRight,
+                        ),
+                        onTap: () => e.onTap?.call(context),
                       ),
-                      //
-                      trailing: const Icon(
-                        FontAwesomeIcons.chevronRight,
+                      const SizedBox(
+                        height: 10,
                       ),
-                      onTap: () => e.onTap?.call(context),
-                    ))
+                    ])
+                .expand((element) => element)
                 .toList(),
           ],
         ),
