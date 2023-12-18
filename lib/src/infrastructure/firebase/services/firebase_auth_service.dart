@@ -59,6 +59,10 @@ class FirebaseGoogleAuthenticationService
 
   @override
   Future<void> loginWithGoogle() async {
+    final isSignedIn = await _googleSignIn.isSignedIn();
+    if (isSignedIn) {
+      await _googleSignIn.signOut();
+    }
     final googleUser = await _googleSignIn.signIn();
     if (googleUser == null) {
       throw GoogleSignInCancelledException();

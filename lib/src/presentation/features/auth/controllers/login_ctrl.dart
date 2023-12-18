@@ -74,7 +74,10 @@ class LoginCtrl extends GetxController {
     _loading.value = true;
     await Future.wait([
       Future.delayed(1.seconds),
-      loginUseCase.login(loginRequest),
+      loginUseCase.login(loginRequest).onError((error, stackTrace) {
+        _loading.value = false;
+        throw error as Exception;
+      }),
     ]);
 
     _loading.value = false;
@@ -82,8 +85,16 @@ class LoginCtrl extends GetxController {
 
   void goToForgotPassword() {}
 
-  void loginWithGoogle() {
+  void loginWithGoogle() async {
     final loginUseCase = getIt<ILoginWithGoogleUseCase>();
-    loginUseCase.login();
+    _loading.value = true;
+    await Future.wait([
+      Future.delayed(1.seconds),
+      loginUseCase.login().onError((error, stackTrace) {
+        _loading.value = false;
+        throw error as Exception;
+      }),
+    ]);
+    _loading.value = false;
   }
 }

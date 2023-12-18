@@ -81,7 +81,10 @@ class RegisterCtrl extends GetxController {
     _loading.value = true;
     await Future.wait([
       Future.delayed(1.seconds),
-      registerUseCase.register(registerRequest),
+      registerUseCase.register(registerRequest).onError((error, stackTrace) {
+        _loading.value = false;
+        throw error as Exception;
+      }),
     ]);
     _loading.value = false;
   }
