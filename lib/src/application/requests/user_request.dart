@@ -27,3 +27,13 @@ class RegisterRequest {
     required this.password,
   });
 }
+
+class RegisterWithGoogleRequest {
+  final String name;
+  final String phone;
+
+  RegisterWithGoogleRequest({
+    required this.name,
+    required this.phone,
+  });
+}

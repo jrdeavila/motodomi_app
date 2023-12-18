@@ -81,4 +81,9 @@ class LoginCtrl extends GetxController {
   }
 
   void goToForgotPassword() {}
+
+  void loginWithGoogle() {
+    final loginUseCase = getIt<ILoginWithGoogleUseCase>();
+    loginUseCase.login();
+  }
 }

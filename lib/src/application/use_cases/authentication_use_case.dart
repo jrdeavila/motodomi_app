@@ -16,6 +16,47 @@ class LoginUseCase implements ILoginUseCase {
   }
 }
 
+@Injectable(as: ILoginWithGoogleUseCase)
+class LoginWithGoogleUseCase implements ILoginWithGoogleUseCase {
+  final IGoogleAuthenticationService _authenticationService;
+
+  LoginWithGoogleUseCase(this._authenticationService);
+
+  @override
+  Future<void> login() async {
+    return _authenticationService.loginWithGoogle();
+  }
+}
+
+@Injectable(as: IRegisterWithGoogleUseCase)
+class RegisterWithGoogleUseCase implements IRegisterWithGoogleUseCase {
+  final IUserRepository _userService;
+  final IAuthenticationService _authenticationService;
+  final IGoogleAuthenticationService _googleAuthenticationService;
+
+  RegisterWithGoogleUseCase({
+    required IUserRepository userService,
+    required IAuthenticationService authenticationService,
+    required IGoogleAuthenticationService googleAuthenticationService,
+  })  : _userService = userService,
+        _authenticationService = authenticationService,
+        _googleAuthenticationService = googleAuthenticationService;
+
+  @override
+  Future<void> register(RegisterWithGoogleRequest registerWithGoogleRequest) {
+    final uuid = _authenticationService.getUserUuid();
+    final email = _googleAuthenticationService.getEmail();
+    return _userService.createUser(AppUser(
+        uuid: uuid,
+        name: registerWithGoogleRequest.name,
+        phone: registerWithGoogleRequest.phone,
+        email: email,
+        roles: [
+          AppUserRole.client,
+        ]));
+  }
+}
+
 @Injectable(as: ILogoutUseCase)
 class LogoutUseCase implements ILogoutUseCase {
   final IAuthenticationService _authenticationService;

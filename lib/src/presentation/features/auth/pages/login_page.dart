@@ -62,21 +62,21 @@ class _LoginPageState extends State<LoginPage> {
                 alignment: Alignment.bottomCenter,
                 child: WelcomeRoundedBall(
                   color: Theme.of(context).colorScheme.surface,
-                  height: 600,
+                  height: 650,
                 ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: WelcomeRoundedBall(
                   color: Theme.of(context).colorScheme.secondary,
-                  height: 550,
+                  height: 600,
                 ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: WelcomeRoundedBall(
                   color: Theme.of(context).colorScheme.primary,
-                  height: 500,
+                  height: 550,
                 ),
               ),
               Align(
@@ -102,13 +102,30 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildForm() {
     return SizedBox(
-      height: 350,
+      height: 430,
       width: 350,
       child: Obx(() {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  controller.loginWithGoogle();
+                },
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(FontAwesomeIcons.google),
+                    SizedBox(width: 10),
+                    Text("Iniciar con Google"),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
             TextFormField(
               initialValue: controller.email,
               keyboardType: TextInputType.emailAddress,

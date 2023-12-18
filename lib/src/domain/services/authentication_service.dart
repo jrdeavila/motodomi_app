@@ -14,6 +14,11 @@ abstract class IAuthenticationService {
   String getUserUuid();
 }
 
+abstract interface class IGoogleAuthenticationService {
+  Future<void> loginWithGoogle();
+  String getEmail();
+}
+
 abstract interface class IChangePasswordService {
   Future<void> changePasswordData({
     required AppUser user,

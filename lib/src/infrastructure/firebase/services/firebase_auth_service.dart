@@ -45,6 +45,38 @@ class FirebaseAuthService implements IAuthenticationService {
   }
 }
 
+@Injectable(as: IGoogleAuthenticationService)
+class FirebaseGoogleAuthenticationService
+    implements IGoogleAuthenticationService {
+  final FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleSignIn;
+
+  FirebaseGoogleAuthenticationService({
+    required FirebaseAuth firebaseAuth,
+    required GoogleSignIn googleSignIn,
+  })  : _firebaseAuth = firebaseAuth,
+        _googleSignIn = googleSignIn;
+
+  @override
+  Future<void> loginWithGoogle() async {
+    final googleUser = await _googleSignIn.signIn();
+    if (googleUser == null) {
+      throw GoogleSignInCancelledException();
+    }
+    final googleAuth = await googleUser.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    await _firebaseAuth.signInWithCredential(credential);
+  }
+
+  @override
+  String getEmail() {
+    return _firebaseAuth.currentUser!.email!;
+  }
+}
+
 @Injectable(as: IChangePasswordService)
 class FirebaseChangePasswordService implements IChangePasswordService {
   final FirebaseAuth _firebaseAuth;
@@ -98,9 +130,4 @@ class FirebaseChangePasswordService implements IChangePasswordService {
       return false;
     }
   }
-}
-
-class PasswordDoesNotMatchException implements Exception {
-  final String code;
-  const PasswordDoesNotMatchException({this.code = 'password-does-not-match'});
 }

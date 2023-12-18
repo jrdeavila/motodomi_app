@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:motodomi_app/lib.dart';
 
-void main() {
+void main() async {
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
     // Initialize Injection

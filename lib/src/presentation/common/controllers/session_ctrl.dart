@@ -5,6 +5,7 @@ class SessionCtrl extends GetxController {
   final Rx<AppUser?> _user = Rx<AppUser?>(null);
   final RxBool _loading = RxBool(true);
   final RxBool _onHome = RxBool(false);
+  final RxBool _isAuthenticated = RxBool(false);
 
   // ----------------------- Getters -----------------------
   AppUser? get user => _user.value;
@@ -25,6 +26,7 @@ class SessionCtrl extends GetxController {
 
   void _whenObservableChanges() {
     ever(_loading, _listenUserChanges);
+    ever(_isAuthenticated, _listenAuthenticationChanges);
   }
 
   void _listenAuthenticationChanges(bool value) async {
@@ -37,15 +39,21 @@ class SessionCtrl extends GetxController {
 
   void _listenUserChanges(bool value) {
     if (!value) {
-      if (_user.value == null) {
+      if (_user.value == null && !_isAuthenticated.value) {
         Get.offAllNamed(MainRoutes.welcome);
         _onHome.value = false;
         return;
       }
 
-      if (_user.value != null) {
+      if (_user.value != null && _isAuthenticated.value) {
         Get.offAllNamed(HomeRoutes.home);
         _onHome.value = true;
+        return;
+      }
+
+      if (_user.value == null && _isAuthenticated.value) {
+        Get.offAllNamed(AuthRoutes.registerWithGoogle);
+        _onHome.value = false;
         return;
       }
     } else {
@@ -62,7 +70,7 @@ class SessionCtrl extends GetxController {
       final value = await Future.delayed(2.seconds, () => event);
       return value;
     }).listen((event) {
-      _listenAuthenticationChanges(event);
+      _isAuthenticated.value = event;
     });
   }
 
@@ -89,5 +97,11 @@ class SessionCtrl extends GetxController {
     ]);
 
     _user.value = null;
+  }
+
+  void reloadSession() {
+    _loading.value = true;
+    _isAuthenticated.value = true;
+    _isAuthenticated.refresh();
   }
 }

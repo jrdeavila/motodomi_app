@@ -4,6 +4,14 @@ abstract interface class ILoginUseCase {
   Future<void> login(LoginRequest loginRequest);
 }
 
+abstract interface class ILoginWithGoogleUseCase {
+  Future<void> login();
+}
+
+abstract interface class IRegisterWithGoogleUseCase {
+  Future<void> register(RegisterWithGoogleRequest registerWithGoogleRequest);
+}
+
 abstract interface class ILogoutUseCase {
   Future<void> logout();
 }

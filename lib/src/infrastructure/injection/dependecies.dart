@@ -62,7 +62,7 @@ abstract class AppCheckModule {
   Future<FirebaseAppCheck> get appCheck async {
     final appCheck = FirebaseAppCheck.instanceFor(app: getIt<FirebaseApp>());
     await appCheck.activate(
-      androidProvider: AndroidProvider.debug,
+      androidProvider: AndroidProvider.playIntegrity,
     );
     return appCheck;
   }
@@ -76,6 +76,19 @@ abstract class FirebaseStorageModule {
       FirebaseStorage.instanceFor(
         app: getIt<FirebaseApp>(),
         bucket: "gs://motodomi-app.appspot.com",
+      );
+}
+
+// ---------------------------------- Google Sign In ----------------------------------
+@module
+abstract class GoogleSignInModule {
+  @preResolve
+  @lazySingleton
+  Future<GoogleSignIn> get googleSignIn async => GoogleSignIn(
+        scopes: [
+          'email',
+          'https://www.googleapis.com/auth/contacts.readonly',
+        ],
       );
 }
 

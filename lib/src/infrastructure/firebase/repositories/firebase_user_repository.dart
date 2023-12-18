@@ -13,7 +13,7 @@ class FirebaseUserRepository implements IUserRepository {
     return _firestore
         .collection('users')
         .doc(user.uuid)
-        .update(userToJsonWithoutRoles(user))
+        .set(userToJson(user))
         .then((value) => user);
   }
 
@@ -23,12 +23,9 @@ class FirebaseUserRepository implements IUserRepository {
   }
 
   @override
-  Future<AppUser> getUser(String uuid) {
-    return _firestore
-        .collection('users')
-        .doc(uuid)
-        .get()
-        .then((snapshot) => userFromJson(snapshot.data()!));
+  Future<AppUser?> getUser(String uuid) {
+    return _firestore.collection('users').doc(uuid).get().then((snapshot) =>
+        snapshot.data() != null ? userFromJson(snapshot.data()!) : null);
   }
 
   @override
@@ -36,9 +33,9 @@ class FirebaseUserRepository implements IUserRepository {
     await _firestore
         .collection('users')
         .doc(user.uuid)
-        .update(userToJson(user));
+        .update(userToJsonWithoutRoles(user));
 
-    return getUser(user.uuid);
+    return (await getUser(user.uuid))!;
   }
 
   @override
