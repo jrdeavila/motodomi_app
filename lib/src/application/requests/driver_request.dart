@@ -35,6 +35,8 @@ class SendNoCriminalRecordSectionRequest extends SendSectionRequest {
 class SendAboutMeSectionRequest extends SendSectionRequest {
   final String firstname;
   final String lastname;
+  final String phone;
+  final String code;
   final String email;
   final String birthDate;
   final Uint8List profileImage;
@@ -45,6 +47,8 @@ class SendAboutMeSectionRequest extends SendSectionRequest {
     required this.email,
     required this.birthDate,
     required this.profileImage,
+    required this.phone,
+    required this.code,
     required super.userUuid,
   });
 }

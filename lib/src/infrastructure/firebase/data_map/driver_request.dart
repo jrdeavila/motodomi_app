@@ -203,6 +203,8 @@ Map<String, dynamic> aboutMeSectionToJson(
       "email": aboutMeSection.email,
       "profile_image": aboutMeSection.profileImage,
       "birth_date": aboutMeSection.birthDate,
+      "phone": aboutMeSection.phone,
+      "code": aboutMeSection.code,
       "status": sectionStatusToString(aboutMeSection.status),
     }
   };
@@ -218,6 +220,8 @@ AboutMeSection aboutMeSectionFromJson(Map<String, dynamic>? json) {
   return AboutMeSection(
     firstName: json["about_me_section"]["first_name"],
     lastName: json["about_me_section"]["last_name"],
+    code: json["about_me_section"]["code"],
+    phone: json["about_me_section"]["phone"],
     email: json["about_me_section"]["email"],
     profileImage: json["about_me_section"]["profile_image"],
     birthDate: json["about_me_section"]["birth_date"],

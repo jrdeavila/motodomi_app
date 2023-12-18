@@ -34,6 +34,9 @@ class HomeCtrl extends GetxController {
         HomeOption(
           title: "Modo de conductor",
           icon: FontAwesomeIcons.carBurst,
+          onTap: (context) {
+            Get.find<DomiciliaryModeCtrl>().goToDomiciliaryMode();
+          },
         ),
         HomeOption(
           title: "Configuraciones",

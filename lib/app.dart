@@ -16,6 +16,7 @@ class App extends StatelessWidget {
             ...MainRoutes.routes,
             ...AuthRoutes.routes,
             ...HomeRoutes.routes,
+            ...DomiciliaryRoutes.routes,
           ],
           initialBinding: MainBindings(),
         ));

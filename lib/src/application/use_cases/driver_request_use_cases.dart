@@ -32,6 +32,8 @@ class SendAboutMeSectionUseCase implements ISendAboutMeSectionUseCase {
       birthDate: request.birthDate,
       profileImage: profileImageUrl,
       status: SectionStatus.complete,
+      phone: request.phone,
+      code: request.code,
     );
 
     return _aboutMeSectionService.setAboutMeSection(

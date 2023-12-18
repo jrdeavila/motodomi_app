@@ -56,6 +56,10 @@ class AppDialog extends StatelessWidget {
                             ?.copyWith(
                               color: Theme.of(context).colorScheme.secondary,
                             ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 10.0,
                       ),
                       Text(
                         description,
@@ -93,7 +97,7 @@ class AppDialog extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: const FractionalOffset(0.5, -0.5),
+                alignment: const FractionalOffset(0.5, -0.4),
                 child: CircleAvatar(
                   radius: 50,
                   child: Icon(

@@ -4,6 +4,7 @@ class SessionCtrl extends GetxController {
   // ----------------------- Observables -----------------------
   final Rx<AppUser?> _user = Rx<AppUser?>(null);
   final RxBool _loading = RxBool(true);
+  final RxBool _onHome = RxBool(false);
 
   // ----------------------- Getters -----------------------
   AppUser? get user => _user.value;
@@ -38,15 +39,18 @@ class SessionCtrl extends GetxController {
     if (!value) {
       if (_user.value == null) {
         Get.offAllNamed(MainRoutes.welcome);
+        _onHome.value = false;
         return;
       }
 
       if (_user.value != null) {
         Get.offAllNamed(HomeRoutes.home);
+        _onHome.value = true;
         return;
       }
     } else {
       Get.offAllNamed(MainRoutes.root);
+      _onHome.value = false;
     }
   }
 
@@ -63,6 +67,14 @@ class SessionCtrl extends GetxController {
   }
 
   // ----------------------- Public Methods -----------------------
+
+  void listenOnHome(Function(AppUser user) callback) {
+    _onHome.listen((value) {
+      if (value) {
+        callback(_user.value!);
+      }
+    });
+  }
 
   void updateAvatar(String? url) {
     _user.value = _user.value?..avatar = url;

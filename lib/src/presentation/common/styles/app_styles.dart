@@ -35,8 +35,33 @@ abstract class AppTheme {
           primary: Color(0xff0F1F41),
           secondary: Color(0xff05C7F2),
           tertiary: Color(0xff11238C),
-          surface: Color(0xffE8E9ED),
+          surface: Color.fromARGB(255, 224, 225, 230),
           background: Color(0xffF5F6FA),
+        ),
+        // -------- Date Picker Theme --------
+        datePickerTheme: DatePickerThemeData(
+          backgroundColor: const Color.fromARGB(255, 224, 225, 230),
+          dividerColor: Colors.transparent,
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            fillColor: const Color(0xff11238c),
+            hintStyle: GoogleFonts.nunito(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: Colors.white.withOpacity(0.5),
+            ),
+            alignLabelWithHint: true,
+            prefixIconColor: Colors.white,
+            suffixIconColor: Colors.white,
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 15,
+              horizontal: 24,
+            ),
+            border: CustomOutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius),
+              borderSide: BorderSide.none,
+            ),
+          ),
         ),
         // -------- Input Decoration Theme --------
         inputDecorationTheme: InputDecorationTheme(
@@ -63,6 +88,15 @@ abstract class AppTheme {
             borderRadius: BorderRadius.circular(borderRadius),
             borderSide: BorderSide.none,
           ),
+        ),
+        // -------- Card Theme --------
+        cardTheme: CardTheme(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+          margin: const EdgeInsets.all(0),
+          color: const Color(0xff11238c),
         ),
         // -------- Button Theme --------
         outlinedButtonTheme: OutlinedButtonThemeData(
@@ -152,7 +186,9 @@ abstract class AppTheme {
             ),
           ),
         ),
+        // --------------- Floating Action Button Theme ---------------
         floatingActionButtonTheme: FloatingActionButtonThemeData(
+          elevation: 0,
           backgroundColor: const Color(0xff11238c),
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(

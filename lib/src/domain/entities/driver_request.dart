@@ -232,6 +232,8 @@ class AboutMeSection extends DriverRequestSection {
   final String? email;
   final String? profileImage;
   final String? birthDate;
+  final String? phone;
+  final String? code;
 
   AboutMeSection({
     required this.firstName,
@@ -239,6 +241,8 @@ class AboutMeSection extends DriverRequestSection {
     required this.email,
     required this.birthDate,
     required this.profileImage,
+    required this.phone,
+    required this.code,
     super.status = SectionStatus.making,
   }) : super(
           title: "Información Personal",
@@ -251,6 +255,8 @@ class AboutMeSection extends DriverRequestSection {
         email: null,
         birthDate: null,
         profileImage: null,
+        phone: null,
+        code: null,
       );
 }
 
