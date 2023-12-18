@@ -7,16 +7,22 @@ class CroppPickImageUtility implements IPickImage {
   Future<Uint8List?> pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    var base64 = await image?.readAsBytes();
-    return base64;
+    final path = image?.path;
+    if (path == null) return null;
+    return _croppImage(path);
   }
 
   @override
   Future<Uint8List?> takePhoto() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+    final XFile? image = await picker.pickImage(
+        source: ImageSource.camera, preferredCameraDevice: CameraDevice.front);
     final path = image?.path;
     if (path == null) return null;
+    return _croppImage(path);
+  }
+
+  Future<Uint8List?> _croppImage(String path) async {
     final croppedImage =
         await ImageCropper().cropImage(sourcePath: path, aspectRatioPresets: [
       CropAspectRatioPreset.square,
