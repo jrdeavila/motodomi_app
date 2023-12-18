@@ -25,6 +25,12 @@ class ExceptionCtrl extends GetxController {
       case DioException:
         _dioException(exception as DioException);
         break;
+      case GoogleSignInCancelledException:
+        showSnackbar(
+          "Ups! Cancelado 😢",
+          "El inicio de sesión con Google fue cancelado",
+        );
+        break;
       case ExceptionMessage:
         showSnackbar(
           "Ups! Algo salió mal 😢",
