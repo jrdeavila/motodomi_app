@@ -27,6 +27,7 @@ class BackOvalSection extends StatelessWidget {
         padding: const EdgeInsets.only(
           top: kToolbarHeight,
           left: 16,
+          right: 50,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -27,3 +27,7 @@ abstract interface class IGetUserUseCase {
 abstract interface class IRegisterUseCase {
   Future<void> register(RegisterRequest registerRequest);
 }
+
+abstract interface class IResetPasswordUseCase {
+  Future<void> call(ResetPasswordRequest resetPasswordRequest);
+}

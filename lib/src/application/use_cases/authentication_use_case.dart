@@ -127,3 +127,17 @@ class RegisterUseCase implements IRegisterUseCase {
     return _userRepository.createUser(user);
   }
 }
+
+@Injectable(as: IResetPasswordUseCase)
+class ResetPasswordUseCase implements IResetPasswordUseCase {
+  final IResetPasswordService _resetPasswordService;
+
+  ResetPasswordUseCase(this._resetPasswordService);
+
+  @override
+  Future<void> call(ResetPasswordRequest resetPasswordRequest) {
+    return _resetPasswordService.resetPassword(
+      email: resetPasswordRequest.email,
+    );
+  }
+}

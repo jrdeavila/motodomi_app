@@ -243,6 +243,12 @@ extension GetItInjectableX on _i1.GetIt {
             ));
     gh.factory<_i9.IProfileLocationService>(() =>
         _i32.FirebaseProfileService(firestore: gh<_i9.FirebaseFirestore>()));
+    gh.factory<_i9.IResetPasswordService>(() =>
+        _i11.FirebaseResetPasswordService(
+            firebaseAuth: gh<_i8.FirebaseAuth>(
+                instanceName: 'FirebaseAuthForPasswordReset')));
+    gh.factory<_i9.IResetPasswordUseCase>(
+        () => _i27.ResetPasswordUseCase(gh<_i9.IResetPasswordService>()));
     gh.factory<_i9.ISendDriverRequestService>(() =>
         _i10.FirebaseSendDriverRequestService(
             firebaseFirestore: gh<_i9.FirebaseFirestore>()));

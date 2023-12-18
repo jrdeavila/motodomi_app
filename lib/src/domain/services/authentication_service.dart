@@ -27,3 +27,9 @@ abstract interface class IChangePasswordService {
     required String confirmPassword,
   });
 }
+
+abstract interface class IResetPasswordService {
+  Future<void> resetPassword({
+    required String email,
+  });
+}

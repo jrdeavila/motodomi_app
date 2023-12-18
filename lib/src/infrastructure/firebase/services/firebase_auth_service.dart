@@ -135,3 +135,19 @@ class FirebaseChangePasswordService implements IChangePasswordService {
     }
   }
 }
+
+@Injectable(as: IResetPasswordService)
+class FirebaseResetPasswordService implements IResetPasswordService {
+  final FirebaseAuth _firebaseAuth;
+
+  FirebaseResetPasswordService({
+    @Named('FirebaseAuthForPasswordReset') required FirebaseAuth firebaseAuth,
+  }) : _firebaseAuth = firebaseAuth;
+
+  @override
+  Future<void> resetPassword({required String email}) {
+    return _firebaseAuth.sendPasswordResetEmail(
+      email: email,
+    );
+  }
+}

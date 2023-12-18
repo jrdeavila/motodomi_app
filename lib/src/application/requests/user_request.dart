@@ -37,3 +37,9 @@ class RegisterWithGoogleRequest {
     required this.phone,
   });
 }
+
+class ResetPasswordRequest {
+  final String email;
+
+  ResetPasswordRequest({required this.email});
+}

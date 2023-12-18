@@ -4,6 +4,7 @@ abstract class AuthRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String registerWithGoogle = '/register-with-google';
+  static const String resetPassword = '/reset-password';
 
   static final routes = [
     GetPage(
@@ -25,6 +26,13 @@ abstract class AuthRoutes {
       page: () => const RegisterWithGooglePage(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => RegisterWithGoogleCtrl());
+      }),
+    ),
+    GetPage(
+      name: resetPassword,
+      page: () => const ResetPasswordPage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => ResetPasswordCtrl());
       }),
     ),
   ];

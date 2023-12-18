@@ -83,7 +83,9 @@ class LoginCtrl extends GetxController {
     _loading.value = false;
   }
 
-  void goToForgotPassword() {}
+  void goToForgotPassword() {
+    Get.toNamed(AuthRoutes.resetPassword);
+  }
 
   void loginWithGoogle() async {
     final loginUseCase = getIt<ILoginWithGoogleUseCase>();
