@@ -116,10 +116,6 @@ class EditProfilePage extends GetView<EditProfileCtrl> {
   }
 
   List<Widget> _buildPersonalInfo(context) {
-    final nameCtrl = TextEditingController(text: controller.name);
-    final phoneCtrl = TextEditingController(text: controller.phone);
-    final emailCtrl = TextEditingController(text: controller.email);
-    final codeCtrl = TextEditingController(text: controller.code);
     return [
       const SizedBox(
         height: 20,
@@ -133,7 +129,7 @@ class EditProfilePage extends GetView<EditProfileCtrl> {
         height: 20,
       ),
       TextFormField(
-        controller: nameCtrl,
+        controller: controller.nameCtrl,
         onChanged: (value) => controller.name = value,
         decoration: const InputDecoration(
           hintText: 'Nombre',
@@ -147,7 +143,7 @@ class EditProfilePage extends GetView<EditProfileCtrl> {
           SizedBox(
             width: 100,
             child: TextFormField(
-              controller: codeCtrl,
+              controller: controller.codeCtrl,
               onChanged: (value) => controller.code = value,
               decoration: const InputDecoration(
                 hintText: '+57',
@@ -159,7 +155,7 @@ class EditProfilePage extends GetView<EditProfileCtrl> {
           ),
           Expanded(
             child: TextFormField(
-              controller: phoneCtrl,
+              controller: controller.phoneCtrl,
               onChanged: (value) => controller.phone = value,
               decoration: const InputDecoration(
                 hintText: 'Teléfono',
@@ -172,7 +168,7 @@ class EditProfilePage extends GetView<EditProfileCtrl> {
         height: 10,
       ),
       TextFormField(
-        controller: emailCtrl,
+        controller: controller.emailCtrl,
         onChanged: (value) => controller.email = value,
         decoration: const InputDecoration(
           hintText: 'Correo',

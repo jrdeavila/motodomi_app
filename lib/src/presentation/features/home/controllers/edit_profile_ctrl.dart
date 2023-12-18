@@ -14,6 +14,12 @@ class EditProfileCtrl extends GetxController {
 
   final RxBool _loadingAvatar = false.obs;
 
+  // -------------------- No Observables -------------------
+  final nameCtrl = TextEditingController();
+  final phoneCtrl = TextEditingController();
+  final emailCtrl = TextEditingController();
+  final codeCtrl = TextEditingController();
+
   // ---------------------- Getters ---------------------
 
   String get name => _name.value;
@@ -50,6 +56,11 @@ class EditProfileCtrl extends GetxController {
 
     _email.value = Get.find<SessionCtrl>().user!.email;
     _avatar.value = Get.find<SessionCtrl>().user?.avatar;
+
+    nameCtrl.text = name;
+    emailCtrl.text = email;
+    phoneCtrl.text = phone;
+    codeCtrl.text = code;
   }
   // ---------------------- Private Methods ---------------------
 
