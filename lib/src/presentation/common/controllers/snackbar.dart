@@ -25,7 +25,7 @@ void showSnackbar(
     snackPosition: SnackPosition.TOP,
     title: title,
     message: message,
-    backgroundColor: Get.theme.colorScheme.secondary,
+    backgroundColor: Get.theme.colorScheme.tertiary,
     borderRadius: 20,
     mainButton: action,
     margin: const EdgeInsets.all(20),

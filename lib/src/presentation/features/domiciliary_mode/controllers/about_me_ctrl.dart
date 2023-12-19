@@ -24,8 +24,10 @@ class AboutMeCtrl extends GetxController {
     _birthDate.value = aboutMeSection.birthDate == null
         ? null
         : _formatDate(aboutMeSection.birthDate!);
-    imageFromNetworkImage(aboutMeSection.profileImage!)
-        .then((value) => _image.value = value);
+    if (aboutMeSection.profileImage != null) {
+      imageFromNetworkImage(aboutMeSection.profileImage!)
+          .then((value) => _image.value = value);
+    }
 
     firstnameCtrl.text = aboutMeSection.firstName ?? "";
     lastnameCtrl.text = aboutMeSection.lastName ?? "";
