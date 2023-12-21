@@ -18,7 +18,3 @@ abstract interface class IDeleteProfileAvatarUseCase {
   Future<void> deleteProfileAvatar(
       DeleteProfileAvatarRequest deleteProfileAvatarRequest);
 }
-
-abstract interface class IChangePasswordUseCase {
-  Future<void> changePassword(ChangePasswordRequest changePasswordRequest);
-}

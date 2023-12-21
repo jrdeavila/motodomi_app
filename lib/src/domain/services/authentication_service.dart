@@ -19,17 +19,7 @@ abstract interface class IGoogleAuthenticationService {
   String getEmail();
 }
 
-abstract interface class IChangePasswordService {
-  Future<void> changePasswordData({
-    required AppUser user,
-    required String oldPassword,
-    required String newPassword,
-    required String confirmPassword,
-  });
-}
-
-abstract interface class IResetPasswordService {
-  Future<void> resetPassword({
-    required String email,
-  });
+abstract interface class IFacebookAuthenticationService {
+  Future<void> loginWithFacebook();
+  String getEmail();
 }

@@ -45,6 +45,41 @@ class FirebaseAuthService implements IAuthenticationService {
   }
 }
 
+@Injectable(as: IFacebookAuthenticationService)
+class FirebaseFacebookAuthenticationService
+    implements IFacebookAuthenticationService {
+  final FirebaseAuth _firebaseAuth;
+  final FacebookAuth _facebookLogin;
+
+  FirebaseFacebookAuthenticationService({
+    required FirebaseAuth firebaseAuth,
+    required FacebookAuth facebookLogin,
+  })  : _firebaseAuth = firebaseAuth,
+        _facebookLogin = facebookLogin;
+
+  @override
+  Future<void> loginWithFacebook() async {
+    final result = await _facebookLogin.login(
+      permissions: [
+        'public_profile',
+        'email',
+      ],
+    );
+    if (result.status == LoginStatus.success) {
+      final accessToken = result.accessToken!.token;
+      final credential = FacebookAuthProvider.credential(accessToken);
+      await _firebaseAuth.signInWithCredential(credential);
+    } else {
+      throw FacebookSignInCancelledException();
+    }
+  }
+
+  @override
+  String getEmail() {
+    return _firebaseAuth.currentUser!.email!;
+  }
+}
+
 @Injectable(as: IGoogleAuthenticationService)
 class FirebaseGoogleAuthenticationService
     implements IGoogleAuthenticationService {
@@ -78,76 +113,5 @@ class FirebaseGoogleAuthenticationService
   @override
   String getEmail() {
     return _firebaseAuth.currentUser!.email!;
-  }
-}
-
-@Injectable(as: IChangePasswordService)
-class FirebaseChangePasswordService implements IChangePasswordService {
-  final FirebaseAuth _firebaseAuth;
-
-  FirebaseChangePasswordService({
-    @Named('FirebaseAuthForPasswordReset') required FirebaseAuth firebaseAuth,
-  }) : _firebaseAuth = firebaseAuth;
-
-  @override
-  Future<void> changePasswordData(
-      {required AppUser user,
-      required String oldPassword,
-      required String newPassword,
-      required String confirmPassword}) async {
-    final isCorrectPassword = await _checkCurrentPassword(
-      oldPassword: oldPassword,
-      user: user,
-    );
-    if (!isCorrectPassword) {
-      throw const PasswordDoesNotMatchException(code: 'wrong-password');
-    }
-    if (newPassword != confirmPassword) {
-      throw const PasswordDoesNotMatchException();
-    }
-
-    if (oldPassword == newPassword) {
-      throw const PasswordDoesNotMatchException(code: 'same-password');
-    }
-    return _firebaseAuth.currentUser!
-        .updatePassword(newPassword)
-        .then((value) => value);
-  }
-
-  Future<bool> _checkCurrentPassword({
-    required String oldPassword,
-    required AppUser user,
-  }) async {
-    await _firebaseAuth.signOut();
-    try {
-      final credential = EmailAuthProvider.credential(
-        email: user.email,
-        password: oldPassword,
-      );
-      final userCredential =
-          await _firebaseAuth.signInWithCredential(credential);
-      return userCredential.user != null;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'wrong-password') {
-        return false;
-      }
-      return false;
-    }
-  }
-}
-
-@Injectable(as: IResetPasswordService)
-class FirebaseResetPasswordService implements IResetPasswordService {
-  final FirebaseAuth _firebaseAuth;
-
-  FirebaseResetPasswordService({
-    @Named('FirebaseAuthForPasswordReset') required FirebaseAuth firebaseAuth,
-  }) : _firebaseAuth = firebaseAuth;
-
-  @override
-  Future<void> resetPassword({required String email}) {
-    return _firebaseAuth.sendPasswordResetEmail(
-      email: email,
-    );
   }
 }

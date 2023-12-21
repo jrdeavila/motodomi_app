@@ -1,15 +1,19 @@
 import 'package:motodomi_app/lib.dart';
 
-abstract interface class ILoginUseCase {
-  Future<void> login(LoginRequest loginRequest);
-}
-
 abstract interface class ILoginWithGoogleUseCase {
   Future<void> login();
 }
 
+abstract interface class ILoginWithFacebookUseCase {
+  Future<void> login();
+}
+
 abstract interface class IRegisterWithGoogleUseCase {
-  Future<void> register(RegisterWithGoogleRequest registerWithGoogleRequest);
+  Future<void> register(RegisterRequest registerWithGoogleRequest);
+}
+
+abstract interface class IRegisterWithFacebookUseCase {
+  Future<void> register(RegisterRequest registerWithFacebookRequest);
 }
 
 abstract interface class ILogoutUseCase {
@@ -22,12 +26,4 @@ abstract interface class IListenAuthenticationUseCase {
 
 abstract interface class IGetUserUseCase {
   Future<AppUser?> getUser();
-}
-
-abstract interface class IRegisterUseCase {
-  Future<void> register(RegisterRequest registerRequest);
-}
-
-abstract interface class IResetPasswordUseCase {
-  Future<void> call(ResetPasswordRequest resetPasswordRequest);
 }

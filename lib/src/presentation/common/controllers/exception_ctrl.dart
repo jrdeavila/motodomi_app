@@ -97,13 +97,6 @@ Map<String, ExceptionCodeAction> firebaseExceptionsCodeMap = {
     title: "Ups! Algo salió mal 😢",
     description: 'Se produjo un error desconocido',
   ),
-  'user-not-found': ExceptionCodeAction(
-    title: "Ups! No tienes cuenta 😢",
-    description:
-        'No hay ningún registro de usuario que corresponda a este identificador. El usuario puede haber sido eliminado',
-    action: 'Registrarse',
-    onTap: () => Get.offAndToNamed(AuthRoutes.register),
-  ),
   'wrong-password': ExceptionCodeAction(
     title: "Ups! Contraseña incorrecta 😢",
     description: 'La contraseña no es válida o el usuario no tiene contraseña',
@@ -113,13 +106,6 @@ Map<String, ExceptionCodeAction> firebaseExceptionsCodeMap = {
     title: "Ups! Contraseña débil 😢",
     description: 'La contraseña proporcionada no es válida',
   ),
-  'email-already-in-use': ExceptionCodeAction(
-    title: "Ups! Correo electrónico en uso 😢",
-    description:
-        'La dirección de correo electrónico ya está siendo utilizada por otra cuenta',
-    action: 'Iniciar sesión',
-    onTap: () => Get.offAndToNamed(AuthRoutes.login),
-  ),
   'invalid-email': ExceptionCodeAction(
     title: "Ups! Correo electrónico inválido 😢",
     description: 'La dirección de correo electrónico está mal formateada',
@@ -128,20 +114,6 @@ Map<String, ExceptionCodeAction> firebaseExceptionsCodeMap = {
     title: "Ups! Operación no permitida 😢",
     description:
         'Habilitar el inicio de sesión con correo electrónico / contraseña en la consola de Firebase, en la sección Método de inicio de sesión de la sección Auth.',
-  ),
-  'account-exists-with-different-credential': ExceptionCodeAction(
-    title: "Ups! Credenciales diferentes 😢",
-    description:
-        'Ya existe una cuenta con la dirección de correo electrónico que se proporcionó',
-    action: 'Iniciar sesión',
-    onTap: () => Get.offAndToNamed(AuthRoutes.login),
-  ),
-  'requires-recent-login': ExceptionCodeAction(
-    title: "Ups! Sesión expirada 😢",
-    description:
-        'Esta operación es confidencial y requiere autenticación reciente. Inicie sesión nuevamente antes de volver a intentar esta solicitud',
-    action: 'Iniciar sesión',
-    onTap: () => Get.offAndToNamed(AuthRoutes.login),
   ),
   'expired-action-code': ExceptionCodeAction(
     title: "Ups! Código de acción expirado 😢",
@@ -157,13 +129,6 @@ Map<String, ExceptionCodeAction> firebaseExceptionsCodeMap = {
     title: "Ups! Usuario deshabilitado 😢",
     description:
         'La cuenta de usuario ha sido deshabilitada por un administrador',
-  ),
-  'user-token-expired': ExceptionCodeAction(
-    title: "Ups! Sesión expirada 😢",
-    description:
-        'El token de autenticación del usuario ha caducado. Inicie sesión nuevamente para volver a autenticar al usuario',
-    action: 'Iniciar sesión',
-    onTap: () => Get.offAndToNamed(AuthRoutes.login),
   ),
   'invalid-verification-code': ExceptionCodeAction(
     title: "Ups! Código de verificación inválido 😢",
@@ -185,13 +150,6 @@ Map<String, ExceptionCodeAction> firebaseExceptionsCodeMap = {
     description:
         'Se ha bloqueado la solicitud debido a actividades inusuales. Inténtalo de nuevo más tarde',
   ),
-  'invalid-credential': ExceptionCodeAction(
-      title: "Ups! Credenciales inválidas 😢",
-      description: 'Al paracer tu cuenta no esta asociada a nuestros servicios',
-      action: "Registrate",
-      onTap: () {
-        Get.offAndToNamed(AuthRoutes.register);
-      }),
 };
 
 class ExceptionCodeAction {

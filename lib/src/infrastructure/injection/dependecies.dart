@@ -92,6 +92,14 @@ abstract class GoogleSignInModule {
       );
 }
 
+// ------------------------------------ Facebook ------------------------------------
+@module
+abstract class FacebookAuthModule {
+  @preResolve
+  @lazySingleton
+  Future<FacebookAuth> get facebookAuth async => FacebookAuth.instance;
+}
+
 // ------------------------------------ Dio ------------------------------------
 
 @module

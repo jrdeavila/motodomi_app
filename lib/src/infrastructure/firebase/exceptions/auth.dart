@@ -4,3 +4,5 @@ class PasswordDoesNotMatchException implements Exception {
 }
 
 class GoogleSignInCancelledException implements Exception {}
+
+class FacebookSignInCancelledException implements Exception {}

@@ -17,6 +17,7 @@ export 'package:image_picker/image_picker.dart';
 export 'package:image_cropper/image_cropper.dart';
 export 'package:cached_network_image/cached_network_image.dart';
 export 'package:google_sign_in/google_sign_in.dart';
+export 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 export 'firebase_options.dart';
 export 'main.dart';

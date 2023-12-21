@@ -22,9 +22,15 @@ class DomiciliaryRequestFormPage extends GetView<DomiciliaryRequestCtrl> {
                 color: Colors.white,
               )),
               Positioned.fill(
-                top: MediaQuery.of(context).size.height * 0.1,
+                top: MediaQuery.of(context).size.height * 0.15,
                 child: WelcomeRoundedBall(
                   color: Theme.of(context).colorScheme.surface,
+                ),
+              ),
+              Positioned.fill(
+                top: controller.backgroundOffset,
+                child: WelcomeRoundedBall(
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               Align(
@@ -32,12 +38,6 @@ class DomiciliaryRequestFormPage extends GetView<DomiciliaryRequestCtrl> {
                 child: Image.asset(
                   "assets/img/domiciliary_3.png",
                   height: 250,
-                ),
-              ),
-              Positioned.fill(
-                top: controller.backgroundOffset,
-                child: WelcomeRoundedBall(
-                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               Positioned.fill(
@@ -84,7 +84,7 @@ class DomiciliaryRequestFormPage extends GetView<DomiciliaryRequestCtrl> {
           ),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: MediaQuery.of(Get.context!).size.height * 0.2,
+              height: MediaQuery.of(Get.context!).size.height * 0.15,
             ),
           ),
           SliverPadding(

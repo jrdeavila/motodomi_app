@@ -58,24 +58,35 @@ class WelcomePage extends GetView<InitCtrl> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(
-            onPressed: controller.goToLogin,
-            child: const SizedBox(
-              width: 200,
-              child: Text(
-                "Iniciar Sesión",
-                textAlign: TextAlign.center,
+          SizedBox(
+            width: 300,
+            child: ElevatedButton(
+              onPressed: controller.loginWithGoogle,
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(FontAwesomeIcons.google),
+                  SizedBox(width: 10),
+                  Text("Iniciar con Google"),
+                ],
               ),
             ),
           ),
           const SizedBox(height: 10),
-          OutlinedButton(
-            onPressed: controller.goToRegister,
-            child: const SizedBox(
-              width: 200,
-              child: Text(
-                "Registrarse",
-                textAlign: TextAlign.center,
+          SizedBox(
+            width: 300,
+            child: OutlinedButton(
+              onPressed: controller.loginWithFacebook,
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(FontAwesomeIcons.facebookF),
+                  SizedBox(width: 10),
+                  Text(
+                    "Iniciar con facebook",
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
           ),

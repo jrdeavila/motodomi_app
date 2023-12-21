@@ -50,7 +50,7 @@ class RegisterWithGoogleCtrl extends GetxController {
   void register() async {
     if (!_isReady.value) return;
     if (_loading.value) return;
-    final registerRequest = RegisterWithGoogleRequest(
+    final registerRequest = RegisterRequest(
       phone: "${_code.value} ${_phone.value}",
       name: _name.value,
     );
