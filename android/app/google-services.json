@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:422891690174:android:5195e890a7ab4cb366e6ef",
+        "mobilesdk_app_id": "1:422891690174:android:156299eff76cad0f66e6ef",
         "android_client_info": {
-          "package_name": "com.example.motodomi_app"
+          "package_name": "app.motodomi.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "422891690174-bdudo40ng9a5c9aag61i05jljtksh1ur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB4lSzACg9yHOX1FZNaDgjZK5PS-B0_V6k"
@@ -20,7 +25,63 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422891690174-bdudo40ng9a5c9aag61i05jljtksh1ur.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "422891690174-2akb2bbmsp3cm6f7snqskpc955c5c30m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.motodomiApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422891690174:android:5195e890a7ab4cb366e6ef",
+        "android_client_info": {
+          "package_name": "com.example.motodomi_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "422891690174-f21fkckpos88c5tl9rio3n54t1c6c370.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.motodomi_app",
+            "certificate_hash": "021adcf72ca4c8df2e73bd52af0097079cac870a"
+          }
+        },
+        {
+          "client_id": "422891690174-bdudo40ng9a5c9aag61i05jljtksh1ur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4lSzACg9yHOX1FZNaDgjZK5PS-B0_V6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422891690174-bdudo40ng9a5c9aag61i05jljtksh1ur.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "422891690174-2akb2bbmsp3cm6f7snqskpc955c5c30m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.motodomiApp"
+              }
+            }
+          ]
         }
       }
     }

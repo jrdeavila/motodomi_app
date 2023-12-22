@@ -13,6 +13,7 @@ class MaskInputFormatter extends TextInputFormatter {
   final String separator;
 
   MaskInputFormatter({required this.mask, required this.separator});
+
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {

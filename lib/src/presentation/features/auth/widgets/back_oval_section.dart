@@ -8,6 +8,7 @@ class BackOvalSection extends StatelessWidget {
     required this.backLabel,
     required this.labelTitle,
     required this.labelDesc,
+    this.canGoBack = true,
   });
 
   final double width;
@@ -15,6 +16,7 @@ class BackOvalSection extends StatelessWidget {
   final String backLabel;
   final String labelTitle;
   final String labelDesc;
+  final bool canGoBack;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class BackOvalSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildBackButton(context),
+            if (canGoBack) _buildBackButton(context),
             const SizedBox(height: 10),
             Text(
               labelTitle,

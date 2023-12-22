@@ -71,6 +71,7 @@ class SessionCtrl extends GetxController {
       return value;
     }).listen((event) {
       _isAuthenticated.value = event;
+      _isAuthenticated.refresh();
     });
   }
 

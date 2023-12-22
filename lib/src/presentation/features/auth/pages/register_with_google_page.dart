@@ -83,11 +83,13 @@ class _RegisterWithGooglePageState extends State<RegisterWithGooglePage> {
                 const Align(
                   alignment: Alignment.topLeft,
                   child: BackOvalSection(
+                    canGoBack: false,
                     width: 300,
                     height: 220,
                     backLabel: "Salir",
                     labelTitle: "Bienvenido",
-                    labelDesc: "Registra los datos de tu cuenta",
+                    labelDesc:
+                        "Digite todos los campos para poder registrarse.",
                   ),
                 ),
               ],
@@ -107,39 +109,11 @@ class _RegisterWithGooglePageState extends State<RegisterWithGooglePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 100,
-                  child: TextFormField(
-                    initialValue: controller.code,
-                    onChanged: controller.setCode,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      hintText: "+57",
-                    ),
-                    inputFormatters: [
-                      PhoneCodeInputFormatter(),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 7),
-                Expanded(
-                  child: TextFormField(
-                    focusNode: _phoneFN,
-                    initialValue: controller.phone,
-                    onChanged: controller.setPhone,
-                    keyboardType: TextInputType.phone,
-                    decoration: const InputDecoration(
-                      hintText: "Telefono",
-                      prefixIcon: Icon(Icons.phone),
-                    ),
-                    inputFormatters: [
-                      PhoneInputFormatter(),
-                    ],
-                  ),
-                ),
-              ],
+            PhoneInput(
+              codeValue: controller.code,
+              codeChanged: controller.setCode,
+              phoneValue: controller.phone,
+              phoneChanged: controller.setPhone,
             ),
             const SizedBox(height: 7),
             TextFormField(
@@ -187,5 +161,69 @@ class _RegisterWithGooglePageState extends State<RegisterWithGooglePage> {
         curve: Curves.easeInOut,
       );
     });
+  }
+}
+
+class PhoneInput extends StatefulWidget {
+  const PhoneInput({
+    super.key,
+    this.codeValue,
+    this.phoneValue,
+    this.codeChanged,
+    this.phoneChanged,
+  });
+
+  final String? codeValue;
+  final ValueChanged<String>? codeChanged;
+  final String? phoneValue;
+  final ValueChanged<String>? phoneChanged;
+
+  @override
+  State<PhoneInput> createState() => _PhoneInputState();
+}
+
+class _PhoneInputState extends State<PhoneInput> {
+  final _phoneFN = FocusNode();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 100,
+          child: TextFormField(
+            initialValue: widget.codeValue,
+            onChanged: widget.codeChanged,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              hintText: "+__",
+            ),
+            // When user write the code, focus on phone input
+            onFieldSubmitted: (_) {
+              _phoneFN.requestFocus();
+            },
+            inputFormatters: [
+              PhoneCodeInputFormatter(),
+            ],
+          ),
+        ),
+        const SizedBox(width: 7),
+        Expanded(
+          child: TextFormField(
+            focusNode: _phoneFN,
+            initialValue: widget.phoneValue,
+            onChanged: widget.phoneChanged,
+            keyboardType: TextInputType.phone,
+            decoration: const InputDecoration(
+              hintText: "Telefono",
+              prefixIcon: Icon(Icons.phone),
+            ),
+            inputFormatters: [
+              PhoneInputFormatter(),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

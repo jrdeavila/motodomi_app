@@ -59,12 +59,7 @@ class FirebaseFacebookAuthenticationService
 
   @override
   Future<void> loginWithFacebook() async {
-    final result = await _facebookLogin.login(
-      permissions: [
-        'public_profile',
-        'email',
-      ],
-    );
+    final result = await _facebookLogin.login();
     if (result.status == LoginStatus.success) {
       final accessToken = result.accessToken!.token;
       final credential = FacebookAuthProvider.credential(accessToken);
