@@ -41,39 +41,7 @@ class AboutMePage extends GetView<AboutMeCtrl> {
         right: 20.0,
         bottom: 20.0,
       ),
-      child: Theme(
-        data: Theme.of(context).copyWith(
-          textTheme: Theme.of(context).textTheme.copyWith(
-                // Input Text Style
-                bodySmall: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                bodyMedium: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                bodyLarge: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-              ),
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true,
-            fillColor: Theme.of(context).colorScheme.surface,
-            labelStyle:
-                Theme.of(context).inputDecorationTheme.labelStyle?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-            hintStyle: Theme.of(context)
-                .inputDecorationTheme
-                .hintStyle
-                ?.copyWith(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide.none,
-            ),
-          ),
-        ),
+      child: DomiciliaryThemeData(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -152,6 +120,13 @@ class AboutMePage extends GetView<AboutMeCtrl> {
                 ),
             textAlign: TextAlign.center,
           ),
+          Text(
+            "Completa tu información personal para continuar",
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -183,42 +158,11 @@ class AboutMePage extends GetView<AboutMeCtrl> {
           const SizedBox(
             height: 10,
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 100,
-                child: TextFormField(
-                  keyboardType: TextInputType.phone,
-                  controller: controller.codeCtrl,
-                  onChanged: (value) => controller.code = value,
-                  decoration: const InputDecoration(
-                    hintText: '+57',
-                  ),
-                  inputFormatters: [
-                    PhoneCodeInputFormatter(),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: TextFormField(
-                  keyboardType: TextInputType.phone,
-                  controller: controller.phoneCtrl,
-                  onChanged: (value) => controller.phone = value,
-                  decoration: InputDecoration(
-                    hintText: 'Teléfono',
-                    errorText:
-                        controller.errors['phone'] ?? controller.errors['code'],
-                  ),
-                  inputFormatters: [
-                    PhoneInputFormatter(),
-                  ],
-                ),
-              ),
-            ],
+          PhoneInput(
+            codeChanged: (value) => controller.code = value,
+            phoneChanged: (value) => controller.phone = value,
+            codeCtrl: controller.codeCtrl,
+            phoneCtrl: controller.phoneCtrl,
           ),
           const SizedBox(
             height: 10,
@@ -263,7 +207,15 @@ class AboutMePage extends GetView<AboutMeCtrl> {
               onPressed: () {
                 controller.save();
               },
-              child: const Text('Guardar'),
+              child: controller.loading
+                  ? const SizedBox(
+                      height: 25,
+                      child: LoadingIndicator(
+                        color: Colors.white,
+                        size: 60,
+                      ),
+                    )
+                  : const Text('Guardar'),
             ),
           ),
         ],

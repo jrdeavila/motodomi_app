@@ -35,3 +35,49 @@ class MaskInputFormatter extends TextInputFormatter {
     return newValue;
   }
 }
+
+class DNIInputFormatter extends TextInputFormatter {
+  final int segment;
+  final String separator;
+
+  DNIInputFormatter({this.segment = 3, this.separator = " "});
+
+  String format(String text) {
+    final filteredNewText = text.replaceAll(separator, "");
+    if (filteredNewText.isNotEmpty) {
+      final formatedValue = _formattedText(filteredNewText);
+      return formatedValue;
+    }
+    return text;
+  }
+
+  String unformat(String text) {
+    return text.replaceAll(separator, "");
+  }
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final filteredNewText = newValue.text.replaceAll(separator, "");
+    if (filteredNewText.isNotEmpty) {
+      final formatedValue = _formattedText(filteredNewText);
+      return TextEditingValue(
+        text: formatedValue,
+      );
+    }
+    return newValue;
+  }
+
+  String _formattedText(String filteredNewText) {
+    String formatedValue = "";
+    for (int i = filteredNewText.length; i > 0; i--) {
+      if ((filteredNewText.length - i) % segment == 0 &&
+          filteredNewText.length != i) {
+        formatedValue = "${filteredNewText[i - 1]}$separator$formatedValue";
+      } else {
+        formatedValue = "${filteredNewText[i - 1]}$formatedValue";
+      }
+    }
+    return formatedValue;
+  }
+}

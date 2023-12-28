@@ -25,6 +25,14 @@ abstract class DomiciliaryRequestRoutes {
     GetPage(
       name: dni,
       page: () => const DNIPage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<DNICtrl>(
+          () => DNICtrl(
+            dniSection: Get.arguments['section'],
+            user: Get.arguments['user'],
+          ),
+        );
+      }),
     ),
     GetPage(
       name: license,

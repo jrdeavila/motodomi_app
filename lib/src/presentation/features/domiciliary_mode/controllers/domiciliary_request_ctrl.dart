@@ -171,6 +171,14 @@ class DomiciliaryRequestCtrl extends GetxController {
             section as NoCriminalRecordSection;
         break;
     }
+
+    Get.find<BannerCtrl>().showInfo(
+      // Emoji happy face
+      "Sección (${section.title}) actualizada 😄",
+      "Los datos fueron actualizados correctamente",
+    );
+
+    update();
   }
 
   // ------------------- Public Methods ------------------

@@ -171,12 +171,16 @@ class PhoneInput extends StatefulWidget {
     this.phoneValue,
     this.codeChanged,
     this.phoneChanged,
+    this.codeCtrl,
+    this.phoneCtrl,
   });
 
   final String? codeValue;
   final ValueChanged<String>? codeChanged;
   final String? phoneValue;
   final ValueChanged<String>? phoneChanged;
+  final TextEditingController? codeCtrl;
+  final TextEditingController? phoneCtrl;
 
   @override
   State<PhoneInput> createState() => _PhoneInputState();
@@ -192,6 +196,7 @@ class _PhoneInputState extends State<PhoneInput> {
         SizedBox(
           width: 100,
           child: TextFormField(
+            controller: widget.codeCtrl,
             initialValue: widget.codeValue,
             onChanged: widget.codeChanged,
             keyboardType: TextInputType.number,
@@ -211,6 +216,7 @@ class _PhoneInputState extends State<PhoneInput> {
         Expanded(
           child: TextFormField(
             focusNode: _phoneFN,
+            controller: widget.phoneCtrl,
             initialValue: widget.phoneValue,
             onChanged: widget.phoneChanged,
             keyboardType: TextInputType.phone,

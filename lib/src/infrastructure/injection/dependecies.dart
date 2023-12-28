@@ -197,3 +197,14 @@ abstract class FlutterLocalNotificationModule {
     return plugin;
   }
 }
+
+// --------------------------  Camera --------------------------------
+@module
+abstract class CameraModule {
+  @preResolve
+  @lazySingleton
+  Future<CameraDescription> get camera async {
+    final cameras = await availableCameras();
+    return cameras.first;
+  }
+}

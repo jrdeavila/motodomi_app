@@ -145,9 +145,13 @@ class EditProfilePage extends GetView<EditProfileCtrl> {
             child: TextFormField(
               controller: controller.codeCtrl,
               onChanged: (value) => controller.code = value,
+              keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
                 hintText: '+57',
               ),
+              inputFormatters: [
+                PhoneCodeInputFormatter(),
+              ],
             ),
           ),
           const SizedBox(
@@ -160,6 +164,10 @@ class EditProfilePage extends GetView<EditProfileCtrl> {
               decoration: const InputDecoration(
                 hintText: 'Teléfono',
               ),
+              keyboardType: TextInputType.phone,
+              inputFormatters: [
+                PhoneInputFormatter(),
+              ],
             ),
           ),
         ],

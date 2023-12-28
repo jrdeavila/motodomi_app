@@ -48,15 +48,15 @@ class EditProfileCtrl extends GetxController {
     var phone = Get.find<SessionCtrl>().user!.phone;
     // +57 300 123 4567
     _code.value = phone.split(' ')[0];
-    _phone.value = phone.split(' ').sublist(1).join(' ');
+    _phone.value = phone.split(' ').getRange(1, 4).join(' ');
 
     _email.value = Get.find<SessionCtrl>().user!.email;
     _avatar.value = Get.find<SessionCtrl>().user?.avatar;
 
-    nameCtrl.text = name;
-    emailCtrl.text = email;
-    phoneCtrl.text = phone;
-    codeCtrl.text = code;
+    nameCtrl.text = _name.value;
+    emailCtrl.text = _email.value;
+    phoneCtrl.text = _phone.value;
+    codeCtrl.text = _code.value;
   }
   // ---------------------- Private Methods ---------------------
 

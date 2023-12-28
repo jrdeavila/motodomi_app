@@ -186,6 +186,11 @@ abstract class AppTheme {
             ),
           ),
         ),
+        bottomAppBarTheme: const BottomAppBarTheme(
+          height: 120,
+          elevation: 0,
+          color: Color(0xff0f1f41),
+        ),
         // --------------- Floating Action Button Theme ---------------
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           elevation: 0,

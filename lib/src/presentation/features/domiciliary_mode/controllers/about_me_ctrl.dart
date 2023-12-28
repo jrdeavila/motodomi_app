@@ -64,6 +64,7 @@ class AboutMeCtrl extends GetxController {
 
   final RxBool _isValid = false.obs;
   final RxMap<String, String> _errors = RxMap<String, String>();
+  final RxBool _loading = false.obs;
 
   // ------------------------- Getters ---------------------------
 
@@ -77,6 +78,7 @@ class AboutMeCtrl extends GetxController {
 
   bool get isValid => _isValid.value;
   Map<String, String> get errors => _errors;
+  bool get loading => _loading.value;
 
   // ------------------------- Setters ---------------------------
 
@@ -185,7 +187,9 @@ class AboutMeCtrl extends GetxController {
 
   void save() async {
     final useCase = getIt<ISendAboutMeSectionUseCase>();
-    final aboutMeSection = await useCase.call(
+    _loading.value = true;
+    final aboutMeSection = await useCase
+        .call(
       SendAboutMeSectionRequest(
         userUuid: user.uuid,
         firstname: firstName,
@@ -196,14 +200,13 @@ class AboutMeCtrl extends GetxController {
         birthDate: _dateToString(birthDate),
         profileImage: _image.value!,
       ),
-    );
-
-    Get.find<DomiciliaryRequestCtrl>().updateSection(aboutMeSection);
+    )
+        .onError((error, stackTrace) {
+      _loading.value = false;
+      throw error as Exception;
+    }).whenComplete(() => _loading.value = false);
 
     Get.back();
-    Get.find<BannerCtrl>().showSuccess(
-      "Datos personales guardados",
-      "Los datos personales han sido guardados correctamente",
-    );
+    Get.find<DomiciliaryRequestCtrl>().updateSection(aboutMeSection);
   }
 }

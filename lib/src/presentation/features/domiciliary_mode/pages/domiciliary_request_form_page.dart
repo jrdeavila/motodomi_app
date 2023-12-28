@@ -7,10 +7,12 @@ class DomiciliaryRequestFormPage extends GetView<DomiciliaryRequestCtrl> {
   Widget build(BuildContext context) {
     final key = GlobalKey<ScaffoldState>();
     final modeCtrl = Get.find<DomiciliaryModeCtrl>();
-    return WillPopScope(
-      onWillPop: () async {
-        modeCtrl.cancelWithAlert();
-        return false;
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (didPop) {
+          modeCtrl.cancelWithAlert();
+        }
       },
       child: Obx(() {
         return Scaffold(
@@ -19,12 +21,12 @@ class DomiciliaryRequestFormPage extends GetView<DomiciliaryRequestCtrl> {
             children: [
               Positioned.fill(
                   child: Container(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
               )),
               Positioned.fill(
                 top: MediaQuery.of(context).size.height * 0.15,
                 child: WelcomeRoundedBall(
-                  color: Theme.of(context).colorScheme.surface,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
               Positioned.fill(
