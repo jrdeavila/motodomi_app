@@ -19,6 +19,7 @@ class _ScanDNICameraPageState extends State<ScanDNICameraPage> {
   bool _isFlashOn = false;
   Uint8List? _image;
   bool _loading = false;
+  bool _isCameraReady = false;
 
   @override
   void initState() {
@@ -31,7 +32,10 @@ class _ScanDNICameraPageState extends State<ScanDNICameraPage> {
     _cameraController.setFlashMode(FlashMode.off);
     _cameraController.initialize().then((value) {
       if (!mounted) return;
-      setState(() {});
+      Future.delayed(const Duration(milliseconds: 500), () {
+        _isCameraReady = true;
+        setState(() {});
+      });
     }).catchError((error) {
       Get.find<BannerCtrl>().showInfo(
         "Error al iniciar la cámara",
@@ -74,73 +78,83 @@ class _ScanDNICameraPageState extends State<ScanDNICameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AspectRatio(
-        aspectRatio: (_cameraController.value.previewSize?.height ?? 1) /
-            (_cameraController.value.previewSize?.width ?? 1),
-        child: Stack(
-          children: [
-            if (_image == null)
-              CameraPreview(
-                _cameraController,
-                key: _cameraKey,
-              ),
-            if (_image != null)
-              Align(
-                alignment: Alignment.center,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.memory(
-                    _image!,
-                    width: _targetWidth,
-                    height: _targetHeight,
-                  ),
-                ),
-              ),
-            if (_image == null)
-              ClipPath(
-                clipper: DNIClipper(),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: Container(
-                    color: Colors.black.withOpacity(0.4),
-                  ),
-                ),
-              ),
-            if (_image == null)
-              Align(
-                alignment: FractionalOffset(
-                  0.5,
-                  0.5 -
-                      (_targetHeight /
-                          1.2 /
-                          MediaQuery.of(context).size.height),
-                ),
-                child: Text(
-                  widget.title,
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+      body: _isCameraReady
+          ? AspectRatio(
+              aspectRatio: (_cameraController.value.previewSize?.height ?? 1) /
+                  (_cameraController.value.previewSize?.width ?? 1),
+              child: Stack(
+                children: [
+                  if (_image == null)
+                    CameraPreview(
+                      _cameraController,
+                      key: _cameraKey,
+                    ),
+                  if (_image != null)
+                    Align(
+                      alignment: Alignment.center,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.memory(
+                          _image!,
+                          width: _targetWidth,
+                          height: _targetHeight,
+                        ),
                       ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            Align(
-              alignment: Alignment.center,
-              child: Container(
-                width: _targetWidth,
-                height: _targetHeight,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 3,
+                    ),
+                  if (_image == null)
+                    ClipPath(
+                      clipper: DNIClipper(),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        child: Container(
+                          color: Colors.black.withOpacity(0.4),
+                        ),
+                      ),
+                    ),
+                  if (_image == null)
+                    Align(
+                      alignment: FractionalOffset(
+                        0.5,
+                        0.5 -
+                            (_targetHeight /
+                                1.2 /
+                                MediaQuery.of(context).size.height),
+                      ),
+                      child: Text(
+                        widget.title,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: _targetWidth,
+                      height: _targetHeight,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 3,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
+              ),
+            )
+          : Center(
+              child: LoadingIndicator(
+                count: 3,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
-          ],
-        ),
-      ),
       extendBody: true,
       bottomNavigationBar: BottomAppBar(
         padding: const EdgeInsets.symmetric(vertical: 20),
