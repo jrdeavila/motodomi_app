@@ -17,6 +17,8 @@ abstract class AppTheme {
         ),
         // -------- App Bar Theme --------
         appBarTheme: const AppBarTheme(
+          shadowColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
           toolbarHeight: kToolbarHeight + 30,
           elevation: 0,
           backgroundColor: Colors.transparent,
