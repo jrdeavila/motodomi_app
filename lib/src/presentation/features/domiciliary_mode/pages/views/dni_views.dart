@@ -70,10 +70,12 @@ class ResumeBodyView extends GetView<DNICtrl> {
                         ),
                   ),
                   const SizedBox(height: 20.0),
-                  DNISideResumeCard(
-                    image: controller.dniFront!,
-                    onRemoveAction: controller.clearFrontImage,
-                  ),
+                  controller.dniFront != null
+                      ? DNISideResumeCard(
+                          image: controller.dniFront!,
+                          onRemoveAction: controller.clearFrontImage,
+                        )
+                      : const FrontalSideIdentification(),
                   const SizedBox(height: 20.0),
                   Text(
                     "Dorso de la identificación",
@@ -85,10 +87,12 @@ class ResumeBodyView extends GetView<DNICtrl> {
                         ),
                   ),
                   const SizedBox(height: 20.0),
-                  DNISideResumeCard(
-                    image: controller.dniBack!,
-                    onRemoveAction: controller.clearBackImage,
-                  ),
+                  controller.dniBack != null
+                      ? DNISideResumeCard(
+                          image: controller.dniBack!,
+                          onRemoveAction: controller.clearBackImage,
+                        )
+                      : const BackSideIdentification(),
                 ],
               ),
             ),
