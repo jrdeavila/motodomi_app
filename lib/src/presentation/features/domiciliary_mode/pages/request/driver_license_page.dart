@@ -1,17 +1,43 @@
 import 'package:motodomi_app/lib.dart';
 
-class DriverLicensePage extends StatelessWidget {
+class DriverLicensePage extends GetView<DriverLicenseCtrl> {
   const DriverLicensePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('DomiciliaryRequestRoutes'),
-      ),
-      body: const Center(
-        child: Text('Scaffold Body'),
-      ),
+      body: Obx(() {
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            _buildBody(context),
+            if (controller.pageLoading)
+              Positioned.fill(
+                child: Container(
+                  color: Colors.black.withOpacity(0.5),
+                  child: const Center(
+                    child: LoadingIndicator(),
+                  ),
+                ),
+              ),
+          ],
+        );
+      }),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return PageView(
+      controller: controller.pageCtrl,
+      scrollDirection: Axis.horizontal,
+      physics: const NeverScrollableScrollPhysics(),
+      children: const [
+        DriverLicenseScanFrontSideBodyView(),
+        DriverLicenseScanBackSideBodyView(),
+        DriverLicenseConfirmationBodyView(),
+        FormLicenseBodyView(),
+        ResumeLicenseBodyView(),
+      ],
     );
   }
 }

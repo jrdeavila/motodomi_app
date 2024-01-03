@@ -62,6 +62,8 @@ class DNICtrl extends GetxController {
     ever(_dniNumber, _moveToResume);
   }
 
+  // ---------------------------- Private Methods -------------------------------
+
   void _goToResume(callback) {
     Future.delayed(const Duration(milliseconds: 500), () {
       pageCtrl.animateToPage(
@@ -71,8 +73,6 @@ class DNICtrl extends GetxController {
       );
     });
   }
-
-  // ---------------------------- Private Methods -------------------------------
 
   void _fetchingData() async {
     if (dniSection.status == SectionStatus.making) {

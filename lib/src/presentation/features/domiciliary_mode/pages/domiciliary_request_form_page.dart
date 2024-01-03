@@ -100,43 +100,7 @@ class DomiciliaryRequestFormPage extends GetView<DomiciliaryRequestCtrl> {
               ),
               itemBuilder: (context, index) {
                 final step = controller.steps[index];
-                return Card(
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(30),
-                    onTap: step.onTap,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Stack(
-                          children: [
-                            Icon(
-                              step.icon,
-                              size: 50,
-                              color: Theme.of(Get.context!).colorScheme.primary,
-                            ),
-                            if (step.status == StepStatus.complete)
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: Icon(
-                                  FontAwesomeIcons.solidCircleCheck,
-                                  color: Theme.of(Get.context!)
-                                      .colorScheme
-                                      .secondary,
-                                ),
-                              )
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          step.title,
-                          style: Theme.of(Get.context!).textTheme.headlineSmall,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                return FormCard(step: step);
               },
               itemCount: controller.steps.length,
             ),
@@ -144,5 +108,64 @@ class DomiciliaryRequestFormPage extends GetView<DomiciliaryRequestCtrl> {
         ],
       );
     });
+  }
+}
+
+class FormCard extends StatelessWidget {
+  const FormCard({
+    super.key,
+    required this.step,
+  });
+
+  final SectionSegment step;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(30),
+        onTap: step.onTap,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildIcon(),
+            const SizedBox(height: 10),
+            Text(
+              step.title,
+              style: Theme.of(Get.context!).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  SizedBox _buildIcon() {
+    return SizedBox(
+      height: 60,
+      width: 100,
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Icon(
+              step.icon,
+              size: 50,
+              color: Theme.of(Get.context!).colorScheme.secondary,
+            ),
+          ),
+          if (step.status == StepStatus.complete)
+            const Positioned(
+              top: 0,
+              right: 0,
+              child: Icon(
+                FontAwesomeIcons.solidCircleCheck,
+                color: Colors.white,
+              ),
+            )
+        ],
+      ),
+    );
   }
 }

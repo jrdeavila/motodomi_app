@@ -11,7 +11,7 @@ class App extends StatelessWidget {
           title: 'Motodomi',
           themeMode: themeCtrl.themeMode,
           theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
+          // darkTheme: AppTheme.darkTheme,
           getPages: [
             ...MainRoutes.routes,
             ...AuthRoutes.routes,

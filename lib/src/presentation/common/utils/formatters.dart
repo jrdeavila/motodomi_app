@@ -1,5 +1,36 @@
 import 'package:flutter/services.dart';
 
+class LicenseInputFormatter extends MaskInputFormatter {
+  LicenseInputFormatter() : super(mask: "xxxx xxxx xxxx", separator: " ");
+
+  String unformat(String text) {
+    return text.replaceAll(separator, "");
+  }
+
+  String format(String text) {
+    final filteredNewText = text.replaceAll(separator, "");
+    if (filteredNewText.isNotEmpty) {
+      final formatedValue = _formattedText(filteredNewText);
+      return formatedValue;
+    } else {
+      return text;
+    }
+  }
+
+  String _formattedText(String filteredNewText) {
+    String formatedValue = "";
+    for (int i = filteredNewText.length; i > 0; i--) {
+      if ((filteredNewText.length - i) % 4 == 0 &&
+          filteredNewText.length != i) {
+        formatedValue = "${filteredNewText[i - 1]}$separator$formatedValue";
+      } else {
+        formatedValue = "${filteredNewText[i - 1]}$formatedValue";
+      }
+    }
+    return formatedValue;
+  }
+}
+
 class PhoneCodeInputFormatter extends MaskInputFormatter {
   PhoneCodeInputFormatter() : super(mask: "+xxx", separator: "+");
 }

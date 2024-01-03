@@ -163,9 +163,7 @@ abstract class AppTheme {
         ),
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
-              const Color(0xff0f1f41),
-            ),
+            backgroundColor: MaterialStateProperty.all(Colors.transparent),
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
@@ -178,7 +176,7 @@ abstract class AppTheme {
               ),
             ),
             foregroundColor: MaterialStateProperty.all(
-              const Color(0xff05C7F2),
+              const Color(0xff0f1f41),
             ),
             textStyle: MaterialStateProperty.all(
               GoogleFonts.nunito(

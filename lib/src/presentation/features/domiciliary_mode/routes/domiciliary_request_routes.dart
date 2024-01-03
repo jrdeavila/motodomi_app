@@ -37,6 +37,14 @@ abstract class DomiciliaryRequestRoutes {
     GetPage(
       name: license,
       page: () => const DriverLicensePage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<DriverLicenseCtrl>(
+          () => DriverLicenseCtrl(
+            licenseSection: Get.arguments['section'],
+            user: Get.arguments['user'],
+          ),
+        );
+      }),
     ),
     GetPage(
       name: soat,
