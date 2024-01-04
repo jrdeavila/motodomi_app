@@ -49,6 +49,14 @@ abstract class DomiciliaryRequestRoutes {
     GetPage(
       name: soat,
       page: () => const SoatPage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<SoatCtrl>(
+          () => SoatCtrl(
+            soatSection: Get.arguments['section'],
+            user: Get.arguments['user'],
+          ),
+        );
+      }),
     ),
     GetPage(
       name: technicalReview,
