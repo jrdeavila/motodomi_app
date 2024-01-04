@@ -62,34 +62,34 @@ class DomiciliaryRequestFormPage extends GetView<DomiciliaryRequestCtrl> {
   }
 
   Widget _buildBody() {
-    return Obx(() {
-      return CustomScrollView(
-        controller: controller.scrollController,
-        slivers: [
-          SliverAppBar.large(
-            backgroundColor: Colors.transparent,
-            title: Text(
-              "Solictud de Conductor",
-              style: Theme.of(Get.context!).textTheme.headlineMedium?.copyWith(
-                    color: Theme.of(Get.context!).colorScheme.primary,
-                  ),
-            ),
-            leadingWidth: 100,
-            leading: Center(
-              child: FloatingActionButton(
-                child: const Icon(FontAwesomeIcons.arrowLeft),
-                onPressed: () {
-                  Get.find<DomiciliaryModeCtrl>().cancelWithAlert();
-                },
-              ),
+    return CustomScrollView(
+      controller: controller.scrollController,
+      slivers: [
+        SliverAppBar.large(
+          backgroundColor: Colors.transparent,
+          title: Text(
+            "Solictud de Conductor",
+            style: Theme.of(Get.context!).textTheme.headlineMedium?.copyWith(
+                  color: Theme.of(Get.context!).colorScheme.primary,
+                ),
+          ),
+          leadingWidth: 100,
+          leading: Center(
+            child: FloatingActionButton(
+              child: const Icon(FontAwesomeIcons.arrowLeft),
+              onPressed: () {
+                Get.find<DomiciliaryModeCtrl>().cancelWithAlert();
+              },
             ),
           ),
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: MediaQuery.of(Get.context!).size.height * 0.15,
-            ),
+        ),
+        SliverToBoxAdapter(
+          child: SizedBox(
+            height: MediaQuery.of(Get.context!).size.height * 0.15,
           ),
-          SliverPadding(
+        ),
+        Obx(() {
+          return SliverPadding(
             padding: const EdgeInsets.all(20.0),
             sliver: SliverGrid.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -104,10 +104,10 @@ class DomiciliaryRequestFormPage extends GetView<DomiciliaryRequestCtrl> {
               },
               itemCount: controller.steps.length,
             ),
-          ),
-        ],
-      );
-    });
+          );
+        }),
+      ],
+    );
   }
 }
 
