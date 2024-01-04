@@ -32,7 +32,7 @@ class DomiciliaryRequestFormPage extends GetView<DomiciliaryRequestCtrl> {
               Positioned.fill(
                 top: controller.backgroundOffset,
                 child: WelcomeRoundedBall(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.9),
                 ),
               ),
               Align(
@@ -93,8 +93,8 @@ class DomiciliaryRequestFormPage extends GetView<DomiciliaryRequestCtrl> {
             padding: const EdgeInsets.all(20.0),
             sliver: SliverGrid.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1.2,
+                crossAxisCount: 3,
+                childAspectRatio: 0.8,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
@@ -122,18 +122,38 @@ class FormCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(Get.context!).colorScheme.primary,
       child: InkWell(
         borderRadius: BorderRadius.circular(30),
         onTap: step.onTap,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: [
-            _buildIcon(),
-            const SizedBox(height: 10),
-            Text(
-              step.title,
-              style: Theme.of(Get.context!).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
+            if (step.status == StepStatus.complete)
+              const Positioned(
+                top: 0,
+                right: 0,
+                child: Icon(
+                  FontAwesomeIcons.solidCircleCheck,
+                  color: Colors.white,
+                ),
+              ),
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _buildIcon(),
+                    const SizedBox(height: 10),
+                    Text(
+                      step.title,
+                      style: Theme.of(Get.context!).textTheme.bodySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -141,30 +161,14 @@ class FormCard extends StatelessWidget {
     );
   }
 
-  SizedBox _buildIcon() {
+  Widget _buildIcon() {
     return SizedBox(
-      height: 60,
+      height: 50,
       width: 100,
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: Icon(
-              step.icon,
-              size: 50,
-              color: Theme.of(Get.context!).colorScheme.secondary,
-            ),
-          ),
-          if (step.status == StepStatus.complete)
-            const Positioned(
-              top: 0,
-              right: 0,
-              child: Icon(
-                FontAwesomeIcons.solidCircleCheck,
-                color: Colors.white,
-              ),
-            )
-        ],
+      child: Icon(
+        step.icon,
+        size: 40,
+        color: Theme.of(Get.context!).colorScheme.secondary,
       ),
     );
   }

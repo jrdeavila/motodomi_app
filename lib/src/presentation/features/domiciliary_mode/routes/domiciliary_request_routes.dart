@@ -73,6 +73,14 @@ abstract class DomiciliaryRequestRoutes {
     GetPage(
       name: onwerShip,
       page: () => const OwnerShipCardPage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<OwnerShipCardCtrl>(
+          () => OwnerShipCardCtrl(
+            ownerShipCardSection: Get.arguments['section'],
+            user: Get.arguments['user'],
+          ),
+        );
+      }),
     ),
     GetPage(
       name: aboutCar,

@@ -191,12 +191,10 @@ class AboutCarSection extends DriverRequestSection {
 class OwnerShipCardSection extends DriverRequestSection {
   final String? ownershipCardFrontImage;
   final String? ownershipCardBackImage;
-  final int? ownerShipCardMakeYear;
 
   OwnerShipCardSection({
     required this.ownershipCardFrontImage,
     required this.ownershipCardBackImage,
-    required this.ownerShipCardMakeYear,
     super.status = SectionStatus.making,
   }) : super(
           title: "Tarjeta de Propiedad",
@@ -206,7 +204,6 @@ class OwnerShipCardSection extends DriverRequestSection {
   factory OwnerShipCardSection.empty() => OwnerShipCardSection(
         ownershipCardFrontImage: null,
         ownershipCardBackImage: null,
-        ownerShipCardMakeYear: null,
       );
 }
 

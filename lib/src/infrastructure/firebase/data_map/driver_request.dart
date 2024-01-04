@@ -280,7 +280,6 @@ Map<String, dynamic> ownerShipCardSectionToJson(
     OwnerShipCardSection ownerShipCardSection) {
   return {
     "owner_ship_card_section": {
-      "owner_ship_card_make_year": ownerShipCardSection.ownerShipCardMakeYear,
       "ownership_card_back_image": ownerShipCardSection.ownershipCardBackImage,
       "ownership_card_front_image":
           ownerShipCardSection.ownershipCardFrontImage,
@@ -297,8 +296,6 @@ OwnerShipCardSection ownerShipCardSectionFromJson(Map<String, dynamic>? json) {
     return OwnerShipCardSection.empty();
   }
   return OwnerShipCardSection(
-    ownerShipCardMakeYear: json["owner_ship_card_section"]
-        ["owner_ship_card_make_year"],
     ownershipCardBackImage: json["owner_ship_card_section"]
         ["ownership_card_back_image"],
     ownershipCardFrontImage: json["owner_ship_card_section"]

@@ -365,7 +365,6 @@ class SendOwnerShipCardSectionUseCase
     final ownerShipCardSection = OwnerShipCardSection(
       ownershipCardBackImage: ownerShipCardBackImageUrl,
       ownershipCardFrontImage: ownerShipCardFrontImageUrl,
-      ownerShipCardMakeYear: request.ownerShipCardExpirationYear,
       status: SectionStatus.complete,
     );
 

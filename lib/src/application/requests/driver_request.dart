@@ -110,12 +110,10 @@ class SendTechnicalReviewSectionRequest extends SendSectionRequest {
 class SendOwnerShipCardSectionRequest extends SendSectionRequest {
   final Uint8List ownerShipCardFrontImage;
   final Uint8List ownerShipCardBackImage;
-  final int ownerShipCardExpirationYear;
 
   SendOwnerShipCardSectionRequest({
     required this.ownerShipCardFrontImage,
     required this.ownerShipCardBackImage,
-    required this.ownerShipCardExpirationYear,
     required super.userUuid,
   });
 }
