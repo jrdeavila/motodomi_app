@@ -61,6 +61,14 @@ abstract class DomiciliaryRequestRoutes {
     GetPage(
       name: technicalReview,
       page: () => const TechnicalReviewPage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<TechnicalReviewCtrl>(
+          () => TechnicalReviewCtrl(
+            technicalReviewSection: Get.arguments['section'],
+            user: Get.arguments['user'],
+          ),
+        );
+      }),
     ),
     GetPage(
       name: onwerShip,
