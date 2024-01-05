@@ -1,0 +1,48 @@
+const vehicleBrandsAndModels = {
+  "Bajaj": [
+    "boxer",
+    "discover",
+    "platina",
+    "ct 100",
+    "pulsar",
+    "dominar",
+  ],
+  "Honda": [
+    "cb 110",
+    "cb 125",
+    "cb 150",
+    "cb 190",
+    "otro",
+  ],
+  "Yamaha": [
+    "fz 16",
+    "fz 25",
+    "fz 2.0",
+    "fz 3.0",
+    "xtz 125",
+    "xtz 250",
+    "xtz 150",
+    "xtz 250",
+    "otro",
+  ],
+  "Suzuki": [
+    "gixxer",
+    "gixxer sf",
+    "gixxer 250",
+    "gixxer 150",
+    "gixxer 150 sf",
+    "gixxer 250 sf",
+    "gixxer 250 sf",
+    "gixxer 250 sf",
+    "otro",
+  ],
+  "AKT": [
+    "nkd",
+    "tt",
+    "special",
+    "otro",
+  ],
+  "Otro": [
+    "otro",
+  ],
+};

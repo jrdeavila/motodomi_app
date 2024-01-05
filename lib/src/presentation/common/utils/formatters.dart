@@ -1,5 +1,42 @@
 import 'package:flutter/services.dart';
 
+class CarPlateFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final value = newValue.text.replaceAll(" ", "");
+    if (newValue.text.length < oldValue.text.length) {
+      return newValue;
+    }
+    if (newValue.text.length < 6) {
+      return TextEditingValue(
+        text: value.toUpperCase(),
+        selection: newValue.selection,
+      );
+    } else {
+      return TextEditingValue(
+          text: "${value.substring(0, 3)} ${value.substring(3)}",
+          selection: TextSelection.collapsed(
+            offset: oldValue.selection.end + 1,
+          ));
+    }
+  }
+
+  static String unformat(String text) {
+    return text.replaceAll(" ", "");
+  }
+
+  static String format(String text) {
+    final filteredNewText = text.replaceAll(" ", "");
+    if (filteredNewText.isNotEmpty) {
+      final formatedValue =
+          "${filteredNewText.substring(0, 3)} ${filteredNewText.substring(3)}";
+      return formatedValue;
+    }
+    return text;
+  }
+}
+
 class LicenseInputFormatter extends MaskInputFormatter {
   LicenseInputFormatter() : super(mask: "xxxx xxxx xxxx", separator: " ");
 

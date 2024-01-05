@@ -27,12 +27,14 @@ class DomiciliaryThemeData extends StatelessWidget {
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: Theme.of(context).colorScheme.surface,
-          labelStyle:
-              Theme.of(context).inputDecorationTheme.labelStyle?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+          labelStyle: Theme.of(context)
+              .inputDecorationTheme
+              .labelStyle
+              ?.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              ),
           hintStyle: Theme.of(context).inputDecorationTheme.hintStyle?.copyWith(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
               ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
