@@ -97,6 +97,14 @@ abstract class DomiciliaryRequestRoutes {
     GetPage(
       name: noCriminalRecord,
       page: () => const NoCriminalRecordPage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<NoCriminalRecordCtrl>(
+          () => NoCriminalRecordCtrl(
+            noCriminalRecordSection: Get.arguments['section'],
+            user: Get.arguments['user'],
+          ),
+        );
+      }),
     ),
   ];
 }
