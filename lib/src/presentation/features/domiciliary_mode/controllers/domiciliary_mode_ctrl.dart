@@ -11,8 +11,11 @@ class DomiciliaryModeCtrl extends GetxController {
       Rx<DriverRequest?>(DriverRequest.empty());
   final Rx<AppUser?> _user = Rx<AppUser?>(null);
   final RxBool _isInMode = RxBool(false);
+  final RxBool _loading = RxBool(false);
 
   // ---------------------- Getters ---------------------
+
+  bool get loading => _loading.value;
 
   // ---------------------- Setters ---------------------
 
@@ -64,16 +67,55 @@ class DomiciliaryModeCtrl extends GetxController {
         Get.offAllNamed(DomiciliaryRoutes.domiciliaryLoading);
         return;
       }
-      if (_driverRequest.value?.status == DriverRequestStatus.making) {
-        _timerOperation = Timer.periodic(2.seconds, (timer) {
-          if (timer.tick == 2) {
-            timer.cancel();
+      _timerOperation = Timer.periodic(2.seconds, (timer) {
+        if (timer.tick == 2) {
+          timer.cancel();
+          _redirectByRequest(_driverRequest.value!);
+        }
+      });
+    }
+  }
+
+  void _redirectByRequest(DriverRequest request) {
+    switch (request.status) {
+      case DriverRequestStatus.making:
+        {
+          if ([
+            request.aboutCarSection,
+            request.aboutMeSection,
+            request.dniSection,
+            request.driverLicenseSection,
+            request.noCriminalRecordSection,
+            request.ownerShipCardSection,
+            request.soatSection,
+            request.technicalReviewSection,
+          ].every((element) => element.status == SectionStatus.complete)) {
+            Get.offAllNamed(DomiciliaryRoutes.domiciliaryRequestComplete);
+          } else {
             Get.offAllNamed(DomiciliaryRoutes.domiciliaryRequest);
           }
-        });
-
-        return;
-      }
+          break;
+        }
+      case DriverRequestStatus.approved:
+        {
+          Get.offAllNamed(DomiciliaryRoutes.domiciliaryRequestApproved);
+          break;
+        }
+      case DriverRequestStatus.rejected:
+        {
+          Get.offAllNamed(DomiciliaryRoutes.domiciliaryRequestRejected);
+          break;
+        }
+      case DriverRequestStatus.finalized:
+        {
+          Get.offAllNamed(DomiciliaryRoutes.domiciliaryHome);
+          break;
+        }
+      case DriverRequestStatus.sended:
+        {
+          Get.offAllNamed(DomiciliaryRoutes.domiciliaryRequestSended);
+          break;
+        }
     }
   }
 
@@ -90,6 +132,11 @@ class DomiciliaryModeCtrl extends GetxController {
   }
 
   // ---------------------- Public methods ---------------------
+
+  void updateDriverRequest(DriverRequest request) {
+    _driverRequest.value = request;
+  }
+
   void cancel() {
     _timerOperation?.cancel();
     Get.offAllNamed(HomeRoutes.home);
@@ -126,5 +173,39 @@ class DomiciliaryModeCtrl extends GetxController {
         );
       },
     );
+  }
+
+  void viewTermsAndConditions() {}
+
+  void goBackToEdit() {
+    Get.offAllNamed(DomiciliaryRoutes.domiciliaryRequest);
+  }
+
+  void sendRequest() async {
+    final useCase = getIt<ISendDriverRequestService>();
+    _loading.value = true;
+    final request = await useCase
+        .setFinishDriverRequestSection(Get.find<SessionCtrl>().user!)
+        .onError((error, stackTrace) {
+      _loading.value = false;
+      throw error as Exception;
+    }).whenComplete(() => _loading.value = false);
+
+    _driverRequest.value = request;
+    _driverRequest.refresh();
+  }
+
+  void finishRequest() async {
+    final useCase = getIt<IFinishDriverRequestService>();
+    _loading.value = true;
+    final request = await useCase
+        .setFinishDriverRequestSection(Get.find<SessionCtrl>().user!)
+        .onError((error, stackTrace) {
+      _loading.value = false;
+      throw error as Exception;
+    }).whenComplete(() => _loading.value = false);
+
+    _driverRequest.value = request;
+    _driverRequest.refresh();
   }
 }

@@ -118,6 +118,7 @@ class DomiciliaryRequestCtrl extends GetxController {
   }
 
   // ------------------- Private Methods ------------------
+
   void _listenScrollController() {
     scrollController.addListener(() {
       _backgroundOffset.value = lerpDouble(
@@ -171,6 +172,8 @@ class DomiciliaryRequestCtrl extends GetxController {
             section as NoCriminalRecordSection;
         break;
     }
+
+    Get.find<DomiciliaryModeCtrl>().updateDriverRequest(_driverRequest.value);
 
     Get.find<BannerCtrl>().showInfo(
       // Emoji happy face

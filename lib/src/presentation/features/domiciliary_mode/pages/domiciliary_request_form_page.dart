@@ -91,18 +91,15 @@ class DomiciliaryRequestFormPage extends GetView<DomiciliaryRequestCtrl> {
         Obx(() {
           return SliverPadding(
             padding: const EdgeInsets.all(20.0),
-            sliver: SliverGrid.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 0.8,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+            sliver: SliverToBoxAdapter(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                runSpacing: 10.0,
+                spacing: 10.0,
+                children: [
+                  ...controller.steps.map((e) => FormCard(step: e)),
+                ],
               ),
-              itemBuilder: (context, index) {
-                final step = controller.steps[index];
-                return FormCard(step: step);
-              },
-              itemCount: controller.steps.length,
             ),
           );
         }),
@@ -121,41 +118,45 @@ class FormCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Theme.of(Get.context!).colorScheme.primary,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(30),
-        onTap: step.onTap,
-        child: Stack(
-          children: [
-            if (step.status == StepStatus.complete)
-              const Positioned(
-                top: 0,
-                right: 0,
-                child: Icon(
-                  FontAwesomeIcons.solidCircleCheck,
-                  color: Colors.white,
+    return SizedBox(
+      width: 110,
+      height: 140,
+      child: Card(
+        color: Theme.of(Get.context!).colorScheme.primary,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(30),
+          onTap: step.onTap,
+          child: Stack(
+            children: [
+              if (step.status == StepStatus.complete)
+                const Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Icon(
+                    FontAwesomeIcons.solidCircleCheck,
+                    color: Colors.white,
+                  ),
+                ),
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildIcon(),
+                      const SizedBox(height: 10),
+                      Text(
+                        step.title,
+                        style: Theme.of(Get.context!).textTheme.bodySmall,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _buildIcon(),
-                    const SizedBox(height: 10),
-                    Text(
-                      step.title,
-                      style: Theme.of(Get.context!).textTheme.bodySmall,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
