@@ -5,6 +5,8 @@ abstract class DomiciliaryRoutes {
   static const String domiciliaryLoading = '/domiciliary-loading';
   static const String domiciliaryMode = '/domiciliary-mode';
   static const String domiciliaryHome = '/domiciliary-home';
+  static const String profileDetails = '/domiciliary-profile-details';
+
   static const String domiciliaryRequestSended = '/domiciliary-request-sended';
   static const String domiciliaryRequestRejected =
       '/domiciliary-request-rejected';
@@ -17,6 +19,18 @@ abstract class DomiciliaryRoutes {
     GetPage(
       name: domiciliaryHome,
       page: () => const DomiciliaryHomePage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(
+          () => DomiciliaryHomeCtrl(),
+        );
+      }),
+    ),
+    GetPage(
+      name: profileDetails,
+      page: () => const DomiciliaryProfileDetailsPage(),
+      binding: BindingsBuilder(() {
+        Get.put(DomiciliaryHomeCtrl());
+      }),
     ),
     GetPage(
         name: domiciliaryRequest,

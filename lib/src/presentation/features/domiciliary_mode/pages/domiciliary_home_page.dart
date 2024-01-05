@@ -8,7 +8,7 @@ class DomiciliaryHomePage extends StatelessWidget {
     final key = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: key,
-      drawer: const HomeDrawer(),
+      drawer: const DomiciliaryHomeDrawer(),
       body: Stack(
         children: [
           Positioned.fill(

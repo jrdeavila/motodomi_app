@@ -143,9 +143,9 @@ class DomiciliaryModeCtrl extends GetxController {
     _leaveMode();
   }
 
-  void goToDomiciliaryMode() {
-    Get.offAllNamed(DomiciliaryRoutes.domiciliaryLoading);
-    _persistMode();
+  void goToClientMode() {
+    Get.offAllNamed(HomeRoutes.home);
+    _leaveMode();
   }
 
   void cancelWithAlert() {
@@ -207,5 +207,10 @@ class DomiciliaryModeCtrl extends GetxController {
 
     _driverRequest.value = request;
     _driverRequest.refresh();
+  }
+
+  void goToDomiciliaryMode() {
+    _persistMode();
+    Get.offAllNamed(DomiciliaryRoutes.domiciliaryLoading);
   }
 }
