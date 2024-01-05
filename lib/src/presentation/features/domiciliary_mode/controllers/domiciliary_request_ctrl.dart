@@ -51,11 +51,11 @@ final redirectBySectionClass = {
 final iconBySectionClass = {
   AboutMeSection: FontAwesomeIcons.user,
   DNISection: FontAwesomeIcons.idCard,
-  DriverLicenseSection: FontAwesomeIcons.carSide,
-  SoatSection: FontAwesomeIcons.carBurst,
+  DriverLicenseSection: FontAwesomeIcons.solidIdCard,
+  SoatSection: FontAwesomeIcons.personBurst,
   TechnicalReviewSection: FontAwesomeIcons.paperPlane,
-  OwnerShipCardSection: FontAwesomeIcons.carRear,
-  AboutCarSection: FontAwesomeIcons.car,
+  OwnerShipCardSection: FontAwesomeIcons.idCard,
+  AboutCarSection: FontAwesomeIcons.motorcycle,
   NoCriminalRecordSection: FontAwesomeIcons.fileContract,
 };
 
