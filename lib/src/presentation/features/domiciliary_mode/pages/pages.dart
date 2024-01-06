@@ -3,5 +3,6 @@ export 'domiciliary_loading_page.dart';
 export 'domiciliary_profile_details_page.dart';
 export 'domiciliary_request_form_page.dart';
 export 'domiciliary_request_status_page.dart';
+export 'domiliciliary_edit_profile_page.dart';
 export 'request/request.dart';
 export 'views/views.dart';

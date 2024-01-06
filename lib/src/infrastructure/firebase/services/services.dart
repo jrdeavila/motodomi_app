@@ -1,4 +1,5 @@
 export 'firebase_auth_service.dart';
+export 'firebase_delivery_man_profile_service.dart';
 export 'firebase_driver_request_service.dart';
 export 'firebase_finish_service_actions_service.dart';
 export 'firebase_profile_service.dart';

@@ -6,6 +6,7 @@ abstract class DomiciliaryRoutes {
   static const String domiciliaryMode = '/domiciliary-mode';
   static const String domiciliaryHome = '/domiciliary-home';
   static const String profileDetails = '/domiciliary-profile-details';
+  static const String domiciliaryEditProfile = '/domiciliary-edit-profile';
 
   static const String domiciliaryRequestSended = '/domiciliary-request-sended';
   static const String domiciliaryRequestRejected =
@@ -20,8 +21,23 @@ abstract class DomiciliaryRoutes {
       name: domiciliaryHome,
       page: () => const DomiciliaryHomePage(),
       binding: BindingsBuilder(() {
-        Get.lazyPut(
-          () => DomiciliaryHomeCtrl(),
+        Get.put(
+          DomiciliaryHomeCtrl(
+            user: Get.find<SessionCtrl>().user!,
+          ),
+        );
+      }),
+    ),
+    GetPage(
+      name: domiciliaryEditProfile,
+      page: () => const DomiciliaryEditProfilePage(),
+      binding: BindingsBuilder(() {
+        Get.put(
+          DomiciliaryEditProfileCtrl(
+            user: Get.find<SessionCtrl>().user!,
+            deliveryManProfile:
+                Get.find<DomiciliaryHomeCtrl>().deliveryManProfile!,
+          ),
         );
       }),
     ),
@@ -29,7 +45,9 @@ abstract class DomiciliaryRoutes {
       name: profileDetails,
       page: () => const DomiciliaryProfileDetailsPage(),
       binding: BindingsBuilder(() {
-        Get.put(DomiciliaryHomeCtrl());
+        Get.put(DomiciliaryHomeCtrl(
+          user: Get.find<SessionCtrl>().user!,
+        ));
       }),
     ),
     GetPage(

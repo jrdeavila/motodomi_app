@@ -1,4 +1,5 @@
 export 'bonification_request.dart';
+export 'delivery_man_request.dart';
 export 'driver_request.dart';
 export 'find_file_request.dart';
 export 'geopoint_request.dart';
