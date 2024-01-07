@@ -46,7 +46,9 @@ class DomiciliaryHomeCtrl extends GetxController {
         HomeOption(
           title: "Modo cliente",
           icon: FontAwesomeIcons.solidUser,
-          onTap: (context) {},
+          onTap: (context) {
+            Get.find<DomiciliaryModeCtrl>().goToClientMode();
+          },
         ),
         HomeOption(
           title: "Perfil",
