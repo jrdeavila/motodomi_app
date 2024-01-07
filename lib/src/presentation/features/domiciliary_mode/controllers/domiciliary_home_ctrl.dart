@@ -14,7 +14,50 @@ class DomiciliaryHomeCtrl extends GetxController {
 
   // ---------------------- Getters ---------------------
 
-  List<HomeOption> get homeOptions => [
+  List<HomeSection> get homeSections => [
+        HomeSection(
+          title: "Bienvenido $userFirstName",
+          child: const DomiciliaryWelcomeMessage(),
+        ),
+        HomeSection(
+          title: "Opciones como conductor",
+          child: const DeliveryManOptions(),
+        ),
+        HomeSection(
+          title: "Recargar saldo",
+          child: RechargeBalanceButton(onTap: () {}),
+        ),
+        HomeSection(
+          title: "Gestionar documentos",
+          child: ManageDocumentsButton(onTap: () {}),
+        ),
+      ];
+
+  List<HomeOption> get deliveryManOptions => [
+        HomeOption(
+            title: "Servicios",
+            icon: FontAwesomeIcons.motorcycle,
+            onTap: (context) {}),
+        HomeOption(
+          title: "Preferencias",
+          icon: FontAwesomeIcons.userGear,
+          onTap: (context) {},
+        ),
+        HomeOption(
+          title: "Modo cliente",
+          icon: FontAwesomeIcons.solidUser,
+          onTap: (context) {},
+        ),
+        HomeOption(
+          title: "Perfil",
+          icon: FontAwesomeIcons.solidCircleUser,
+          onTap: (context) {
+            Get.toNamed(DomiciliaryRoutes.profileDetails);
+          },
+        ),
+      ];
+
+  List<HomeOption> get homeDrawerOptions => [
         HomeOption(
           title: "Principal",
           icon: FontAwesomeIcons.houseChimneyCrack,

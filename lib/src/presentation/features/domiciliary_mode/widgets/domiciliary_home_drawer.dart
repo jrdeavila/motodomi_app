@@ -94,7 +94,7 @@ class DomiciliaryHomeDrawer extends GetView<DomiciliaryHomeCtrl> {
                 ],
               ),
             ),
-            ...controller.homeOptions
+            ...controller.homeDrawerOptions
                 .map((e) => ListTile(
                       leading: Icon(e.icon),
                       title: Text(

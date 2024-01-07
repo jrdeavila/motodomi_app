@@ -14,6 +14,16 @@ class HomeOption {
   });
 }
 
+class HomeSection {
+  final String title;
+  final Widget child;
+
+  HomeSection({
+    required this.title,
+    required this.child,
+  });
+}
+
 class HomeCtrl extends GetxController {
   // ---------------------- Getters ---------------------
   List<HomeOption> get homeOptions => [

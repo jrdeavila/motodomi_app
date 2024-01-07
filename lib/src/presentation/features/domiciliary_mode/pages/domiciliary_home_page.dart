@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:motodomi_app/lib.dart';
 
 class DomiciliaryHomePage extends StatelessWidget {
@@ -7,45 +8,84 @@ class DomiciliaryHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final key = GlobalKey<ScaffoldState>();
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       key: key,
       drawer: const DomiciliaryHomeDrawer(),
-      body: Stack(
+      appBar: AppBar(
+        leadingWidth: 100,
+        leading: Center(
+          child: FloatingActionButton(
+            onPressed: () {
+              key.currentState?.openDrawer();
+            },
+            child: const Icon(FontAwesomeIcons.bars),
+          ),
+        ),
+        actions: [
+          AvailableBalanceTarget(),
+          const SizedBox(width: 20),
+        ],
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.only(
+          bottom: 16.0,
+        ),
+        child: Column(
+            children: Get.find<DomiciliaryHomeCtrl>()
+                .homeSections
+                .map((e) => [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          children: [
+                            Divider(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.1),
+                            ),
+                            const SizedBox(height: 20),
+                            e.child,
+                            const SizedBox(height: 20),
+                            Divider(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.1),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ])
+                .expand((element) => element)
+                .toList()),
+      ),
+    );
+  }
+}
+
+class AvailableBalanceTarget extends StatelessWidget {
+  const AvailableBalanceTarget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 70,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Positioned.fill(
-              child: Container(
-            color: Colors.white,
-          )),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: WelcomeRoundedBall(
-              color: Theme.of(context).colorScheme.surface,
-              height: 600,
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: WelcomeRoundedBall(
-              color: Theme.of(context).colorScheme.primary,
-              height: 500,
-            ),
-          ),
-          Align(
-            alignment: const FractionalOffset(0.5, 0.1),
-            child: Image.asset(
-              "assets/img/domiciliary.png",
-              width: 400,
-              height: 400,
-            ),
-          ),
-          Positioned(
-            top: kToolbarHeight,
-            left: 16,
-            child: FloatingActionButton(
-              onPressed: () {
-                key.currentState?.openDrawer();
-              },
-              child: const Icon(FontAwesomeIcons.barsStaggered),
-            ),
+          Text("Saldo disponible",
+              style: Theme.of(context).textTheme.labelSmall),
+          Text(
+            "\$ 0.00",
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ],
       ),
