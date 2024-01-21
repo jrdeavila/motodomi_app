@@ -1,4 +1,3 @@
-import 'package:flutter/rendering.dart';
 import 'package:motodomi_app/lib.dart';
 
 class DomiciliaryHomePage extends StatelessWidget {
@@ -21,13 +20,13 @@ class DomiciliaryHomePage extends StatelessWidget {
             child: const Icon(FontAwesomeIcons.bars),
           ),
         ),
-        actions: [
+        actions: const [
           AvailableBalanceTarget(),
-          const SizedBox(width: 20),
+          SizedBox(width: 20),
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           bottom: 16.0,
         ),
         child: Column(

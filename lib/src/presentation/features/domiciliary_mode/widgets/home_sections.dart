@@ -8,12 +8,14 @@ class DomiciliaryWelcomeMessage extends GetView<DomiciliaryHomeCtrl> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          "Bienvenido ${controller.userFirstName}",
-          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-              ),
-        ),
+        Obx(() {
+          return Text(
+            "Bienvenido ${controller.userFirstName}",
+            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+          );
+        }),
         Text(
           "¿Qué deseas hacer hoy?",
           style: Theme.of(context).textTheme.labelMedium?.copyWith(

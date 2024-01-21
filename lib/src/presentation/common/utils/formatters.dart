@@ -1,4 +1,6 @@
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:motodomi_app/lib.dart';
 
 class CarPlateFormatter extends TextInputFormatter {
   @override
@@ -74,6 +76,40 @@ class PhoneCodeInputFormatter extends MaskInputFormatter {
 
 class PhoneInputFormatter extends MaskInputFormatter {
   PhoneInputFormatter() : super(mask: "xxx xxx xxxx", separator: " ");
+
+  static int unformat(String text) {
+    try {
+      return int.parse(text.replaceAll(" ", ""));
+    } catch (e) {
+      return 0;
+    }
+  }
+}
+
+class BancolombiaAccountInputFormatter extends MaskInputFormatter {
+  BancolombiaAccountInputFormatter()
+      : super(mask: "xxx xxxxxx xxx", separator: " ");
+
+  String unformat(String text) {
+    return text.replaceAll(separator, "");
+  }
+}
+
+class CreditCardInputFormatter extends MaskInputFormatter {
+  CreditCardInputFormatter()
+      : super(mask: "xxxx xxxx xxxx xxxx", separator: " ");
+
+  String unformat(String text) {
+    return text.replaceAll(separator, "");
+  }
+}
+
+class CardDateInputFormatter extends MaskInputFormatter {
+  CardDateInputFormatter() : super(mask: "xx/xx", separator: "/");
+
+  String unformat(String text) {
+    return text.replaceAll(separator, "");
+  }
 }
 
 class MaskInputFormatter extends TextInputFormatter {
@@ -148,4 +184,57 @@ class DNIInputFormatter extends TextInputFormatter {
     }
     return formatedValue;
   }
+}
+
+class COPCurrencyInputFormatter extends TextInputFormatter {
+  static double unformat(String text) {
+    try {
+      final valueString = text
+          .replaceAll(".", "")
+          .replaceAll(",", "")
+          .replaceAll("COP", "")
+          .trim();
+      return double.parse(valueString);
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.isEmpty) {
+      return newValue;
+    }
+    final currencyFormatText =
+        currencyFormatWithSymbol(double.parse(newValue.text));
+    return TextEditingValue(
+      text: currencyFormatText,
+      selection: TextSelection.collapsed(
+        offset: currencyFormatText.length - 4,
+      ),
+    );
+  }
+}
+
+String currencyFormatWithSymbol(double value) {
+  final formatter = NumberFormat.currency(
+    locale: "es_CO",
+    symbol: "COP",
+    decimalDigits: 0,
+  );
+  return formatter.format(value);
+}
+
+String currencyFormat(double value) {
+  final formatter = NumberFormat.currency(
+    locale: "es_CO",
+    symbol: "COP",
+    decimalDigits: 0,
+  );
+  return "\$ ${formatter.format(value)}";
+}
+
+String parseEEEDMMMMyyyyFormat(DateTime date) {
+  return DateFormat('EEE. d MMMM yyyy', 'es_CO').format(date).capitalize!;
 }

@@ -25,7 +25,9 @@ class DomiciliaryHomeCtrl extends GetxController {
         ),
         HomeSection(
           title: "Recargar saldo",
-          child: RechargeBalanceButton(onTap: () {}),
+          child: RechargeBalanceButton(onTap: () {
+            Get.toNamed(DomiciliaryRoutes.domiciliaryViewBalance);
+          }),
         ),
         HomeSection(
           title: "Gestionar documentos",

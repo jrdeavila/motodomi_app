@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:motodomi_app/lib.dart';
 
 class ResumeOwnerShipCardBodyView extends GetView<OwnerShipCardCtrl> {

@@ -107,6 +107,13 @@ abstract class DioModule {
   @lazySingleton
   Dio get dio => Dio()
     ..interceptors.addAll([
+      LogInterceptor(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: true,
+        error: true,
+      ),
       DioCacheInterceptor(
         options: CacheOptions(
           store: MemCacheStore(),
@@ -207,4 +214,16 @@ abstract class CameraModule {
     final cameras = await availableCameras();
     return cameras.first;
   }
+}
+
+//  --------------------------- Payment Module Services ---------------------------
+
+@module
+abstract class PaymentModuleServicesModule {
+  @preResolve
+  @lazySingleton
+  Future<HttpGetTokenService> get httpGetTokenService async =>
+      HttpGetTokenService(
+        dio: getIt<Dio>(),
+      );
 }

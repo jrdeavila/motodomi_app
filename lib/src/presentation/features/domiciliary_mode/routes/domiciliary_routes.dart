@@ -7,6 +7,11 @@ abstract class DomiciliaryRoutes {
   static const String domiciliaryHome = '/domiciliary-home';
   static const String profileDetails = '/domiciliary-profile-details';
   static const String domiciliaryEditProfile = '/domiciliary-edit-profile';
+  static const String domiciliaryViewBalance = '/domiciliary-view-balance';
+  static const String domiciliaryRechargeBalance =
+      '/domiciliary-recharge-balance';
+  static const String domiciliaryTermsAndConditions =
+      "/payment-terms-and-conditions";
 
   static const String domiciliaryRequestSended = '/domiciliary-request-sended';
   static const String domiciliaryRequestRejected =
@@ -15,6 +20,8 @@ abstract class DomiciliaryRoutes {
       '/domiciliary-request-approved';
   static const String domiciliaryRequestComplete =
       '/domiciliary-request-complete';
+  static const String domiciliaryHistoryPayment =
+      '/domiciliary-history-payment';
 
   static final routes = [
     GetPage(
@@ -81,6 +88,48 @@ abstract class DomiciliaryRoutes {
     GetPage(
       name: domiciliaryRequestComplete,
       page: () => const DomiciliaryRequestCompletePage(),
+    ),
+    GetPage(
+      name: domiciliaryViewBalance,
+      page: () => const DomiciliaryViewBalancePage(),
+      binding: BindingsBuilder(() {
+        Get.put(
+          DomiciliaryRechargeBalanceCtrl(
+            deliveryManProfile:
+                Get.find<DomiciliaryHomeCtrl>().deliveryManProfile!,
+          ),
+        );
+      }),
+    ),
+    GetPage(
+      name: domiciliaryRechargeBalance,
+      page: () => const DomiciliaryRechargeBalancePage(),
+      binding: BindingsBuilder(() {
+        Get.put(
+          DomiciliaryRechargeBalanceCtrl(
+            deliveryManProfile:
+                Get.find<DomiciliaryHomeCtrl>().deliveryManProfile!,
+          ),
+        );
+      }),
+    ),
+    GetPage(
+      name: domiciliaryTermsAndConditions,
+      page: () => DomiciliaryTermsAndConditionsPage(
+        url: Get.arguments['url'] as String,
+      ),
+    ),
+    GetPage(
+      name: domiciliaryHistoryPayment,
+      page: () => const DomiciliaryHistoryPaymentPage(),
+      binding: BindingsBuilder(() {
+        Get.put(
+          HistoryPaymentCtrl(
+            deliveryManProfile:
+                Get.find<DomiciliaryHomeCtrl>().deliveryManProfile!,
+          ),
+        );
+      }),
     ),
     ...DomiciliaryRequestRoutes.routes,
   ];
