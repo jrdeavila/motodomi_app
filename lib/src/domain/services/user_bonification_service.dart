@@ -9,19 +9,19 @@ abstract class IClientBonificationService {
 abstract class IDriverPaymentService {
   Future<void> updatePayment({
     required double amount,
-    required AppUser driver,
+    required DeliveryManProfile deliveryManProfile,
   });
 }
 
 abstract class IDriverBalanceService {
   Future<void> updateBalance({
     required double amount,
-    required AppUser driver,
+    required DeliveryManProfile deliveryManProfile,
   });
 
-  Future<double> getBalance(AppUser driver);
+  Future<double> getBalance(DeliveryManProfile deliveryMapProfile);
 
-  Stream<double> listenBalance(AppUser driver);
+  Stream<double> listenBalance(DeliveryManProfile deliveryMapProfile);
 }
 
 abstract class IClientPointsService {

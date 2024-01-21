@@ -31,13 +31,13 @@ class FirebaseServiceActionService implements IServiceActionService {
             return Future.value(null);
           }
           final creator = await _getUser(event.docs.first['clientCreator']);
-          final driver = event.docs.first.data()['driver'] != null
-              ? await _getUser(event.docs.first['driver'])
+          final deliveryMan = event.docs.first.data()['driver'] != null
+              ? await _getDeliveryMan(event.docs.first['driver'])
               : null;
           return requestServiceFromMapWithUserAndDriver(
             event.docs.first.data(),
             clientCreator: creator,
-            driver: driver,
+            deliveryManProfile: deliveryMan,
           );
         });
   }
@@ -69,14 +69,13 @@ class FirebaseServiceActionService implements IServiceActionService {
 
     for (final counterOffer in docsNoViewed) {
       final creator = await _getUser(counterOffer['clientCreator']);
-      final driver = counterOffer.data()['driver'] != null
-          ? await _getUser(counterOffer['driver'])
+      final deliveryManProfile = counterOffer.data()['driver'] != null
+          ? await _getDeliveryMan(counterOffer['driver'])
           : null;
       final requestService = requestServiceFromMapWithUserAndDriver(
-        counterOffer.data(),
-        clientCreator: creator,
-        driver: driver,
-      );
+          counterOffer.data(),
+          clientCreator: creator,
+          deliveryManProfile: deliveryManProfile);
       offers.add(requestService);
     }
 
@@ -86,6 +85,11 @@ class FirebaseServiceActionService implements IServiceActionService {
   Future<AppUser> _getUser(String uuid) async {
     final user = await _firestore.collection('users').doc(uuid).get();
     return userFromJson(user.data()!);
+  }
+
+  Future<DeliveryManProfile> _getDeliveryMan(String uuid) async {
+    final user = await _firestore.collection('delivery_men').doc(uuid).get();
+    return deliveryManFromJson(user.data()!);
   }
 
   @override
@@ -99,7 +103,8 @@ class FirebaseServiceActionService implements IServiceActionService {
   @override
   Future<void> acceptCounterOffer(
       RequestService requestService, RequestService counterOffer) async {
-    final driverIsAvailable = await _driverIsAvailable(counterOffer.driver!);
+    final driverIsAvailable =
+        await _driverIsAvailable(counterOffer.deliveryManProfile!);
     if (driverIsAvailable) {
       await cancelRequestService(requestService);
       await _acceptCounterOffer(requestService, counterOffer);
@@ -116,7 +121,7 @@ class FirebaseServiceActionService implements IServiceActionService {
     final ref = _firestore.collection("services").doc(requestService.uuid);
     return ref
         .collection("counter_offer")
-        .doc(counterOffer.driver?.uuid)
+        .doc(counterOffer.deliveryManProfile?.uuid)
         .update({
       'status': RequestServiceStatus.started.toString(),
     });
@@ -128,16 +133,16 @@ class FirebaseServiceActionService implements IServiceActionService {
     final ref = _firestore.collection("services").doc(requestService.uuid);
     return ref
         .collection("counter_offer")
-        .doc(counterOffer.driver?.uuid)
+        .doc(counterOffer.deliveryManProfile?.uuid)
         .update({'status': RequestServiceStatus.canceled.toString()});
   }
 
-  Future<bool> _driverIsAvailable(AppUser driver) async {
+  Future<bool> _driverIsAvailable(DeliveryManProfile deliveryManProfile) async {
     return _firestore
         .collection('services')
         .where(
           'driver',
-          isEqualTo: driver.uuid,
+          isEqualTo: deliveryManProfile.uuid,
         )
         .where(
           'status',
@@ -151,7 +156,7 @@ class FirebaseServiceActionService implements IServiceActionService {
 RequestService requestServiceFromMapWithUserAndDriver(
   Map<String, dynamic> map, {
   required AppUser clientCreator,
-  AppUser? driver,
+  DeliveryManProfile? deliveryManProfile,
 }) {
   PaymentType getPaymentType(String type) {
     switch (type) {
@@ -198,7 +203,7 @@ RequestService requestServiceFromMapWithUserAndDriver(
   return RequestService(
     uuid: map['uuid'],
     clientCreator: clientCreator,
-    driver: driver,
+    deliveryManProfile: deliveryManProfile,
     origin: getTravelPoint(map['origin']),
     destination: getTravelPoint(map['destination']),
     payment: getPayment(map['payment']),
@@ -211,7 +216,7 @@ Map<String, dynamic> requestServiceToMap(RequestService request) {
   return {
     'uuid': request.uuid,
     'clientCreator': request.clientCreator.uuid,
-    'driver': request.driver?.uuid,
+    'driver': request.deliveryManProfile?.uuid,
     'origin': {
       'name': request.origin.name,
       'address': request.origin.address,

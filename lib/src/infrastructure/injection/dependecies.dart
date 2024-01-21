@@ -56,6 +56,17 @@ abstract class FirestoreModule {
 }
 
 @module
+abstract class FirebaseStorageModule {
+  @preResolve
+  @lazySingleton
+  Future<FirebaseStorage> get firebaseStorage async =>
+      FirebaseStorage.instanceFor(
+        app: getIt<FirebaseApp>(),
+        bucket: "gs://motodomi-app.appspot.com",
+      );
+}
+
+@module
 abstract class AppCheckModule {
   @preResolve
   @lazySingleton
@@ -66,17 +77,6 @@ abstract class AppCheckModule {
     );
     return appCheck;
   }
-}
-
-@module
-abstract class FirebaseStorageModule {
-  @preResolve
-  @lazySingleton
-  Future<FirebaseStorage> get firebaseStorage async =>
-      FirebaseStorage.instanceFor(
-        app: getIt<FirebaseApp>(),
-        bucket: "gs://motodomi-app.appspot.com",
-      );
 }
 
 // ---------------------------------- Google Sign In ----------------------------------

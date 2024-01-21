@@ -7,7 +7,7 @@ class GetMyPointsRequest {
 }
 
 class GetMyBalanceRequest {
-  final AppUser user;
+  final DeliveryManProfile deliveryMapProfile;
 
-  GetMyBalanceRequest(this.user);
+  GetMyBalanceRequest(this.deliveryMapProfile);
 }

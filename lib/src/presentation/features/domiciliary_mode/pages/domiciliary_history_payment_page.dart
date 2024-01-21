@@ -212,7 +212,8 @@ class PaymentHistoryItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  currencyFormat(paymentHistory.amount.toDouble()),
+                  currencyFormatWithSymbolAndCOP(
+                      paymentHistory.amount.toDouble()),
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                         color: Theme.of(context).colorScheme.primary,
                       ),

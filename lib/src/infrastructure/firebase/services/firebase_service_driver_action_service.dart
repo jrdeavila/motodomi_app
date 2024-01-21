@@ -11,8 +11,8 @@ class FirebaseServiceDriverActionService
   }) : _firebaseFirestore = firebaseFirestore;
   @override
   Future<void> acceptRequestService(
-      RequestService requestService, AppUser driver) {
-    requestService.driver = driver;
+      RequestService requestService, DeliveryManProfile deliveryManProfile) {
+    requestService.deliveryManProfile = deliveryManProfile;
     requestService.status = RequestServiceStatus.started;
     return _firebaseFirestore
         .collection("services")
@@ -23,7 +23,8 @@ class FirebaseServiceDriverActionService
   }
 
   @override
-  Stream<List<RequestService>> listenAllRequestService(AppUser driver) {
+  Stream<List<RequestService>> listenAllRequestService(
+      DeliveryManProfile driver) {
     return _firebaseFirestore
         .collection("services")
         .where("status", isEqualTo: RequestServiceStatus.waiting.toString())
@@ -57,7 +58,7 @@ class FirebaseServiceDriverActionService
     });
   }
 
-  Future<bool> _hasCurrentService(AppUser driver) {
+  Future<bool> _hasCurrentService(DeliveryManProfile driver) {
     return _firebaseFirestore
         .collection("services")
         .where("driver", isEqualTo: driver.uuid)
@@ -75,20 +76,21 @@ class FirebaseServiceDriverActionService
 
   @override
   Future<void> sendCounterOffer(RequestService requestService,
-      RequestService counterOffer, AppUser driver) {
+      RequestService counterOffer, DeliveryManProfile deliveryManProfile) {
     final ref =
         _firebaseFirestore.collection("services").doc(requestService.uuid);
-    return ref.collection("counter_offer").doc(driver.uuid).set(
+    return ref.collection("counter_offer").doc(deliveryManProfile.uuid).set(
           requestServiceToMap(counterOffer),
         );
   }
 
   @override
-  Stream<RequestService?> listenCurrentRequestService(AppUser driver) {
+  Stream<RequestService?> listenCurrentRequestService(
+      DeliveryManProfile deliveryManProfile) {
     return _firebaseFirestore
         .collection("services")
         .where("status", isEqualTo: RequestServiceStatus.started.toString())
-        .where("driver", isEqualTo: driver.uuid)
+        .where("driver", isEqualTo: deliveryManProfile.uuid)
         .snapshots()
         .asyncMap((event) async {
       if (event.docs.isEmpty) {
@@ -99,7 +101,7 @@ class FirebaseServiceDriverActionService
       return requestServiceFromMapWithUserAndDriver(
         doc.data(),
         clientCreator: clientCreator,
-        driver: driver,
+        deliveryManProfile: deliveryManProfile,
       );
     });
   }
@@ -128,7 +130,7 @@ class FirebaseServiceFinishDriverActionService
       );
       await _driverPaymentService.updatePayment(
         amount: requestService.tee,
-        driver: requestService.driver!,
+        deliveryManProfile: requestService.deliveryManProfile!,
       );
 
       transaction.update(

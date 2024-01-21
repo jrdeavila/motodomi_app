@@ -63,7 +63,7 @@ class DomiciliaryHomePage extends StatelessWidget {
   }
 }
 
-class AvailableBalanceTarget extends StatelessWidget {
+class AvailableBalanceTarget extends GetView<DomiciliaryHomeCtrl> {
   const AvailableBalanceTarget({
     super.key,
   });
@@ -82,10 +82,12 @@ class AvailableBalanceTarget extends StatelessWidget {
         children: [
           Text("Saldo disponible",
               style: Theme.of(context).textTheme.labelSmall),
-          Text(
-            "\$ 0.00",
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
+          Obx(() {
+            return Text(
+              controller.balance,
+              style: Theme.of(context).textTheme.headlineMedium,
+            );
+          }),
         ],
       ),
     );

@@ -12,6 +12,8 @@ class DomiciliaryHomeCtrl extends GetxController {
   final Rx<DeliveryManProfile?> _deliveryManProfile =
       Rx<DeliveryManProfile?>(null);
 
+  final Rx<double> _balance = Rx<double>(0);
+
   // ---------------------- Getters ---------------------
 
   List<HomeSection> get homeSections => [
@@ -113,6 +115,8 @@ class DomiciliaryHomeCtrl extends GetxController {
         ),
       ];
 
+  String get balance => currencyFormatWithSymbol(_balance.value);
+
   String get userFirstName =>
       _deliveryManProfile.value?.firstName ?? user.name.split(" ")[0];
 
@@ -136,6 +140,7 @@ class DomiciliaryHomeCtrl extends GetxController {
     super.onReady();
 
     _getDeliveryManProfile();
+    ever(_deliveryManProfile, _listenBalance);
   }
 
   // ----------------------- Private Methods ---------------------
@@ -144,6 +149,17 @@ class DomiciliaryHomeCtrl extends GetxController {
     final deliveryManProfile = await getIt<IGetDeliveryManProfileUseCase>()
         .getDeliveryManProfile(user);
     _deliveryManProfile.value = deliveryManProfile;
+  }
+
+  void _listenBalance(DeliveryManProfile? deliveryManProfile) {
+    if (deliveryManProfile != null) {
+      final useCase = getIt<IListenMyBalanceUseCase>();
+      _balance.bindStream(
+        useCase.getBalance(
+          GetMyBalanceRequest(deliveryManProfile),
+        ),
+      );
+    }
   }
 
   // ---------------------- Public Methods ---------------------

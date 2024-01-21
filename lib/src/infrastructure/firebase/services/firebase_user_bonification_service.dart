@@ -45,27 +45,31 @@ class FirebaseDriverBalanceService implements IDriverBalanceService {
   }) : _firebaseFirestore = firebaseFirestore;
 
   @override
-  Future<double> getBalance(AppUser driver) {
+  Future<double> getBalance(DeliveryManProfile deliveryManProfile) {
     return _firebaseFirestore
-        .collection("users")
-        .doc(driver.uuid)
+        .collection("delivery_men")
+        .doc(deliveryManProfile.uuid)
         .get()
         .then((value) => value.data()?["balance"] ?? 0);
   }
 
   @override
-  Stream<double> listenBalance(AppUser driver) {
+  Stream<double> listenBalance(DeliveryManProfile deliveryManProfile) {
     return _firebaseFirestore
-        .collection("users")
-        .doc(driver.uuid)
+        .collection("delivery_men")
+        .doc(deliveryManProfile.uuid)
         .snapshots()
         .map((event) => double.parse("${event.data()?["balance"] ?? 0}"));
   }
 
   @override
   Future<void> updateBalance(
-      {required double amount, required AppUser driver}) {
-    return _firebaseFirestore.collection("users").doc(driver.uuid).update({
+      {required double amount,
+      required DeliveryManProfile deliveryManProfile}) {
+    return _firebaseFirestore
+        .collection("delivery_men")
+        .doc(deliveryManProfile.uuid)
+        .update({
       "balance": amount,
     });
   }

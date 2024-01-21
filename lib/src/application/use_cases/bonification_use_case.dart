@@ -30,6 +30,6 @@ class ListenMyBalanceUseCase implements IListenMyBalanceUseCase {
   ListenMyBalanceUseCase(this._driverBalanceService);
   @override
   Stream<double> getBalance(GetMyBalanceRequest request) {
-    return _driverBalanceService.listenBalance(request.user);
+    return _driverBalanceService.listenBalance(request.deliveryMapProfile);
   }
 }

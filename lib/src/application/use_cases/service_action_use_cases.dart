@@ -20,7 +20,7 @@ class SendRequestServiceUseCase implements ISendRequestServiceUseCase {
       destination: request.destination,
       payment: request.payment,
       tee: request.tee,
-      driver: request.driver,
+      deliveryManProfile: request.deliveryManProfile,
     );
 
     return _serviceActionService.sendRequestService(requestService);
@@ -128,7 +128,8 @@ class ListenAllRequestServiceUseCase
   }) : _serviceActionService = serviceActionService;
   @override
   Stream<List<RequestService>> listen(ListenAllRequestServiceRequest request) {
-    return _serviceActionService.listenAllRequestService(request.driver);
+    return _serviceActionService
+        .listenAllRequestService(request.deliveryManProfile);
   }
 }
 
@@ -143,7 +144,7 @@ class AcceptRequestServiceUseCase implements IAcceptRequestServiceUseCase {
   Future<void> acceptRequestService(AcceptRequestServiceRequest request) {
     return _serviceActionService.acceptRequestService(
       request.requestService,
-      request.driver,
+      request.deliveryManProfile,
     );
   }
 }
@@ -158,13 +159,13 @@ class SendCounterOfferUseCase implements ISendCounterOfferUseCase {
   @override
   Future<void> sendCounterOffer(SendCounterOfferRequest request) {
     final counterOffer = request.requestService;
-    counterOffer.driver = request.driver;
+    counterOffer.deliveryManProfile = request.deliveryManProfile;
     counterOffer.tee = request.counterOffer;
 
     return _serviceActionService.sendCounterOffer(
       request.requestService,
       counterOffer,
-      request.driver,
+      request.deliveryManProfile,
     );
   }
 }
@@ -180,7 +181,8 @@ class ListenCurrentRequestServiceDriverUseCase
   @override
   Stream<RequestService?> listen(
       ListenCurrentRequestServiceDriverRequest request) {
-    return _serviceActionService.listenCurrentRequestService(request.driver);
+    return _serviceActionService
+        .listenCurrentRequestService(request.deliveryManProfile);
   }
 }
 

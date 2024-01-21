@@ -102,12 +102,12 @@ extension GetItInjectableX on _i1.GetIt {
       preResolve: true,
     );
     await gh.factoryAsync<_i7.FirebaseApp>(
-      () => firebaseAppModule.firebaseAppForPasswordReset,
-      instanceName: 'FirebaseAppForPasswordReset',
+      () => firebaseAppModule.firebaseApp,
       preResolve: true,
     );
     await gh.factoryAsync<_i7.FirebaseApp>(
-      () => firebaseAppModule.firebaseApp,
+      () => firebaseAppModule.firebaseAppForPasswordReset,
+      instanceName: 'FirebaseAppForPasswordReset',
       preResolve: true,
     );
     await gh.lazySingletonAsync<_i8.FirebaseAppCheck>(

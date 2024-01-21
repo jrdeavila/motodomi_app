@@ -2,7 +2,7 @@ import 'package:motodomi_app/lib.dart';
 
 class SendRequestServiceRequest {
   final AppUser clientCreator;
-  final AppUser? driver;
+  final DeliveryManProfile? deliveryManProfile;
   final TravelPoint origin;
   final TravelPoint destination;
   final Payment payment;
@@ -10,7 +10,7 @@ class SendRequestServiceRequest {
 
   SendRequestServiceRequest({
     required this.clientCreator,
-    required this.driver,
+    required this.deliveryManProfile,
     required this.origin,
     required this.destination,
     required this.payment,
@@ -85,38 +85,38 @@ class ChangeRequestServiceOfferRequest {
 class SendCounterOfferRequest {
   final RequestService requestService;
   final double counterOffer;
-  final AppUser driver;
+  final DeliveryManProfile deliveryManProfile;
 
   SendCounterOfferRequest({
     required this.requestService,
     required this.counterOffer,
-    required this.driver,
+    required this.deliveryManProfile,
   });
 }
 
 class AcceptRequestServiceRequest {
   final RequestService requestService;
-  final AppUser driver;
+  final DeliveryManProfile deliveryManProfile;
 
   AcceptRequestServiceRequest({
     required this.requestService,
-    required this.driver,
+    required this.deliveryManProfile,
   });
 }
 
 class ListenAllRequestServiceRequest {
-  final AppUser driver;
+  final DeliveryManProfile deliveryManProfile;
 
   ListenAllRequestServiceRequest({
-    required this.driver,
+    required this.deliveryManProfile,
   });
 }
 
 class ListenCurrentRequestServiceDriverRequest {
-  final AppUser driver;
+  final DeliveryManProfile deliveryManProfile;
 
   ListenCurrentRequestServiceDriverRequest({
-    required this.driver,
+    required this.deliveryManProfile,
   });
 }
 

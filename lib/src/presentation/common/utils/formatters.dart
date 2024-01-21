@@ -207,7 +207,7 @@ class COPCurrencyInputFormatter extends TextInputFormatter {
       return newValue;
     }
     final currencyFormatText =
-        currencyFormatWithSymbol(double.parse(newValue.text));
+        currencyFormatWithCOP(double.parse(newValue.text));
     return TextEditingValue(
       text: currencyFormatText,
       selection: TextSelection.collapsed(
@@ -217,22 +217,30 @@ class COPCurrencyInputFormatter extends TextInputFormatter {
   }
 }
 
-String currencyFormatWithSymbol(double value) {
+String currencyFormat(double value) {
   final formatter = NumberFormat.currency(
     locale: "es_CO",
-    symbol: "COP",
+    symbol: "",
     decimalDigits: 0,
   );
   return formatter.format(value);
 }
 
-String currencyFormat(double value) {
+String currencyFormatWithSymbol(double value) {
   final formatter = NumberFormat.currency(
     locale: "es_CO",
-    symbol: "COP",
+    symbol: "",
     decimalDigits: 0,
   );
   return "\$ ${formatter.format(value)}";
+}
+
+String currencyFormatWithCOP(double value) {
+  return "${currencyFormat(value)} COP";
+}
+
+String currencyFormatWithSymbolAndCOP(double value) {
+  return "\$${currencyFormat(value)} COP";
 }
 
 String parseEEEDMMMMyyyyFormat(DateTime date) {

@@ -21,15 +21,17 @@ abstract interface class IChangeRequestServiceOfferService {
 // -------------------------------- Driver --------------------------------
 
 abstract class IServiceDriverActionService {
-  Stream<List<RequestService>> listenAllRequestService(AppUser driver);
+  Stream<List<RequestService>> listenAllRequestService(
+      DeliveryManProfile driver);
 
   Future<void> acceptRequestService(
-      RequestService requestService, AppUser driver);
+      RequestService requestService, DeliveryManProfile driver);
 
   Future<void> sendCounterOffer(RequestService requestService,
-      RequestService counterOffer, AppUser driver);
+      RequestService counterOffer, DeliveryManProfile driver);
 
-  Stream<RequestService?> listenCurrentRequestService(AppUser driver);
+  Stream<RequestService?> listenCurrentRequestService(
+      DeliveryManProfile driver);
 }
 
 abstract class IGetDriverLocationService {

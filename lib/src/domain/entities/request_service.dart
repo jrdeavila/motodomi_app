@@ -20,7 +20,7 @@ enum RequestServiceStatus {
 class RequestService {
   String uuid;
   final AppUser clientCreator;
-  AppUser? driver;
+  DeliveryManProfile? deliveryManProfile;
   final TravelPoint origin;
   final TravelPoint destination;
   final Payment payment;
@@ -35,7 +35,7 @@ class RequestService {
     required this.destination,
     required this.payment,
     required this.tee,
-    required this.driver,
+    required this.deliveryManProfile,
     this.status = RequestServiceStatus.waiting,
   });
 }

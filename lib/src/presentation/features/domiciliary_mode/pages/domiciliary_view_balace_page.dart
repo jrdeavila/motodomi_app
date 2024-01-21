@@ -108,7 +108,7 @@ class CarBalance extends StatelessWidget {
               style: Theme.of(context).textTheme.labelSmall,
             ),
             Text(
-              currencyFormat(balance),
+              currencyFormatWithSymbolAndCOP(balance),
               style: const TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,

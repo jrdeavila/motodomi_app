@@ -45,16 +45,20 @@ class FirebaseDriverPaymentService implements IDriverPaymentService {
         _configurationService = configurationService;
   @override
   Future<void> updatePayment(
-      {required double amount, required AppUser driver}) {
+      {required double amount,
+      required DeliveryManProfile deliveryManProfile}) {
     return _firebaseFirestore.runTransaction((transaction) async {
       final serviceConfiguration = await _configurationService.get();
 
-      double balance = await _driverBalanceService.getBalance(driver);
+      double balance =
+          await _driverBalanceService.getBalance(deliveryManProfile);
 
       balance -= amount * serviceConfiguration.driverPaymentPercentage;
 
       await _driverBalanceService.updateBalance(
-          amount: balance, driver: driver);
+        amount: balance,
+        deliveryManProfile: deliveryManProfile,
+      );
     });
   }
 }
