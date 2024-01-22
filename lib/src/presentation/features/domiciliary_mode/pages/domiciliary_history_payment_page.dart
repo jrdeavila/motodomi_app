@@ -84,142 +84,29 @@ class DomiciliaryHistoryPaymentPage extends GetView<HistoryPaymentCtrl> {
                   padding: const EdgeInsets.only(top: 20, left: 16, right: 16),
                   sliver: Obx(
                     () => SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final paymentHistoryRange = controller
-                              .paymentHistoryGroupedByDate.entries
-                              .toList()[index];
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                parseEEEDMMMMyyyyFormat(
-                                  paymentHistoryRange.key,
-                                ),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
-                                    ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .tertiary,
-                                    ),
-                              ),
-                              const SizedBox(height: 10),
-                              ...paymentHistoryRange.value
-                                  .map((e) => [
-                                        PaymentHistoryItem(
-                                          paymentHistory: e,
-                                        ),
-                                        const SizedBox(height: 10),
-                                      ])
-                                  .expand((element) => element)
-                                  .toList(),
-                              const SizedBox(height: 20),
-                            ],
-                          );
-                        },
-                        childCount: controller
-                            .paymentHistoryGroupedByDate.entries.length,
-                      ),
+                      delegate: controller.isLoading
+                          ? SliverChildBuilderDelegate(
+                              (context, index) {
+                                return const PaymentHistoryGroupByDateItemSkeleton();
+                              },
+                              childCount: 5,
+                            )
+                          : SliverChildBuilderDelegate(
+                              (context, index) {
+                                final paymentHistoryRange = controller
+                                    .paymentHistoryGroupedByDate.entries
+                                    .toList()[index];
+                                return PaymentItemGroupByDateItem(
+                                    paymentHistoryRange: paymentHistoryRange);
+                              },
+                              childCount: controller
+                                  .paymentHistoryGroupedByDate.entries.length,
+                            ),
                     ),
                   ),
                 ),
               ],
             )),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class PaymentHistoryItem extends StatelessWidget {
-  const PaymentHistoryItem({
-    super.key,
-    required this.paymentHistory,
-  });
-
-  final PaymentHistory paymentHistory;
-
-  String get _typeOfPayment => paymentHistory.paymentData.paymentType ==
-          PaymentMethodType.bancolombiaALaMano
-      ? 'Recarga de Bancolombia a la mano'
-      : 'Recarga de Nequi';
-
-  Widget get _status => paymentHistory.status == PaymentStatus.approved
-      ? Row(
-          children: [
-            Icon(
-              FontAwesomeIcons.circleCheck,
-              color: Theme.of(Get.context!).colorScheme.primary,
-            ),
-            const SizedBox(width: 10),
-            Text('PAGO APROBADO',
-                style: Theme.of(Get.context!).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(Get.context!).colorScheme.onSurface,
-                    )),
-          ],
-        )
-      : paymentHistory.status == PaymentStatus.declined
-          ? Row(
-              children: [
-                Icon(
-                  FontAwesomeIcons.circleXmark,
-                  color: Theme.of(Get.context!).colorScheme.error,
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  'PAGO DECLINADO',
-                  style: Theme.of(Get.context!).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(Get.context!).colorScheme.onSurface,
-                      ),
-                ),
-              ],
-            )
-          : Row(
-              children: [
-                Icon(
-                  FontAwesomeIcons.clock,
-                  color: Colors.grey[600],
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  'PENDIENTE',
-                  style: Theme.of(Get.context!).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(Get.context!).colorScheme.onSurface),
-                ),
-              ],
-            );
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: ListTile(
-        title: Text(
-          _typeOfPayment,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _status,
-            const SizedBox(height: 5),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  currencyFormatWithSymbolAndCOP(
-                      paymentHistory.amount.toDouble()),
-                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                ),
-              ],
-            ),
           ],
         ),
       ),

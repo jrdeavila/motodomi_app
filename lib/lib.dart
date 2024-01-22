@@ -19,6 +19,7 @@ export 'package:cached_network_image/cached_network_image.dart';
 export 'package:google_sign_in/google_sign_in.dart';
 export 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 export 'package:camera/camera.dart';
+export 'package:shimmer/shimmer.dart';
 
 export 'firebase_options.dart';
 export 'main.dart';

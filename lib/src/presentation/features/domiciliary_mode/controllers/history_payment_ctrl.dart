@@ -12,6 +12,7 @@ class HistoryPaymentCtrl extends GetxController {
   // ---------------------- Observables ----------------------
 
   final RxList<PaymentHistory> _paymentHistory = RxList<PaymentHistory>([]);
+  final RxBool _isLoading = false.obs;
 
   // --------------------- Getters ---------------------
 
@@ -43,6 +44,8 @@ class HistoryPaymentCtrl extends GetxController {
     return groupedByDate;
   }
 
+  bool get isLoading => _isLoading.value;
+
   // --------------------- Life cycle ---------------------
 
   @override
@@ -60,9 +63,14 @@ class HistoryPaymentCtrl extends GetxController {
   // ------------------- Private methods ------------------
 
   void _fetchPaymentHistory() {
+    _isLoading.value = true;
     getIt<IGetPaymentHistoryUseCase>()
         .get(deliveryManProfile)
-        .then((value) => _paymentHistory.addAll(value));
+        .then((value) => _paymentHistory.addAll(value))
+        .onError((error, stackTrace) {
+      _isLoading.value = false;
+      throw error as Exception;
+    }).whenComplete(() => _isLoading.value = false);
   }
 
   // ------------------- Public methods ------------------
