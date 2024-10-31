@@ -15,16 +15,13 @@ import 'package:sqflite/sqflite.dart';
 @module
 abstract class FirebaseAppModule {
   @preResolve
-  Future<FirebaseApp> get firebaseApp => Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-
-  @preResolve
-  @Named("FirebaseAppForPasswordReset")
-  Future<FirebaseApp> get firebaseAppForPasswordReset => Firebase.initializeApp(
-        name: "FirebaseAppForPasswordReset",
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
+  @lazySingleton
+  Future<FirebaseApp> get firebaseApp async {
+    final app = await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    return app;
+  }
 }
 
 @module
@@ -34,15 +31,6 @@ abstract class FirebaseAuthModule {
   Future<FirebaseAuth> get firebaseAuth async {
     return FirebaseAuth.instanceFor(
       app: getIt<FirebaseApp>(),
-    );
-  }
-
-  @preResolve
-  @Named("FirebaseAuthForPasswordReset")
-  @lazySingleton
-  Future<FirebaseAuth> get firebaseAuthForPasswordReset async {
-    return FirebaseAuth.instanceFor(
-      app: getIt<FirebaseApp>(instanceName: "FirebaseAppForPasswordReset"),
     );
   }
 }

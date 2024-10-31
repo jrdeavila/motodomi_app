@@ -85,6 +85,14 @@ class DomiciliaryHomeCtrl extends GetxController {
             Get.find<DomiciliaryModeCtrl>().goToClientMode();
           },
         ),
+        if (user.isAdmin)
+          HomeOption(
+            title: "Modo de administrador",
+            icon: FontAwesomeIcons.userShield,
+            onTap: (context) {
+              Get.find<DomiciliaryModeCtrl>().goToAdminMode();
+            },
+          ),
         HomeOption(
           title: "Configuraciones",
           icon: FontAwesomeIcons.gear,

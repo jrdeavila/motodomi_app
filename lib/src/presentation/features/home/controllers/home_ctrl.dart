@@ -48,6 +48,14 @@ class HomeCtrl extends GetxController {
             Get.find<DomiciliaryModeCtrl>().goToDomiciliaryMode();
           },
         ),
+        if (_user.isAdmin)
+          HomeOption(
+            title: "Modo de administrador",
+            icon: FontAwesomeIcons.userShield,
+            onTap: (context) {
+              Get.find<DomiciliaryModeCtrl>().goToAdminMode();
+            },
+          ),
         HomeOption(
           title: "Configuraciones",
           icon: FontAwesomeIcons.gear,
@@ -63,6 +71,8 @@ class HomeCtrl extends GetxController {
           },
         ),
       ];
+
+  AppUser get _user => Get.find<SessionCtrl>().user!;
 
   String get userFirstName => Get.find<SessionCtrl>().user!.name.split(' ')[0];
 

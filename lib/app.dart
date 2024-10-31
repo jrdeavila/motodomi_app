@@ -13,6 +13,7 @@ class App extends StatelessWidget {
           theme: AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           getPages: [
+            ...AdminRoutes.routes,
             ...MainRoutes.routes,
             ...AuthRoutes.routes,
             ...HomeRoutes.routes,

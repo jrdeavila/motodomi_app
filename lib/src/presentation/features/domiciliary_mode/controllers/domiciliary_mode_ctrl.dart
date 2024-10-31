@@ -213,4 +213,9 @@ class DomiciliaryModeCtrl extends GetxController {
     _persistMode();
     Get.offAllNamed(DomiciliaryRoutes.domiciliaryLoading);
   }
+
+  void goToAdminMode() {
+    Get.offAllNamed(AdminRoutes.adminHome);
+    _leaveMode();
+  }
 }

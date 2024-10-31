@@ -92,7 +92,7 @@ extension GetItInjectableX on _i174.GetIt {
     final cameraModule = _$CameraModule();
     final paymentModuleServicesModule = _$PaymentModuleServicesModule();
     final brightnessModule = _$BrightnessModule();
-    await gh.factoryAsync<_i982.FirebaseApp>(
+    await gh.lazySingletonAsync<_i982.FirebaseApp>(
       () => firebaseAppModule.firebaseApp,
       preResolve: true,
     );
@@ -143,7 +143,7 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.factory<_i608.IDeliveryManProfileRepository>(() =>
-        _i570.FirebaseDeliveryMnaProfileRepository(
+        _i570.FirebaseDeliveryManProfileRepository(
             gh<_i608.FirebaseFirestore>()));
     gh.factory<_i608.IBalancePaymentService>(
         () => _i158.HttpRechargeBalanceService(
@@ -172,11 +172,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i608.IDriverBalanceService>(() =>
         _i6.FirebaseDriverBalanceService(
             firebaseFirestore: gh<_i608.FirebaseFirestore>()));
-    await gh.lazySingletonAsync<_i59.FirebaseAuth>(
-      () => firebaseAuthModule.firebaseAuthForPasswordReset,
-      instanceName: 'FirebaseAuthForPasswordReset',
-      preResolve: true,
-    );
     gh.factory<_i608.IDNISectionService>(() => _i496.FirebaseDNISectionService(
         firebaseFirestore: gh<_i608.FirebaseFirestore>()));
     gh.factory<_i608.IGetAddressByQueryService>(
@@ -209,11 +204,6 @@ extension GetItInjectableX on _i174.GetIt {
                 gh<_i608.IMarkAsViewedRequestServiceService>()));
     gh.factory<_i608.ISetTotalBrightnessUseCase>(
         () => _i162.SetTotalBrightnessUseCase(gh<_i608.IBrightnessService>()));
-    await gh.factoryAsync<_i982.FirebaseApp>(
-      () => firebaseAppModule.firebaseAppForPasswordReset,
-      instanceName: 'FirebaseAppForPasswordReset',
-      preResolve: true,
-    );
     gh.factory<_i608.IListenMyBalanceUseCase>(
         () => _i233.ListenMyBalanceUseCase(gh<_i608.IDriverBalanceService>()));
     gh.factory<_i608.IDeleteDeliveryManProfileAvatarUseCase>(() =>

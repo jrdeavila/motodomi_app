@@ -11,7 +11,7 @@ void main() async {
     // Run the app
     runApp(const App());
   }, (error, stack) {
-    final controller = Get.find<ExceptionCtrl>();
+    final controller = Get.put(ExceptionCtrl(), permanent: true);
     controller.onDebugException(error, stack);
     controller.exception(error);
   });

@@ -2,11 +2,11 @@ import 'package:injectable/injectable.dart';
 import 'package:motodomi_app/lib.dart';
 
 @Injectable(as: IDeliveryManProfileRepository)
-class FirebaseDeliveryMnaProfileRepository
+class FirebaseDeliveryManProfileRepository
     implements IDeliveryManProfileRepository {
   final FirebaseFirestore _firebaseFirestore;
 
-  FirebaseDeliveryMnaProfileRepository(this._firebaseFirestore);
+  FirebaseDeliveryManProfileRepository(this._firebaseFirestore);
   @override
   Future<DeliveryManProfile> getDeliveryMan(String uuid) {
     return _firebaseFirestore
