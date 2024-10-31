@@ -9,5 +9,7 @@ class MainBindings extends Bindings {
     Get.put(DomiciliaryModeCtrl(), permanent: true);
     Get.put(ThemeCtrl());
     Get.put(InitCtrl());
+    Get.put(BrightnessCtrl());
+    Get.put(WakelockCtrl());
   }
 }

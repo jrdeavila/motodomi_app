@@ -227,3 +227,12 @@ abstract class PaymentModuleServicesModule {
         dio: getIt<Dio>(),
       );
 }
+
+// --------------------------- Screen Brightness ---------------------------
+
+@module
+abstract class BrightnessModule {
+  @preResolve
+  @lazySingleton
+  Future<ScreenBrightness> get brightnessService async => ScreenBrightness();
+}

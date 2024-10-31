@@ -1,4 +1,5 @@
 export 'background_notification_service.dart';
+export 'brightness_service.dart';
 export 'find_file.dart';
 export 'image_picker.dart';
 export 'play_sound.dart';

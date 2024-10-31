@@ -20,6 +20,8 @@ export 'package:google_sign_in/google_sign_in.dart';
 export 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 export 'package:camera/camera.dart';
 export 'package:shimmer/shimmer.dart';
+export 'package:screen_brightness/screen_brightness.dart';
+export 'package:wakelock_plus/wakelock_plus.dart';
 
 export 'firebase_options.dart';
 export 'main.dart';

@@ -1,5 +1,6 @@
 export 'authentication_use_case.dart';
 export 'bonitfication_use_case.dart';
+export 'brightness_use_case.dart';
 export 'delivery_man_use_cases.dart';
 export 'driver_request_use_cases.dart';
 export 'find_address_use_case.dart';
@@ -11,3 +12,4 @@ export 'profile_use_case.dart';
 export 'recharge_balance_use_case.dart';
 export 'service_action_use_cases.dart';
 export 'upload_file.dart';
+export 'wakelock_use_case.dart';
