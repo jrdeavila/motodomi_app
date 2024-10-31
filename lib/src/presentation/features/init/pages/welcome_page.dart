@@ -72,24 +72,6 @@ class WelcomePage extends GetView<InitCtrl> {
               ),
             ),
           ),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: 300,
-            child: OutlinedButton(
-              onPressed: controller.loginWithFacebook,
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(FontAwesomeIcons.facebookF),
-                  SizedBox(width: 10),
-                  Text(
-                    "Iniciar con facebook",
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
     );
